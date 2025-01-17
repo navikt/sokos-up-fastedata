@@ -1,6 +1,8 @@
 # Faste data mikrofrontend
 
-(Kort beskrivelse av mikrofrontenden)
+Faste data gir saksbehandler innsikt i hvilke oppsettsregler som til enhver tid er gjeldende i Oppdragssystemet.
+Hensikten er å avhjelpe saksbehandler med hvilke verdier som er gyldige og kan brukes sammen
+
 </br>Backend til applikasjonen er [sokos-oppdrag](https://github.com/navikt/sokos-oppdrag)
 
 ## Miljøer
