@@ -24,11 +24,9 @@ export default function TemplatePage() {
     <>
       <div className={styles["template-header"]}>
         <Heading spacing level="1" size="large">
-          Mikrofrontend Template
+          Faste data
         </Heading>
-        <BodyLong>
-          Dette er en template for å bygge undersider i Utbetalingsportalen
-        </BodyLong>
+        <BodyLong>Coming soon!</BodyLong>
       </div>
 
       <div className={styles["template-body"]}>

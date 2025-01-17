@@ -11,11 +11,11 @@ const reactDomUrl =
   "https://www.nav.no/tms-min-side-assets/react-dom/18/esm/index.js";
 
 export default defineConfig(({ mode }) => ({
-  base: "/mikrofrontend",
+  base: "/fastedata",
   build: {
     lib: {
       entry: resolve(__dirname, "src/App.tsx"),
-      name: "sokos-mikrofrontend-template",
+      name: "sokos-up-fastedata",
       formats: ["es"],
       fileName: () => "bundle.js",
     },
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       ...(mode === "backend" && {
-        "/mikrofrontend-api/api/v1": {
+        "/fastedata-api/api/v1": {
           target: "http://localhost:8080",
           rewrite: (path: string) => path.replace(/^\/oppdrag-api/, ""),
           changeOrigin: true,
@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => ({
       ...(mode === "mock" && {
         "/mockServiceWorker.js": {
           target: "http://localhost:5173",
-          rewrite: () => "mikrofrontend/mockServiceWorker.js",
+          rewrite: () => "fastedata/mockServiceWorker.js",
         },
       }),
     },

@@ -1,7 +1,7 @@
 {
-  "name": "sokos-mikrofrontend-template",
+  "name": "sokos-up-fastedata",
   "version": "1.0.0",
-  "description": "Mikrofrontend for Utbetalingsportalen",
+  "description": "Arbeidsflate for Faste data i Utbetalingsportalen",
   "type": "module",
   "scripts": {
     "dev": "vite --mode mock",

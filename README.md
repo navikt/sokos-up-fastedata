@@ -1,4 +1,4 @@
-# sokos-mikrofrontend-template
+# sokos-up-fastedata
 
 Brukes som utgangspunkt for å opprette nye mikrofrontends i Økonomiportalen.
 

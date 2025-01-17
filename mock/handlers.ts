@@ -1,7 +1,7 @@
 import { HttpResponse, http } from "msw";
 
 export const handlers = [
-  http.get("/mikrofrontend-api/api/v1/employee", () => {
+  http.get("/fastedata-api/api/v1/employee", () => {
     return HttpResponse.json(
       [
         { id: 1, name: "Jonas", profession: "Tech lead" },
