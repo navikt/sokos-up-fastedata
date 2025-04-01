@@ -15,3 +15,8 @@
     background-color: white;
     border-collapse: collapse;
 }
+
+.ventekriterier-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.15) !important;
+}
+
