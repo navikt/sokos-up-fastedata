@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Page, Table, Heading } from "@navikt/ds-react";
+import { Heading, Page, Table } from "@navikt/ds-react";
+import { Ventekriterier } from "../types/Ventekriterier";
 import "./ventekriterier.css";
 
-interface Ventekriterie {
-  kodeFaggruppe: string;
-  bilagstype: string;
-  datoFoM: string;
-  belopBrutto: number | null;
-  belopNetto: number | null;
-  antallDagerEldreEnn: number | null;
-  tidligereAar: boolean;
-}
-
-export const Ventekriterier = () => {
-  const [data, setData] = useState<Ventekriterie[]>([]);
+export const VentekriterierTable = () => {
+  const [data, setData] = useState<Ventekriterier[]>([]);
 
   useEffect(() => {
     fetch("/fastedata-api/api/v1/ventekriterier")
       .then((res) => res.json())
       .then((data) =>
         setData(
-          data.map((item: any) => ({
+          data.map((item: Ventekriterier) => ({
             kodeFaggruppe: item.kodeFaggruppe,
-            bilagstype: item.typeBilag,
-            datoFoM: item.datoFom,
+            typeBilag: item.typeBilag,
+            datoFom: item.datoFom,
             belopBrutto: item.belopBrutto,
             belopNetto: item.belopNetto,
-            antallDagerEldreEnn: item.antDagerEldreenn,
+            antDagerEldreenn: item.antDagerEldreenn,
             tidligereAar: item.tidligereAar,
-          }))
-        )
+          })),
+        ),
       );
   }, []);
 
@@ -39,7 +30,12 @@ export const Ventekriterier = () => {
   return (
     <Page className="ventekriterier-page-wrapper">
       <Page.Block width="lg" gutters>
-        <Heading spacing size="medium" level="1" className="ventekriterier-heading">
+        <Heading
+          spacing
+          size="medium"
+          level="1"
+          className="ventekriterier-heading"
+        >
           Faste data -Ventekriterier
         </Heading>
 
@@ -59,12 +55,14 @@ export const Ventekriterier = () => {
             {data.map((row, idx) => (
               <Table.Row key={idx}>
                 <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
-                <Table.DataCell>{row.bilagstype}</Table.DataCell>
-                <Table.DataCell>{row.datoFoM}</Table.DataCell>
+                <Table.DataCell>{row.typeBilag}</Table.DataCell>
+                <Table.DataCell>{row.datoFom}</Table.DataCell>
                 <Table.DataCell>{formatNumber(row.belopBrutto)}</Table.DataCell>
                 <Table.DataCell>{formatNumber(row.belopNetto)}</Table.DataCell>
-                <Table.DataCell>{row.antallDagerEldreEnn ?? "—"}</Table.DataCell>
-                <Table.DataCell>{row.tidligereAar ? "Ja" : "Nei"}</Table.DataCell>
+                <Table.DataCell>{row.antDagerEldreenn ?? "—"}</Table.DataCell>
+                <Table.DataCell>
+                  {row.tidligereAar ? "Ja" : "Nei"}
+                </Table.DataCell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -74,4 +72,4 @@ export const Ventekriterier = () => {
   );
 };
 
-export default Ventekriterier;
+export default VentekriterierTable;
