@@ -1,31 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Heading, Page, Table } from "@navikt/ds-react";
-import { Ventekriterier } from "../types/Ventekriterier";
+import { useGetVentekriterier } from "../api/apiService";
+import { formatNumber } from "../util/tallUtil";
 import "./Ventekriterier.module.css";
 
 export const VentekriterierTable = () => {
-  const [data, setData] = useState<Ventekriterier[]>([]);
-
-  useEffect(() => {
-    fetch("/fastedata-api/api/v1/ventekriterier")
-      .then((res) => res.json())
-      .then((data) =>
-        setData(
-          data.map((item: Ventekriterier) => ({
-            kodeFaggruppe: item.kodeFaggruppe,
-            typeBilag: item.typeBilag,
-            datoFom: item.datoFom,
-            belopBrutto: item.belopBrutto,
-            belopNetto: item.belopNetto,
-            antDagerEldreenn: item.antDagerEldreenn,
-            tidligereAar: item.tidligereAar,
-          })),
-        ),
-      );
-  }, []);
-
-  const formatNumber = (value: number | null | undefined) =>
-    value != null ? new Intl.NumberFormat("no-NO").format(value) : "—";
+  const { data } = useGetVentekriterier();
 
   return (
     <Page className="ventekriterier-page-wrapper">
@@ -52,7 +32,7 @@ export const VentekriterierTable = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data.map((row, idx) => (
+            {data?.map((row, idx) => (
               <Table.Row key={idx}>
                 <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
                 <Table.DataCell>{row.typeBilag}</Table.DataCell>

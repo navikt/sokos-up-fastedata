@@ -16,10 +16,10 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
 }
 
 export function useGetVentekriterier() {
-  const { data, error, isValidating } = useSWRImmutable<Ventekriterier>(
+  const { data, error, isValidating } = useSWRImmutable<Ventekriterier[]>(
     `/ventekriterier`,
-    swrConfig<Ventekriterier>((url) =>
-      axiosFetcher<Ventekriterier>(BASE_URI.BACKEND_API, url),
+    swrConfig<Ventekriterier[]>((url) =>
+      axiosFetcher<Ventekriterier[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;
