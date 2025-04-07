@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Heading, Page, Table } from "@navikt/ds-react";
 import { Ventekriterier } from "../types/Ventekriterier";
-import "./ventekriterier.css";
+import "./Ventekriterier.module.css";
 
 export const VentekriterierTable = () => {
   const [data, setData] = useState<Ventekriterier[]>([]);
