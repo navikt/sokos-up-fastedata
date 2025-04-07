@@ -1,5 +1,5 @@
 import useSWRImmutable from "swr/immutable";
-import { EmployeeList } from "../types/Employee";
+import { Ventekriterier } from "../types/Ventekriterier";
 import { axiosFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
@@ -15,11 +15,11 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
   };
 }
 
-export function useGetEmployee() {
-  const { data, error, isValidating } = useSWRImmutable<EmployeeList>(
-    `/employee`,
-    swrConfig<EmployeeList>((url) =>
-      axiosFetcher<EmployeeList>(BASE_URI.BACKEND_API, url),
+export function useGetVentekriterier() {
+  const { data, error, isValidating } = useSWRImmutable<Ventekriterier[]>(
+    `/ventekriterier`,
+    swrConfig<Ventekriterier[]>((url) =>
+      axiosFetcher<Ventekriterier[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;

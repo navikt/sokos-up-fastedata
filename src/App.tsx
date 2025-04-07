@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import "./App.module.css";
-import TemplatePage from "./pages/TemplatePage";
+import { VentekriterierTable } from "./pages/VentekriterierPage";
 import { initGrafanaFaro } from "./util/grafanaFaro";
 
 export default function App() {
@@ -9,5 +9,5 @@ export default function App() {
       initGrafanaFaro();
   }, []);
 
-  return <TemplatePage />;
+  return <VentekriterierTable />;
 }
