@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./App.module.css";
+import { VentekriterierTable } from "./pages/VentekriterierPage";
 import { initGrafanaFaro } from "./util/grafanaFaro";
-import Ventekriterier from "./pages/Ventekriterier";
 
 export default function App() {
   useEffect(() => {
@@ -9,5 +9,5 @@ export default function App() {
       initGrafanaFaro();
   }, []);
 
-  return <Ventekriterier />;
+  return <VentekriterierTable />;
 }
