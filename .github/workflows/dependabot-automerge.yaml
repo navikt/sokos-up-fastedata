@@ -14,12 +14,13 @@ on:
       - ".github/workflows/security.yaml"
       - ".github/dependabot.yaml"
 
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+
 jobs:
   dependabot-automerge:
     if: ${{ github.actor == 'dependabot[bot]' }}
     uses: navikt/mob-gha-workflows/.github/workflows/dependabot-automerge.yaml@main
-    permissions:
-      contents: write
-      pull-requests: write
-      checks: read
     secrets: inherit
