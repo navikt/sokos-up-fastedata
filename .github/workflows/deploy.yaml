@@ -14,13 +14,17 @@ on:
       - ".github/workflows/playwright.yaml"
       - ".github/workflows/security.yaml"
       - ".github/dependabot.yaml"
+      - ".github/workflows/dependabot-automerge.yaml"
+
+  repository_dispatch:
+    types: [dependabot-deploy]
 
 env:
   TZ: Europe/Oslo
 
 permissions:
-  contents: "write"
-  id-token: "write"
+  contents: write
+  id-token: write
 
 jobs:
   build:
@@ -36,7 +40,6 @@ jobs:
       cluster: dev-gcp
       resource: .nais/naiserator-dev.yaml
       image: ${{ needs.build.outputs.image }}
-
 #  deploy-prod:
 #    needs: [build, deploy-dev]
 #    name: Deploy to prod-gcp
