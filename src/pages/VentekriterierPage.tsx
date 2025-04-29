@@ -8,7 +8,7 @@ export const VentekriterierPage = () => {
   const { data } = useGetVentekriterier();
 
   return (
-    <Page className="ventekriterier-page-wrapper">
+    <Page>
       <Page.Block width="lg" gutters>
         <Heading
           spacing
