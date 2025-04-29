@@ -5,11 +5,10 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router";
-import "./App.module.css";
 import ContentLoader from "./components/ContentLoader";
 import FastedataPage from "./pages/FastedataPage";
 import VentekriterierPage from "./pages/VentekriterierPage";
-import { BASENAME, ROOT } from "./util/constant";
+import { BASENAME } from "./util/constant";
 
 export default function App() {
   return (
@@ -17,21 +16,17 @@ export default function App() {
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements(
-            <Route
-              path={ROOT}
-              element={<FastedataPage />}
-              ErrorBoundary={ErrorBoundary}
-            >
-              <Route path="ventekriterier" element={<VentekriterierPage />} />
-            </Route>,
+            <>
+              <Route path="fastedata" element={<FastedataPage />} />
+              <Route
+                path="fastedata/ventekriterier"
+                element={<VentekriterierPage />}
+              />
+            </>,
           ),
           { basename: BASENAME },
         )}
       />
     </Suspense>
   );
-}
-
-function ErrorBoundary(): JSX.Element {
-  return <div>Det oppstod en feil</div>;
 }
