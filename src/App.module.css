@@ -7,3 +7,9 @@
 main {
   max-width: none !important;
 }
+
+.fastedataheading {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2.5rem;
+}

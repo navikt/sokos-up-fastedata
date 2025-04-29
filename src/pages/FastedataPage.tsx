@@ -1,4 +1,5 @@
 import { Heading, Page } from "@navikt/ds-react";
+import styles from "../App.module.css";
 import AppCard from "../components/appcard/AppCard";
 
 const appList = [
@@ -33,9 +34,15 @@ export default function FastedataPage() {
   return (
     <Page>
       <Page.Block width="md">
-        <Heading level="1" size="large" spacing>
+        <Heading
+          level="1"
+          size="large"
+          spacing
+          className={styles.fastedataheading}
+        >
           Faste data
         </Heading>
+
         <Heading level="2" size="medium" spacing>
           Oppdrag
         </Heading>
