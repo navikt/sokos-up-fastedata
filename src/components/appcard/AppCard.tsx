@@ -13,7 +13,7 @@ interface AppCardProps {
 export default function AppCard(props: AppCardProps) {
   const content = (
     <div>
-      <div className={styles["appcard_title"]}>
+      <div className={styles["appcard-title"]}>
         <Heading level="3" size="xsmall">
           {props.title}
         </Heading>
