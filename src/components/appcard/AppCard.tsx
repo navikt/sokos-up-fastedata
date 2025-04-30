@@ -17,11 +17,11 @@ export default function AppCard(props: AppCardProps) {
         <Heading level="3" size="xsmall">
           {props.title}
         </Heading>
-        <div className={styles["appcard-arrow"]}>
-          <ChevronRightIcon title="Chevron ikon" />
-        </div>
       </div>
       <div className={styles["appcard-description"]}>{props.description}</div>
+      <div className={styles.appcardarrow}>
+        <ChevronRightIcon title="Chevron ikon" />
+      </div>
     </div>
   );
 
