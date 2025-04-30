@@ -2,7 +2,7 @@ import React from "react";
 import { Heading } from "@navikt/ds-react";
 import { useGetVentekriterier } from "../api/apiService";
 import VentekriterierTable from "../components/VentekriterierTable";
-import styles from "../styles/ventekriterier.module.css";
+import styles from "../styles/Ventekriterier.module.css";
 
 export const VentekriterierPage = () => {
   const { data } = useGetVentekriterier();
