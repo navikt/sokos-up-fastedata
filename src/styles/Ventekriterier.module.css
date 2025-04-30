@@ -1,4 +1,16 @@
-.ventekriterierheading {
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  max-width: 1024px;
+  width: 100%;
+}
+
+.ventekriterier-heading {
   text-align: center;
   padding-top: 2rem;
   padding-bottom: 2rem;

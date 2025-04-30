@@ -1,4 +1,4 @@
-import { Heading, Page } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import styles from "../App.module.css";
 import AppCard from "../components/appcard/AppCard";
 
@@ -32,13 +32,13 @@ const appList = [
 
 export default function FastedataPage() {
   return (
-    <Page>
-      <Page.Block width="md">
+    <div className={styles["container"]}>
+      <div className={styles["content-wrapper"]}>
         <Heading
           level="1"
           size="large"
           spacing
-          className={styles.fastedataheading}
+          className={styles["fastedata-heading"]}
         >
           Faste data
         </Heading>
@@ -46,13 +46,8 @@ export default function FastedataPage() {
         <Heading level="2" size="medium" spacing>
           Oppdrag
         </Heading>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "1rem",
-          }}
-        >
+
+        <div className={styles["card-grid"]}>
           {appList.map((app) => (
             <AppCard
               key={app.title}
@@ -63,7 +58,7 @@ export default function FastedataPage() {
             />
           ))}
         </div>
-      </Page.Block>
-    </Page>
+      </div>
+    </div>
   );
 }

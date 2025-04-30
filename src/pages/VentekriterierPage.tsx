@@ -1,26 +1,26 @@
 import React from "react";
-import { Heading, Page } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import { useGetVentekriterier } from "../api/apiService";
 import VentekriterierTable from "../components/VentekriterierTable";
-import styles from "../styles/Ventekriterier.module.css";
+import styles from "../styles/ventekriterier.module.css";
 
 export const VentekriterierPage = () => {
   const { data } = useGetVentekriterier();
 
   return (
-    <Page>
-      <Page.Block width="lg" gutters>
+    <div className={styles["container"]}>
+      <div className={styles["content-wrapper"]}>
         <Heading
           spacing
           size="medium"
           level="1"
-          className={styles.ventekriterierheading}
+          className={styles["ventekriterier-heading"]}
         >
-          Faste data -Ventekriterier
+          Faste data – Ventekriterier
         </Heading>
         <VentekriterierTable data={data} />
-      </Page.Block>
-    </Page>
+      </div>
+    </div>
   );
 };
 
