@@ -1,10 +1,9 @@
 import { Link as ReactRouterLink } from "react-router";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
-import { Heading, Tooltip } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import styles from "./AppCard.module.css";
 
 interface AppCardProps {
-  hasAccess: boolean;
   route: string;
   title: string;
   description: string;
@@ -25,23 +24,13 @@ export default function AppCard(props: AppCardProps) {
     </div>
   );
 
-  if (props.hasAccess) {
-    return (
-      <ReactRouterLink
-        className={styles["appcard"]}
-        data-umami-event-app={props.title}
-        to={props.route}
-      >
-        {content}
-      </ReactRouterLink>
-    );
-  } else {
-    return (
-      <span className={`${styles["appcard"]} ${styles["disabled"]}`}>
-        <Tooltip content="Du har ikke tilgang til denne appen">
-          {content}
-        </Tooltip>
-      </span>
-    );
-  }
+  return (
+    <ReactRouterLink
+      className={styles["appcard"]}
+      data-umami-event-app={props.title}
+      to={props.route}
+    >
+      {content}
+    </ReactRouterLink>
+  );
 }

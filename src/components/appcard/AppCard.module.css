@@ -16,12 +16,6 @@
   background-color: #99dead;
 }
 
-.appcard.disabled {
-  background-color: #e1e3e6;
-  opacity: 1;
-  cursor: not-allowed;
-}
-
 .appcard-title {
   display: flex;
   justify-content: space-between;
@@ -45,15 +39,15 @@
   display: flex;
 }
 
-.appcard:not(.disabled):hover .appcard-title,
-.appcard:not(.disabled):hover .appcard-description {
+.appcard:hover .appcard-title,
+.appcard:hover .appcard-description {
   text-decoration: underline;
 }
 
-.appcard:not(.disabled):hover {
+.appcard:hover {
   background-color: #88c299;
 }
 
-.appcard:not(.disabled):hover .appcardarrow {
+.appcard:hover .appcardarrow {
   transform: translateY(-50%) translateX(5px);
 }

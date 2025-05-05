@@ -1,6 +1,6 @@
 import { Heading } from "@navikt/ds-react";
-import styles from "../App.module.css";
 import AppCard from "../components/appcard/AppCard";
+import styles from "../styles/Fastedata.module.css";
 
 const appList = [
   {
@@ -54,7 +54,6 @@ export default function FastedataPage() {
               title={app.title}
               description={app.description}
               route={app.route}
-              hasAccess={!!app.route}
             />
           ))}
         </div>

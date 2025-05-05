@@ -7,27 +7,3 @@
 main {
   max-width: none !important;
 }
-
-.fastedata-heading {
-  text-align: center;
-  padding-top: 2rem;
-  padding-bottom: 2.5rem;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-.content-wrapper {
-  max-width: 768px;
-  width: 100%;
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-}
