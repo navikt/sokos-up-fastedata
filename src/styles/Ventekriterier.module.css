@@ -1,12 +1,19 @@
-.ventekriterier-page-wrapper {
-  background-color: #f4f4f4;
-  min-height: 100vh;
-  padding: 4rem 2rem;
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  max-width: 1024px;
+  width: 100%;
 }
 
 .ventekriterier-heading {
   text-align: center;
-  margin-bottom: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .ventekriterier-table {
@@ -14,8 +21,4 @@
   max-width: 1200px;
   background-color: white;
   border-collapse: collapse;
-}
-
-.ventekriterier-table tbody tr:hover {
-  background-color: rgb(37 99 235 / 15%) !important;
 }
