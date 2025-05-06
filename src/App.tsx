@@ -8,6 +8,7 @@ import {
 import ContentLoader from "./components/ContentLoader";
 import FastedataPage from "./pages/FastedataPage";
 import VentekriterierPage from "./pages/VentekriterierPage";
+import VentestatuskoderPage from "./pages/VentestatuskoderPage";
 import { BASENAME } from "./util/constant";
 
 export default function App() {
@@ -21,6 +22,10 @@ export default function App() {
               <Route
                 path="fastedata/ventekriterier"
                 element={<VentekriterierPage />}
+              />
+              <Route
+                path="fastedata/ventestatuskoder"
+                element={<VentestatuskoderPage />}
               />
             </>,
           ),
