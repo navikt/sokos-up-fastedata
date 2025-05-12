@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       ...(mode === "backend" && {
-        "/fastedata-api/api/v1": {
+        "/oppdrag-api/api/v1": {
           target: "http://localhost:8080",
           rewrite: (path: string) => path.replace(/^\/oppdrag-api/, ""),
           changeOrigin: true,
