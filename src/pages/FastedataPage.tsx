@@ -21,7 +21,7 @@ const appList = [
   {
     title: "Ventestatuskoder",
     description: "Forklaring og oppslag",
-    route: "",
+    route: "ventestatuskoder",
   },
   {
     title: "Ventekriterier",

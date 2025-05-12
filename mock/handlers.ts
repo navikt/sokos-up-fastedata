@@ -1,7 +1,7 @@
 import { HttpResponse, http } from "msw";
 
 export const handlers = [
-  http.get("/fastedata-api/api/v1/ventekriterier", () => {
+  http.get("/oppdrag-api/api/v1/ventekriterier", () => {
     return HttpResponse.json(
       [
         {
@@ -30,6 +30,45 @@ export const handlers = [
           belopNetto: 150000.0,
           antDagerEldreenn: 60,
           tidligereAar: false,
+        },
+      ],
+      { status: 200 },
+    );
+  }),
+  http.get("/oppdrag-api/api/v1/ventestatuskoder", () => {
+    return HttpResponse.json(
+      [
+        {
+          kodeVentestatus: "ADAG",
+          beskrivelse: "Periode ikke utbet, navn/adresse mangler",
+          prioritet: 120,
+          settesManuelt: "N",
+          kodeArvesTil: "AVAG",
+          kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
+        },
+        {
+          kodeVentestatus: "ADDR",
+          beskrivelse: "Periode ikke utbet, navn/adresse mangler",
+          prioritet: 120,
+          settesManuelt: "N",
+          kodeArvesTil: "",
+          kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
+        },
+        {
+          kodeVentestatus: "ANRE",
+          beskrivelse: "Man. postering samme periode/ytelse",
+          prioritet: 130,
+          settesManuelt: "N",
+          kodeArvesTil: "REBE",
+          kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
+        },
+        {
+          kodeVentestatus: "AVAG",
+          beskrivelse: "Midlertidig stopp av overfør UR, arb.g.",
+          prioritet: 140,
+          settesManuelt: "J",
+          kodeArvesTil: "STOP",
+          kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
         },
       ],
       { status: 200 },
