@@ -2,6 +2,7 @@ import React from "react";
 import { Heading } from "@navikt/ds-react";
 import { useGetVentekriterier } from "../api/apiService";
 import VentekriterierTable from "../components/VentekriterierTable";
+import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import styles from "../styles/Ventekriterier.module.css";
 
 export const VentekriterierPage = () => {
@@ -18,6 +19,7 @@ export const VentekriterierPage = () => {
         >
           Faste data – Ventekriterier
         </Heading>
+        <BackHomeBox />
         <VentekriterierTable data={data} />
       </div>
     </div>

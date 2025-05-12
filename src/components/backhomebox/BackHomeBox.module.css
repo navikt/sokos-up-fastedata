@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  background-color: #e3dbf5;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  color: #0056b4;
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+  font-size: 1rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
