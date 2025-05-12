@@ -1,37 +1,24 @@
-import { Suspense } from "react";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router";
-import ContentLoader from "./components/ContentLoader";
+import { BrowserRouter, Route, Routes } from "react-router";
+import NotFound from "./components/NotFound";
 import FastedataPage from "./pages/FastedataPage";
 import VentekriterierPage from "./pages/VentekriterierPage";
 import VentestatuskoderPage from "./pages/VentestatuskoderPage";
-import { BASENAME } from "./util/constant";
+import {
+  BASENAME,
+  ROOT,
+  VENTEKRITERIER,
+  VENTESTATUSKODER,
+} from "./util/constant";
 
 export default function App() {
   return (
-    <Suspense fallback={<ContentLoader />}>
-      <RouterProvider
-        router={createBrowserRouter(
-          createRoutesFromElements(
-            <>
-              <Route path="fastedata" element={<FastedataPage />} />
-              <Route
-                path="fastedata/ventekriterier"
-                element={<VentekriterierPage />}
-              />
-              <Route
-                path="fastedata/ventestatuskoder"
-                element={<VentestatuskoderPage />}
-              />
-            </>,
-          ),
-          { basename: BASENAME },
-        )}
-      />
-    </Suspense>
+    <BrowserRouter basename={BASENAME}>
+      <Routes>
+        <Route path={ROOT} element={<FastedataPage />} />
+        <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />,
+        <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />,
+        <Route path={"*"} element={<NotFound />} />,
+      </Routes>
+    </BrowserRouter>
   );
 }
