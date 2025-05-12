@@ -43,7 +43,7 @@ export const handlers = [
           beskrivelse: "Periode ikke utbet, navn/adresse mangler",
           prioritet: 120,
           settesManuelt: "N",
-          kodeArvesTil: "AVAG, REAK, REBE, STOP",
+          kodeArvesTil: "AVAG",
           kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
         },
         {
@@ -51,7 +51,7 @@ export const handlers = [
           beskrivelse: "Periode ikke utbet, navn/adresse mangler",
           prioritet: 120,
           settesManuelt: "N",
-          kodeArvesTil: "AVAG, REAK, REBE, STOP",
+          kodeArvesTil: "",
           kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
         },
         {
@@ -59,7 +59,7 @@ export const handlers = [
           beskrivelse: "Man. postering samme periode/ytelse",
           prioritet: 130,
           settesManuelt: "N",
-          kodeArvesTil: "AVVE, REAK, REBE, STOP",
+          kodeArvesTil: "REBE",
           kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
         },
         {
@@ -67,7 +67,7 @@ export const handlers = [
           beskrivelse: "Midlertidig stopp av overfør UR, arb.g.",
           prioritet: 140,
           settesManuelt: "J",
-          kodeArvesTil: "AVVE, REAK, REBE, STOP",
+          kodeArvesTil: "STOP",
           kanManueltEndresTil: "AVVE, REAK, REBE, STOP",
         },
       ],

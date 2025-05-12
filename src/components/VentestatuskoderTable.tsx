@@ -1,28 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "@navikt/ds-react";
 import { Ventestatuskoder } from "../types/Ventestatuskoder";
-
-// Ensure this type exists
 
 type Props = {
   data?: Ventestatuskoder[];
 };
 
-export const VentestatuskoderTable = (props: Props) => {
+const VentestatuskoderTable = ({ data = [] }: Props) => {
+  const [sortState, setSortState] = useState({
+    orderBy: "kodeVentestatus",
+    direction: "ascending" as "ascending" | "descending",
+  });
+
+  const handleSortChange = (sortKey: string) => {
+    setSortState((prev) => {
+      if (prev.orderBy === sortKey) {
+        return {
+          ...prev,
+          direction:
+            prev.direction === "ascending" ? "descending" : "ascending",
+        };
+      }
+      return { orderBy: sortKey, direction: "ascending" };
+    });
+  };
+
+  const sortedData = [...data].sort((a, b) => {
+    const aVal = a[sortState.orderBy as keyof Ventestatuskoder];
+    const bVal = b[sortState.orderBy as keyof Ventestatuskoder];
+
+    if (typeof aVal === "string" && typeof bVal === "string") {
+      return sortState.direction === "ascending"
+        ? aVal.localeCompare(bVal)
+        : bVal.localeCompare(aVal);
+    }
+
+    if (typeof aVal === "number" && typeof bVal === "number") {
+      return sortState.direction === "ascending" ? aVal - bVal : bVal - aVal;
+    }
+
+    return 0;
+  });
+
   return (
-    <Table zebraStripes size="small" className="ventestatuskoder-table">
+    <Table
+      zebraStripes
+      size="small"
+      sort={sortState}
+      onSortChange={handleSortChange}
+      className="ventestatuskoder-table"
+    >
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Kode Ventestatus</Table.HeaderCell>
-          <Table.HeaderCell>Beskrivelse</Table.HeaderCell>
-          <Table.HeaderCell>Prioritet</Table.HeaderCell>
-          <Table.HeaderCell>Settes Manuelt</Table.HeaderCell>
-          <Table.HeaderCell>Kode Arves Til</Table.HeaderCell>
-          <Table.HeaderCell>Kan Manuelt Endres Til</Table.HeaderCell>
+          <Table.ColumnHeader sortable sortKey="kodeVentestatus">
+            Ventestatuskode
+          </Table.ColumnHeader>
+          <Table.ColumnHeader sortable sortKey="beskrivelse">
+            Beskrivelse
+          </Table.ColumnHeader>
+          <Table.ColumnHeader>Prioritet</Table.ColumnHeader>
+          <Table.ColumnHeader>Settes manuelt</Table.ColumnHeader>
+          <Table.ColumnHeader>Kode arves til</Table.ColumnHeader>
+          <Table.ColumnHeader>Kan manuelt endres til</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {props.data?.map((row, idx) => (
+        {sortedData.map((row, idx) => (
           <Table.Row key={idx}>
             <Table.DataCell>{row.kodeVentestatus}</Table.DataCell>
             <Table.DataCell>{row.beskrivelse}</Table.DataCell>
