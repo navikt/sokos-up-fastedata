@@ -4,7 +4,7 @@ import { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
-  BACKEND_API: "/oppdrag-api/api/v1",
+  BACKEND_API: "/oppdrag-api/api/v1/fastedata",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {

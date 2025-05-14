@@ -17,7 +17,7 @@ export const VentekriterierPage = () => {
           level="1"
           className={styles["ventekriterier-heading"]}
         >
-          Faste data – Ventekriterier
+          Faste data - Ventekriterier
         </Heading>
         <BackHomeBox />
         <VentekriterierTable data={data} />

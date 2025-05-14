@@ -1,12 +1,11 @@
-import React from "react";
-import { Heading } from "@navikt/ds-react";
+import { Heading, Loader } from "@navikt/ds-react";
 import { useGetVentestatuskoder } from "../api/apiService";
 import VentestatuskoderTable from "../components/VentestatuskoderTable";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import styles from "../styles/Ventestatuskoder.module.css";
 
 export const VentestatuskoderPage = () => {
-  const { data } = useGetVentestatuskoder();
+  const { data, isLoading } = useGetVentestatuskoder();
 
   return (
     <div className={styles["container"]}>
@@ -17,9 +16,10 @@ export const VentestatuskoderPage = () => {
           level="1"
           className={styles["ventestatuskoder-heading"]}
         >
-          Faste data – Ventestatuskoder
+          Faste data - Ventestatuskoder
         </Heading>
         <BackHomeBox />
+        {isLoading && <Loader size="large" />}
         <VentestatuskoderTable data={data} />
       </div>
     </div>

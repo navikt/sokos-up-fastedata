@@ -1,7 +1,11 @@
 import { HttpResponse, http } from "msw";
 
+const baseUrl = "/oppdrag-api/api/v1/fastedata";
+const ventestatuskoderUrl = `${baseUrl}/ventestatuskoder`;
+const ventekriterierUrl = `${baseUrl}/ventekriterier`;
+
 export const handlers = [
-  http.get("/oppdrag-api/api/v1/ventekriterier", () => {
+  http.get(ventekriterierUrl, () => {
     return HttpResponse.json(
       [
         {
@@ -35,7 +39,7 @@ export const handlers = [
       { status: 200 },
     );
   }),
-  http.get("/oppdrag-api/api/v1/ventestatuskoder", () => {
+  http.get(ventestatuskoderUrl, () => {
     return HttpResponse.json(
       [
         {
