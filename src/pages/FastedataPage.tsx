@@ -36,14 +36,14 @@ export default function FastedataPage() {
       <div className={styles["content-wrapper"]}>
         <Heading
           level="1"
-          size="large"
+          size="medium"
           spacing
           className={styles["fastedata-heading"]}
         >
           Faste data
         </Heading>
 
-        <Heading level="2" size="medium" spacing>
+        <Heading level="2" size="small" spacing>
           Oppdrag
         </Heading>
 
