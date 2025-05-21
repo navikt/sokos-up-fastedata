@@ -23,7 +23,6 @@ spec:
   ingresses:
     - "https://utbetalingsportalen.intern.dev.nav.no/sokos-up-fastedata"
     - "https://utbetalingsportalen.ansatt.dev.nav.no/sokos-up-fastedata"
-    - "https://sokos-utbetalingsportalen-astro.intern.dev.nav.no/sokos-up-fastedata"
   resources:
     limits:
       cpu: "3"
