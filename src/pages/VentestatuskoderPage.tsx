@@ -3,19 +3,19 @@ import { Alert, Heading } from "@navikt/ds-react";
 import { useGetVentestatuskoder } from "../api/apiService";
 import VentestatuskoderTable from "../components/VentestatuskoderTable";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
-import styles from "../styles/Ventestatuskoder.module.css";
+import commonstyles from "../styles/Commonstyles.module.css";
 
 export const VentestatuskoderPage = () => {
   const { data, error } = useGetVentestatuskoder();
 
   return (
-    <div className={styles["container"]}>
-      <div className={styles["content-wrapper"]}>
+    <div className={commonstyles["container"]}>
+      <div className={commonstyles["content-wrapper"]}>
         <Heading
           spacing
           size="medium"
           level="1"
-          className={styles["ventestatuskoder-heading"]}
+          className={commonstyles["page-heading"]}
         >
           Faste data – Ventestatuskoder
         </Heading>
