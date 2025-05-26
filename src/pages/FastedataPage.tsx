@@ -1,48 +1,21 @@
 import { Heading } from "@navikt/ds-react";
 import AppCard from "../components/appcard/AppCard";
+import commonstyles from "../styles/Commonstyles.module.css";
 import styles from "../styles/Fastedata.module.css";
-
-const appList = [
-  {
-    title: "Faggrupper",
-    description: "Oppslag og forklaring på faggrupper.",
-    route: "",
-  },
-  {
-    title: "Fagområder",
-    description: "Fagområder og motregningsgrupper",
-    route: "",
-  },
-  {
-    title: "Klassekoder",
-    description: "Klassekoder med tilhørende kontonummer",
-    route: "",
-  },
-  {
-    title: "Ventestatuskoder",
-    description: "Forklaring og oppslag",
-    route: "ventestatuskoder",
-  },
-  {
-    title: "Ventekriterier",
-    description: "Forklaring og oppslag",
-    route: "ventekriterier",
-  },
-];
+import { appList } from "../util/constant";
 
 export default function FastedataPage() {
   return (
-    <div className={styles["container"]}>
+    <div className={commonstyles["container"]}>
       <div className={styles["content-wrapper"]}>
         <Heading
           level="1"
           size="medium"
           spacing
-          className={styles["fastedata-heading"]}
+          className={commonstyles["page-heading"]}
         >
           Faste data
         </Heading>
-
         <Heading level="2" size="small" spacing>
           Oppdrag
         </Heading>

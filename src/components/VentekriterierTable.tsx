@@ -9,7 +9,7 @@ type Props = {
 
 export const VentekriterierTable = (props: Props) => {
   return (
-    <Table zebraStripes size="small" className="ventekriterier-table">
+    <Table zebraStripes size="small">
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Kode Faggruppe</Table.HeaderCell>
