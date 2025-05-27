@@ -1,8 +1,8 @@
 import React from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
-import FagomraadeTable from "../components/FagomraadeTable";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
+import FagomraadeTable from "../components/tables/FagomraadeTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {

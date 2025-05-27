@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Table } from "@navikt/ds-react";
-import { Ventestatuskoder } from "../types/Ventestatuskoder";
+import { Ventestatuskoder } from "../../types/Ventestatuskoder";
 
 type Props = {
   data?: Ventestatuskoder[];
