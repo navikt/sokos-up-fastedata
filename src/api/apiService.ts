@@ -1,4 +1,5 @@
 import useSWRImmutable from "swr/immutable";
+import { Fagomraader } from "../types/Fagomraader";
 import { Ventekriterier } from "../types/Ventekriterier";
 import { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
@@ -33,6 +34,18 @@ export function useGetVentestatuskoder() {
     `/ventestatuskoder`,
     swrConfig<Ventestatuskoder[]>((url) =>
       axiosFetcher<Ventestatuskoder[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+
+  return { data, error, isLoading };
+}
+
+export function useGetFagomraader() {
+  const { data, error, isValidating } = useSWRImmutable<Fagomraader[]>(
+    `/fagomraader`,
+    swrConfig<Fagomraader[]>((url) =>
+      axiosFetcher<Fagomraader[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;
