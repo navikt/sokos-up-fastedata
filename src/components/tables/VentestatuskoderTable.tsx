@@ -8,16 +8,15 @@ type Props = {
 };
 
 const VentestatuskoderTable = ({ data = [] }: Props) => {
-  const [sortState, setSortState] = useState<SortState<Ventestatuskoder>>({
-    orderBy: "kodeVentestatus",
-    direction: "ascending",
-  });
+  const [sortState, setSortState] = useState<
+    SortState<Ventestatuskoder> | undefined
+  >();
 
   const handleSortChange = (sortKey: string) => {
     const key = sortKey as keyof Ventestatuskoder;
 
     setSortState((prev) => {
-      const isSame = prev.orderBy === key;
+      const isSame = prev?.orderBy === key;
       const newDirection =
         isSame && prev.direction === "ascending" ? "descending" : "ascending";
       return { orderBy: key, direction: newDirection };
