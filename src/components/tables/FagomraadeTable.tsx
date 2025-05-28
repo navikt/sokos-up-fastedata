@@ -3,25 +3,48 @@ import { ChevronDownIcon } from "@navikt/aksel-icons";
 import { Button, Table } from "@navikt/ds-react";
 import styles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
+import { SortState, sortData } from "../../util/sortUtil";
 
 interface Props {
   data?: Fagomraader[];
 }
 
-export const FagomraadeTable = ({ data }: Props) => {
+export const FagomraadeTable = ({ data = [] }: Props) => {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+  const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
+
+  const sortedData = sortData(data, sort);
 
   const handleExpand = (idx: number) => {
     setExpandedRow(expandedRow === idx ? null : idx);
   };
 
   return (
-    <Table zebraStripes size="small">
+    <Table
+      zebraStripes
+      size="small"
+      sort={sort}
+      onSortChange={(key) => {
+        setSort((prev) => {
+          const orderBy = key as keyof Fagomraader;
+          const isSame = prev?.orderBy === orderBy;
+          const direction =
+            isSame && prev?.direction === "ascending"
+              ? "descending"
+              : "ascending";
+          return { orderBy, direction };
+        });
+      }}
+    >
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Detaljer</Table.HeaderCell>
-          <Table.HeaderCell>Kode</Table.HeaderCell>
-          <Table.HeaderCell>Navn</Table.HeaderCell>
+          <Table.ColumnHeader sortKey="kodeFagomraade" sortable>
+            Kode
+          </Table.ColumnHeader>
+          <Table.ColumnHeader sortKey="navnFagomraade" sortable>
+            Navn
+          </Table.ColumnHeader>
           <Table.HeaderCell>Motregningsgruppe</Table.HeaderCell>
           <Table.HeaderCell>Korrigeringsårsak</Table.HeaderCell>
           <Table.HeaderCell>Bilagstype</Table.HeaderCell>
@@ -29,7 +52,7 @@ export const FagomraadeTable = ({ data }: Props) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {data?.map((row, idx) => (
+        {sortedData.map((row, idx) => (
           <React.Fragment key={idx}>
             <Table.Row>
               <Table.DataCell>
