@@ -1,46 +1,30 @@
 import React, { useState } from "react";
 import { Table } from "@navikt/ds-react";
 import { Ventestatuskoder } from "../../types/Ventestatuskoder";
+import { SortState, sortData } from "../../util/sortUtil";
 
 type Props = {
   data?: Ventestatuskoder[];
 };
 
 const VentestatuskoderTable = ({ data = [] }: Props) => {
-  const [sortState, setSortState] = useState({
+  const [sortState, setSortState] = useState<SortState<Ventestatuskoder>>({
     orderBy: "kodeVentestatus",
-    direction: "ascending" as "ascending" | "descending",
+    direction: "ascending",
   });
 
   const handleSortChange = (sortKey: string) => {
+    const key = sortKey as keyof Ventestatuskoder;
+
     setSortState((prev) => {
-      if (prev.orderBy === sortKey) {
-        return {
-          ...prev,
-          direction:
-            prev.direction === "ascending" ? "descending" : "ascending",
-        };
-      }
-      return { orderBy: sortKey, direction: "ascending" };
+      const isSame = prev.orderBy === key;
+      const newDirection =
+        isSame && prev.direction === "ascending" ? "descending" : "ascending";
+      return { orderBy: key, direction: newDirection };
     });
   };
 
-  const sortedData = [...data].sort((a, b) => {
-    const aVal = a[sortState.orderBy as keyof Ventestatuskoder];
-    const bVal = b[sortState.orderBy as keyof Ventestatuskoder];
-
-    if (typeof aVal === "string" && typeof bVal === "string") {
-      return sortState.direction === "ascending"
-        ? aVal.localeCompare(bVal)
-        : bVal.localeCompare(aVal);
-    }
-
-    if (typeof aVal === "number" && typeof bVal === "number") {
-      return sortState.direction === "ascending" ? aVal - bVal : bVal - aVal;
-    }
-
-    return 0;
-  });
+  const sortedData = sortData(data, sortState);
 
   return (
     <Table
