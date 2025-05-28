@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ChevronDownIcon } from "@navikt/aksel-icons";
-import { Button, Table } from "@navikt/ds-react";
+import { BodyLong, Button, Modal, Table } from "@navikt/ds-react";
 import styles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { SortState, sortData } from "../../util/sortUtil";
@@ -12,6 +12,8 @@ interface Props {
 export const FagomraadeTable = ({ data = [] }: Props) => {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
+  const korrModalRefs = useRef<(HTMLDialogElement | null)[]>([]);
+  const bilagModalRefs = useRef<(HTMLDialogElement | null)[]>([]);
 
   const sortedData = sortData(data, sort);
 
@@ -84,18 +86,56 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
                   variant="secondary"
                   size="xsmall"
                   disabled={!row.korraarsakFinnes}
+                  onClick={() => korrModalRefs.current[idx]?.showModal()}
                 >
                   Korrigeringsårsak
                 </Button>
+                <Modal
+                  ref={(el) => (korrModalRefs.current[idx] = el)}
+                  header={{ heading: "Korrigeringsårsak" }}
+                >
+                  <Modal.Body>
+                    <BodyLong>
+                      Lorum ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed
+                      <b>{row.kodeFagomraade}</b>.
+                    </BodyLong>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={() => korrModalRefs.current[idx]?.close()}>
+                      Lukk
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </Table.DataCell>
               <Table.DataCell>
                 <Button
                   variant="secondary"
                   size="xsmall"
                   disabled={!row.bilagstypeFinnes}
+                  onClick={() => bilagModalRefs.current[idx]?.showModal()}
                 >
                   Bilagstype
                 </Button>
+                <Modal
+                  ref={(el) => (bilagModalRefs.current[idx] = el)}
+                  header={{ heading: "Bilagstype" }}
+                >
+                  <Modal.Body>
+                    <BodyLong>
+                      Lorum ipsum dolor sit amet, consectetur adipiscing elit.
+                      Sed
+                      <b>{row.kodeFagomraade}</b>.
+                    </BodyLong>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      onClick={() => bilagModalRefs.current[idx]?.close()}
+                    >
+                      Lukk
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </Table.DataCell>
               <Table.DataCell>
                 <Button
