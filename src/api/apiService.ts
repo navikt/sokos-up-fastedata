@@ -1,4 +1,5 @@
 import useSWRImmutable from "swr/immutable";
+import { Bilagstype } from "../types/Bilagstype";
 import { Fagomraader } from "../types/Fagomraader";
 import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import { Ventekriterier } from "../types/Ventekriterier";
@@ -14,7 +15,7 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
     fetcher,
     suspense: true,
     revalidateOnFocus: false,
-    refreshInterval: 600000,
+    refreshInterval: 600_000,
   };
 }
 
@@ -26,7 +27,6 @@ export function useGetVentekriterier() {
     ),
   );
   const isLoading = (!error && !data) || isValidating;
-
   return { data, error, isLoading };
 }
 
@@ -38,7 +38,6 @@ export function useGetVentestatuskoder() {
     ),
   );
   const isLoading = (!error && !data) || isValidating;
-
   return { data, error, isLoading };
 }
 
@@ -50,7 +49,6 @@ export function useGetFagomraader() {
     ),
   );
   const isLoading = (!error && !data) || isValidating;
-
   return { data, error, isLoading };
 }
 
@@ -63,8 +61,17 @@ export function useGetKorrigeringsaarsaker(kodeFagomraade: string) {
       axiosFetcher<Korrigeringsaarsak[]>(BASE_URI.BACKEND_API, url),
     ),
   );
-
   const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
 
+export function useGetBilagstyper(kodeFagomraade: string) {
+  const { data, error, isValidating } = useSWRImmutable<Bilagstype[]>(
+    kodeFagomraade ? `/fagomraader/${kodeFagomraade}/bilagstyper` : null,
+    swrConfig<Bilagstype[]>((url) =>
+      axiosFetcher<Bilagstype[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
   return { data, error, isLoading };
 }

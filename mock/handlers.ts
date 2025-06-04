@@ -1,4 +1,5 @@
 import { HttpResponse, http } from "msw";
+import { bilagstyperMAAP } from "./data/bilagstyper";
 import { fagomraaderList } from "./data/fagomraader";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { ventekriterierList } from "./data/ventekriterier";
@@ -24,6 +25,15 @@ export const handlers = [
 
     if (kode === "AAP") {
       return HttpResponse.json(korrigeringsaarsakerAAP, { status: 200 });
+    }
+
+    return HttpResponse.json([], { status: 200 });
+  }),
+  http.get(`${fagomraaderUrl}/:kode/bilagstyper`, ({ params }) => {
+    const { kode } = params;
+
+    if (kode === "MAAP") {
+      return HttpResponse.json(bilagstyperMAAP, { status: 200 });
     }
 
     return HttpResponse.json([], { status: 200 });

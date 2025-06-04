@@ -20,9 +20,9 @@ export const fagomraaderList: Fagomraader[] = [
   {
     antAttestanter: 1,
     anviser: "N",
-    bilagstypeFinnes: false,
+    bilagstypeFinnes: true,
     klassekodeFinnes: false,
-    kodeFagomraade: "AAPARENA",
+    kodeFagomraade: "MAAP",
     kodeFaggruppe: "ARBYT",
     korraarsakFinnes: false,
     kodeMotregningsgruppe: "MAAP",
@@ -36,7 +36,7 @@ export const fagomraaderList: Fagomraader[] = [
   {
     antAttestanter: 1,
     anviser: "",
-    bilagstypeFinnes: false,
+    bilagstypeFinnes: true,
     klassekodeFinnes: false,
     kodeFagomraade: "AGPERM",
     kodeFaggruppe: "KORONA",
@@ -52,7 +52,7 @@ export const fagomraaderList: Fagomraader[] = [
   {
     antAttestanter: 1,
     anviser: "",
-    bilagstypeFinnes: true,
+    bilagstypeFinnes: false,
     klassekodeFinnes: true,
     kodeFagomraade: "BA",
     kodeFaggruppe: "BA",
@@ -84,7 +84,7 @@ export const fagomraaderList: Fagomraader[] = [
   {
     antAttestanter: 1,
     anviser: "N",
-    bilagstypeFinnes: true,
+    bilagstypeFinnes: false,
     klassekodeFinnes: false,
     kodeFagomraade: "BARNEPE",
     kodeFaggruppe: "PEN",
