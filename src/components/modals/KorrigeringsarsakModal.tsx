@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Modal, Table } from "@navikt/ds-react";
 import { useGetKorrigeringsaarsaker } from "../../api/apiService";
 
@@ -9,16 +9,6 @@ interface Props {
 
 const KorrigeringsarsakModal = ({ refEl, kodeFagomraade }: Props) => {
   const { data } = useGetKorrigeringsaarsaker(kodeFagomraade);
-
-  useEffect(() => {
-    const modal = refEl.current;
-    if (!modal) return;
-
-    const forceRevalidate = () => {};
-
-    modal.addEventListener("show", forceRevalidate);
-    return () => modal.removeEventListener("show", forceRevalidate);
-  }, [refEl]);
 
   return (
     <Modal

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Modal, Table } from "@navikt/ds-react";
 import { useGetBilagstyper } from "../../api/apiService";
 
@@ -9,18 +9,6 @@ interface Props {
 
 const BilagstypeModal = ({ refEl, kodeFagomraade }: Props) => {
   const { data } = useGetBilagstyper(kodeFagomraade);
-
-  useEffect(() => {
-    const modal = refEl.current;
-    if (!modal) return;
-
-    const handleShow = () => {
-      // No-op: SWR fetches automatically by key
-    };
-
-    modal.addEventListener("show", handleShow);
-    return () => modal.removeEventListener("show", handleShow);
-  }, [refEl]);
 
   return (
     <Modal
