@@ -1,5 +1,6 @@
 import { HttpResponse, http } from "msw";
 import { fagomraaderList } from "./data/fagomraader";
+import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { ventekriterierList } from "./data/ventekriterier";
 import { ventestatuskoderList } from "./data/ventestatuskoder";
 
@@ -17,5 +18,14 @@ export const handlers = [
   }),
   http.get(fagomraaderUrl, () => {
     return HttpResponse.json(fagomraaderList, { status: 200 });
+  }),
+  http.get(`${fagomraaderUrl}/:kode/korrigeringsaarsaker`, ({ params }) => {
+    const { kode } = params;
+
+    if (kode === "AAP") {
+      return HttpResponse.json(korrigeringsaarsakerAAP, { status: 200 });
+    }
+
+    return HttpResponse.json([], { status: 200 });
   }),
 ];

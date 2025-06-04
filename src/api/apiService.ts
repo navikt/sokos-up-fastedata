@@ -1,5 +1,6 @@
 import useSWRImmutable from "swr/immutable";
 import { Fagomraader } from "../types/Fagomraader";
+import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import { Ventekriterier } from "../types/Ventekriterier";
 import { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
@@ -48,6 +49,21 @@ export function useGetFagomraader() {
       axiosFetcher<Fagomraader[]>(BASE_URI.BACKEND_API, url),
     ),
   );
+  const isLoading = (!error && !data) || isValidating;
+
+  return { data, error, isLoading };
+}
+
+export function useGetKorrigeringsaarsaker(kodeFagomraade: string) {
+  const { data, error, isValidating } = useSWRImmutable<Korrigeringsaarsak[]>(
+    kodeFagomraade
+      ? `/fagomraader/${kodeFagomraade}/korrigeringsaarsaker`
+      : null,
+    swrConfig<Korrigeringsaarsak[]>((url) =>
+      axiosFetcher<Korrigeringsaarsak[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+
   const isLoading = (!error && !data) || isValidating;
 
   return { data, error, isLoading };
