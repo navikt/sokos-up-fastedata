@@ -4,6 +4,7 @@ import { Button, Table } from "@navikt/ds-react";
 import styles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { SortState, sortData } from "../../util/sortUtil";
+import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
 import BilagstypeModal from "../modals/BilagstypeModal";
 import KorrigeringsarsakModal from "../modals/KorrigeringsarsakModal";
 
@@ -11,10 +12,28 @@ interface Props {
   data?: Fagomraader[];
 }
 
+const ModalButton = ({
+  label,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) => (
+  <Button
+    variant="secondary"
+    size="xsmall"
+    disabled={disabled}
+    onClick={onClick}
+  >
+    {label}
+  </Button>
+);
+
 export const FagomraadeTable = ({ data = [] }: Props) => {
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
-
   const [korrModalRefs] = useState(
     () => new Map<number, React.RefObject<HTMLDialogElement>>(),
   );
@@ -24,9 +43,8 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
 
   const sortedData = sortData(data, sort);
 
-  const handleExpand = (idx: number) => {
+  const toggleExpand = (idx: number) =>
     setExpandedRow(expandedRow === idx ? null : idx);
-  };
 
   return (
     <Table
@@ -36,9 +54,8 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
       onSortChange={(key) => {
         setSort((prev) => {
           const orderBy = key as keyof Fagomraader;
-          const isSame = prev?.orderBy === orderBy;
           const direction =
-            isSame && prev?.direction === "ascending"
+            prev?.orderBy === orderBy && prev?.direction === "ascending"
               ? "descending"
               : "ascending";
           return { orderBy, direction };
@@ -62,13 +79,10 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
       </Table.Header>
       <Table.Body>
         {sortedData.map((row, idx) => {
-          // Ensure a stable ref exists for this row
-          if (!korrModalRefs.has(idx)) {
-            korrModalRefs.set(idx, React.createRef<HTMLDialogElement>());
-          }
-          if (!bilagModalRefs.has(idx)) {
-            bilagModalRefs.set(idx, React.createRef<HTMLDialogElement>());
-          }
+          if (!korrModalRefs.has(idx))
+            korrModalRefs.set(idx, React.createRef());
+          if (!bilagModalRefs.has(idx))
+            bilagModalRefs.set(idx, React.createRef());
 
           const korrRef = korrModalRefs.get(idx)!;
           const bilagRef = bilagModalRefs.get(idx)!;
@@ -78,9 +92,9 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
               <Table.Row>
                 <Table.DataCell>
                   <Button
-                    variant="tertiary"
+                    variant={expandedRow === idx ? "primary" : "tertiary"}
                     size="xsmall"
-                    onClick={() => handleExpand(idx)}
+                    onClick={() => toggleExpand(idx)}
                     aria-expanded={expandedRow === idx}
                     icon={
                       <ChevronDownIcon
@@ -101,28 +115,22 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
                 <Table.DataCell>{row.navnFagomraade}</Table.DataCell>
                 <Table.DataCell>{row.kodeMotregningsgruppe}</Table.DataCell>
                 <Table.DataCell>
-                  <Button
-                    variant="secondary"
-                    size="xsmall"
+                  <ModalButton
+                    label="Korrigeringsårsak"
                     disabled={!row.korraarsakFinnes}
                     onClick={() => korrRef.current?.showModal()}
-                  >
-                    Korrigeringsårsak
-                  </Button>
+                  />
                   <KorrigeringsarsakModal
                     refEl={korrRef}
                     kodeFagomraade={row.kodeFagomraade}
                   />
                 </Table.DataCell>
                 <Table.DataCell>
-                  <Button
-                    variant="secondary"
-                    size="xsmall"
+                  <ModalButton
+                    label="Bilagstype"
                     disabled={!row.bilagstypeFinnes}
                     onClick={() => bilagRef.current?.showModal()}
-                  >
-                    Bilagstype
-                  </Button>
+                  />
                   <BilagstypeModal
                     refEl={bilagRef}
                     kodeFagomraade={row.kodeFagomraade}
@@ -141,46 +149,7 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
               {expandedRow === idx && (
                 <Table.Row>
                   <Table.DataCell colSpan={7}>
-                    <div className={styles["expandable-section"]}>
-                      <div className={styles["expandable-section-columns"]}>
-                        <div className={styles["expandable-section-column"]}>
-                          <div>
-                            <b>Kode:</b> {row.kodeFagomraade}
-                          </div>
-                          <div>
-                            <b>Antall attestanter:</b> {row.antAttestanter}
-                          </div>
-                          <div>
-                            <b>Sjekk offnr ID:</b>{" "}
-                            {row.sjekkOffId ? "Ja" : "Nei"}
-                          </div>
-                        </div>
-                        <div className={styles["expandable-section-column"]}>
-                          <div>
-                            <b>Navn:</b> {row.navnFagomraade}
-                          </div>
-                          <div>
-                            <b>Maks aktive oppdrag:</b> {row.maksAktOppdrag}
-                          </div>
-                          <div>
-                            <b>Anviser:</b> {row.anviser ? "Ja" : "Nei"}
-                          </div>
-                        </div>
-                        <div className={styles["expandable-section-column"]}>
-                          <div>
-                            <b>Faggruppe:</b> {row.kodeFaggruppe}
-                          </div>
-                          <div>
-                            <b>TPS distribusjon:</b>{" "}
-                            {row.tpsDistribusjon ? "Ja" : "Nei"}
-                          </div>
-                          <div>
-                            <b>Sjekk mot TPS:</b>{" "}
-                            {row.sjekkMotTps ? "Ja" : "Nei"}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <FagomraaderExpandableSection row={row} />
                   </Table.DataCell>
                 </Table.Row>
               )}
