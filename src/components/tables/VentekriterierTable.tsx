@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "@navikt/ds-react";
-import { Ventekriterier } from "../types/Ventekriterier";
-import { formatNumber } from "../util/tallUtil";
+import { Ventekriterier } from "../../types/Ventekriterier";
+import { formatNumber } from "../../util/tallUtil";
 
 type Props = {
   data?: Ventekriterier[];

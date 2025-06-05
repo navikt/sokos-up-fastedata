@@ -1,8 +1,8 @@
 import React from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetVentestatuskoder } from "../api/apiService";
-import VentestatuskoderTable from "../components/VentestatuskoderTable";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
+import VentestatuskoderTable from "../components/tables/VentestatuskoderTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
 export const VentestatuskoderPage = () => {

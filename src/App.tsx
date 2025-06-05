@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/notfoundpage/NotFound";
 import FagomraaderPage from "./pages/FagomraaderPage";
 import FastedataPage from "./pages/FastedataPage";
 import VentekriterierPage from "./pages/VentekriterierPage";
