@@ -1,15 +1,24 @@
 import React from "react";
-import styles from "../../styles/Commonstyles.module.css";
+import { Table } from "@navikt/ds-react";
 import { Fagomraader } from "../../types/Fagomraader";
 
 interface Props {
   row: Fagomraader;
+  children: React.ReactNode;
 }
 
-const FagomraaderExpandableSection = ({ row }: Props) => (
-  <div className={styles["expandable-section"]}>
-    <div className={styles["expandable-section-columns"]}>
-      <div className={styles["expandable-section-column"]}>
+const FagomraaderExpandableSection = ({ row, children }: Props) => (
+  <Table.ExpandableRow
+    content={
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr", // 3 columns
+          gap: "1rem",
+          padding: "1rem",
+          borderRadius: "8px",
+        }}
+      >
         <div>
           <b>Kode:</b> {row.kodeFagomraade}
         </div>
@@ -19,8 +28,6 @@ const FagomraaderExpandableSection = ({ row }: Props) => (
         <div>
           <b>Sjekk offnr ID:</b> {row.sjekkOffId ? "Ja" : "Nei"}
         </div>
-      </div>
-      <div className={styles["expandable-section-column"]}>
         <div>
           <b>Navn:</b> {row.navnFagomraade}
         </div>
@@ -30,8 +37,6 @@ const FagomraaderExpandableSection = ({ row }: Props) => (
         <div>
           <b>Anviser:</b> {row.anviser ? "Ja" : "Nei"}
         </div>
-      </div>
-      <div className={styles["expandable-section-column"]}>
         <div>
           <b>Faggruppe:</b> {row.kodeFaggruppe}
         </div>
@@ -42,8 +47,10 @@ const FagomraaderExpandableSection = ({ row }: Props) => (
           <b>Sjekk mot TPS:</b> {row.sjekkMotTps ? "Ja" : "Nei"}
         </div>
       </div>
-    </div>
-  </div>
+    }
+  >
+    {children}
+  </Table.ExpandableRow>
 );
 
 export default FagomraaderExpandableSection;
