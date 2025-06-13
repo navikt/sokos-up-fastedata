@@ -15,3 +15,29 @@
   width: 100%;
   padding: 2rem;
 }
+
+.expandable-section {
+  padding: 2rem;
+}
+
+.expandable-section-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.expandable-section-column {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.expand-toggle-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.expand-toggle-icon-rotated {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease-in-out;
+}
