@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
+import FagomraaderFilter from "../components/fagomraaderfilter/FagomraaderFilter";
 import FagomraadeTable from "../components/tables/FagomraadeTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {
   const { data, error } = useGetFagomraader();
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const handleSearch = (query: string) => {
+    setFilters((prev) => [...prev, query]);
+  };
+
+  const handleRemoveFilter = (filter: string) => {
+    setFilters((prev) => prev.filter((f) => f !== filter));
+  };
 
   return (
     <div className={commonstyles["container"]}>
@@ -21,6 +31,12 @@ export const FagomraaderPage = () => {
         </Heading>
 
         <BackHomeBox />
+
+        <FagomraaderFilter
+          activeFilters={filters}
+          onSearch={handleSearch}
+          onRemoveFilter={handleRemoveFilter}
+        />
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
