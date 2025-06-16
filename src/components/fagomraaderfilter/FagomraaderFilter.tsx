@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { XMarkIcon } from "@navikt/aksel-icons";
-import { BodyShort, Search, Tag } from "@navikt/ds-react";
+import { useState } from "react";
+import { BodyShort, Chips, Search } from "@navikt/ds-react";
 import styles from "./FagomraaderFilter.module.css";
 
 interface Props {
@@ -17,8 +16,9 @@ const FagomraaderFilter = ({
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = () => {
-    if (inputValue.trim()) {
-      onSearch(inputValue.trim());
+    const trimmed = inputValue.trim();
+    if (trimmed) {
+      onSearch(trimmed);
       setInputValue("");
     }
   };
@@ -32,7 +32,7 @@ const FagomraaderFilter = ({
       <div className={styles["search-container"]}>
         <Search
           label="Søk"
-          size="small" // Updated to use the small variant
+          size="small"
           value={inputValue}
           onChange={(val) => setInputValue(val)}
           onSearchClick={handleSearch}
@@ -42,19 +42,19 @@ const FagomraaderFilter = ({
         />
       </div>
 
-      <div className={styles["filter-tags"]}>
-        {activeFilters.map((filter) => (
-          <Tag
-            key={filter}
-            variant="alt2"
-            size="medium"
-            icon={<XMarkIcon aria-hidden />}
-            onClick={() => onRemoveFilter(filter)}
-          >
-            {filter}
-          </Tag>
-        ))}
-      </div>
+      {activeFilters.length > 0 && (
+        <Chips className={styles["filter-tags"]}>
+          {activeFilters.map((filter) => (
+            <Chips.Removable
+              key={filter}
+              onClick={() => onRemoveFilter(filter)}
+              className={styles["custom-chip"]}
+            >
+              {filter}
+            </Chips.Removable>
+          ))}
+        </Chips>
+      )}
     </div>
   );
 };
