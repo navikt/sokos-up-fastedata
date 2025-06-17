@@ -17,7 +17,6 @@ export const FagomraaderPage = () => {
   };
 
   if (isLoading) return <ContentLoader />;
-
   return (
     <div className={commonstyles["container"]}>
       <div className={commonstyles["content-wrapper"]}>
