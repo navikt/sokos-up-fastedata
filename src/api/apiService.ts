@@ -51,12 +51,9 @@ export function useGetFagomraader() {
   return { data, error, isLoading };
 }
 
-export function useGetKorrigeringsaarsaker(
-  kodeFagomraade: string,
-  enabled: boolean = true,
-) {
+export function useGetKorrigeringsaarsaker(kodeFagomraade: string) {
   const { data, error, isValidating } = useSWRImmutable<Korrigeringsaarsak[]>(
-    enabled && kodeFagomraade
+    kodeFagomraade
       ? `/fagomraader/${kodeFagomraade}/korrigeringsaarsaker`
       : null,
     swrConfig<Korrigeringsaarsak[]>((url) =>
@@ -67,14 +64,9 @@ export function useGetKorrigeringsaarsaker(
   return { data, error, isLoading };
 }
 
-export function useGetBilagstyper(
-  kodeFagomraade: string,
-  enabled: boolean = true,
-) {
+export function useGetBilagstyper(kodeFagomraade: string) {
   const { data, error, isValidating } = useSWRImmutable<Bilagstype[]>(
-    enabled && kodeFagomraade
-      ? `/fagomraader/${kodeFagomraade}/bilagstyper`
-      : null,
+    kodeFagomraade ? `/fagomraader/${kodeFagomraade}/bilagstyper` : null,
     swrConfig<Bilagstype[]>((url) =>
       axiosFetcher<Bilagstype[]>(BASE_URI.BACKEND_API, url),
     ),

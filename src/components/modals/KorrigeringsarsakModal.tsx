@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
-import { Alert, Button, Loader, Modal, Table } from "@navikt/ds-react";
+import { Alert, Button, Modal, Table } from "@navikt/ds-react";
 import { useGetKorrigeringsaarsaker } from "../../api/apiService";
-import commonstyles from "../../styles/Commonstyles.module.css";
 
 interface Props {
   kodeFagomraade: string;
@@ -15,20 +14,18 @@ const KorrigeringsarsakModal = ({
   disabled,
 }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shouldFetch, setShouldFetch] = useState(false);
 
-  const { data, error, isLoading } = useGetKorrigeringsaarsaker(
-    kodeFagomraade,
-    isModalOpen,
+  const { data, error } = useGetKorrigeringsaarsaker(
+    shouldFetch ? kodeFagomraade : "",
   );
 
   const handleClick = () => {
-    setIsModalOpen(true);
+    setShouldFetch(true);
     ref.current?.showModal();
   };
 
   const handleClose = () => {
-    setIsModalOpen(false);
     ref.current?.close();
   };
 
@@ -52,11 +49,7 @@ const KorrigeringsarsakModal = ({
         onClose={handleClose}
       >
         <Modal.Body>
-          {isLoading ? (
-            <div className={commonstyles["modal-loader"]}>
-              <Loader size="large" title="Laster korrigeringsårsaker..." />
-            </div>
-          ) : error ? (
+          {error ? (
             <Alert variant="error">
               Feil ved lasting av korrigeringsårsaker
             </Alert>
