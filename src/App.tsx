@@ -17,15 +17,34 @@ import {
 export default function App() {
   return (
     <BrowserRouter basename={BASENAME}>
-      <Suspense fallback={<ContentLoader />}>
-        <Routes>
-          <Route path={ROOT} element={<FastedataPage />} />
-          <Route path={FAGOMRAADER} element={<FagomraaderPage />} />,
-          <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />,
-          <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />,
-          <Route path={"*"} element={<NotFound />} />,
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path={ROOT} element={<FastedataPage />} />
+        <Route
+          path={FAGOMRAADER}
+          element={
+            <Suspense fallback={<ContentLoader />}>
+              <FagomraaderPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path={VENTEKRITERIER}
+          element={
+            <Suspense fallback={<ContentLoader />}>
+              <VentekriterierPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path={VENTESTATUSKODER}
+          element={
+            <Suspense fallback={<ContentLoader />}>
+              <VentestatuskoderPage />
+            </Suspense>
+          }
+        />
+        <Route path={"*"} element={<NotFound />} />
+      </Routes>
     </BrowserRouter>
   );
 }
