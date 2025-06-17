@@ -7,7 +7,11 @@ export default function ContentLoader() {
     <div className={commonstyles["container"]}>
       <div className={commonstyles["content-wrapper"]}>
         <div className={styles["loader-container"]}>
-          <Loader size="2xlarge" title="Laster inn data..." />
+          <Loader
+            size="2xlarge"
+            variant="interaction"
+            title="Laster inn data..."
+          />
         </div>
       </div>
     </div>

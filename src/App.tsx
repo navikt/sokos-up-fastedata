@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import ContentLoader from "./components/content-loader/ContentLoader";
 import NotFound from "./components/notfoundpage/NotFound";
 import FagomraaderPage from "./pages/FagomraaderPage";
 import FastedataPage from "./pages/FastedataPage";
@@ -19,30 +17,9 @@ export default function App() {
     <BrowserRouter basename={BASENAME}>
       <Routes>
         <Route path={ROOT} element={<FastedataPage />} />
-        <Route
-          path={FAGOMRAADER}
-          element={
-            <Suspense fallback={<ContentLoader />}>
-              <FagomraaderPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path={VENTEKRITERIER}
-          element={
-            <Suspense fallback={<ContentLoader />}>
-              <VentekriterierPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path={VENTESTATUSKODER}
-          element={
-            <Suspense fallback={<ContentLoader />}>
-              <VentestatuskoderPage />
-            </Suspense>
-          }
-        />
+        <Route path={FAGOMRAADER} element={<FagomraaderPage />} />
+        <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />
+        <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />
         <Route path={"*"} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
