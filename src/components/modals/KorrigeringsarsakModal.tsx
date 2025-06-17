@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
-import { Button, Modal, Table } from "@navikt/ds-react";
+import { useRef, useState } from "react";
+import { Alert, Button, Loader, Modal, Table } from "@navikt/ds-react";
 import { useGetKorrigeringsaarsaker } from "../../api/apiService";
+import commonstyles from "../../styles/Commonstyles.module.css";
 
 interface Props {
   kodeFagomraade: string;
@@ -14,10 +15,21 @@ const KorrigeringsarsakModal = ({
   disabled,
 }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
-  const { data } = useGetKorrigeringsaarsaker(kodeFagomraade);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data, error, isLoading } = useGetKorrigeringsaarsaker(
+    kodeFagomraade,
+    isModalOpen,
+  );
 
   const handleClick = () => {
+    setIsModalOpen(true);
     ref.current?.showModal();
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    ref.current?.close();
   };
 
   return (
@@ -37,33 +49,44 @@ const KorrigeringsarsakModal = ({
           heading: `Faste data - Fagområde ${kodeFagomraade} - Korrigeringsårsak`,
         }}
         width={900}
+        onClose={handleClose}
       >
         <Modal.Body>
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell scope="col">Kode</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
-                <Table.HeaderCell scope="col">
-                  Medfører korrigering
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {data?.map((item) => (
-                <Table.Row key={item.kodeAarsakKorr}>
-                  <Table.DataCell>{item.kodeAarsakKorr}</Table.DataCell>
-                  <Table.DataCell>{item.beskrivelse}</Table.DataCell>
-                  <Table.DataCell>
-                    {item.medforerKorr ? "J" : "N"}
-                  </Table.DataCell>
+          {isLoading ? (
+            <div className={commonstyles["modal-loader"]}>
+              <Loader size="large" title="Laster korrigeringsårsaker..." />
+            </div>
+          ) : error ? (
+            <Alert variant="error">
+              Feil ved lasting av korrigeringsårsaker
+            </Alert>
+          ) : (
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell scope="col">Kode</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+                  <Table.HeaderCell scope="col">
+                    Medfører korrigering
+                  </Table.HeaderCell>
                 </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+              </Table.Header>
+              <Table.Body>
+                {data?.map((item) => (
+                  <Table.Row key={item.kodeAarsakKorr}>
+                    <Table.DataCell>{item.kodeAarsakKorr}</Table.DataCell>
+                    <Table.DataCell>{item.beskrivelse}</Table.DataCell>
+                    <Table.DataCell>
+                      {item.medforerKorr ? "J" : "N"}
+                    </Table.DataCell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button type="button" onClick={() => ref.current?.close()}>
+          <Button type="button" onClick={handleClose}>
             Lukk
           </Button>
         </Modal.Footer>
