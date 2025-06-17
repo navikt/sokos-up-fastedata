@@ -5,17 +5,14 @@ import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import FagomraaderFilter from "../components/fagomraaderfilter/FagomraaderFilter";
 import FagomraadeTable from "../components/tables/FagomraadeTable";
 import commonstyles from "../styles/Commonstyles.module.css";
+import { Fagomraader } from "../types/Fagomraader";
 
 export const FagomraaderPage = () => {
   const { data, error } = useGetFagomraader();
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filteredData, setFilteredData] = useState<Fagomraader[]>([]);
 
-  const handleSearch = (query: string) => {
-    setFilters((prev) => [...prev, query]);
-  };
-
-  const handleRemoveFilter = (filter: string) => {
-    setFilters((prev) => prev.filter((f) => f !== filter));
+  const handleFilter = (filtered: Fagomraader[]) => {
+    setFilteredData(filtered || []);
   };
 
   return (
@@ -32,16 +29,12 @@ export const FagomraaderPage = () => {
 
         <BackHomeBox />
 
-        <FagomraaderFilter
-          activeFilters={filters}
-          onSearch={handleSearch}
-          onRemoveFilter={handleRemoveFilter}
-        />
+        {data && <FagomraaderFilter data={data} onFilter={handleFilter} />}
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
-        ) : data && data.length > 0 ? (
-          <FagomraadeTable data={data} />
+        ) : filteredData.length > 0 ? (
+          <FagomraadeTable data={filteredData} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}

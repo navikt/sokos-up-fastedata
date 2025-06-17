@@ -1,26 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BodyShort, Chips, Search } from "@navikt/ds-react";
+import { Fagomraader } from "../../types/Fagomraader";
 import styles from "./FagomraaderFilter.module.css";
 
 interface Props {
-  activeFilters: string[];
-  onSearch: (query: string) => void;
-  onRemoveFilter: (filter: string) => void;
+  data: Fagomraader[];
+  onFilter: (filteredData: Fagomraader[]) => void;
 }
 
-const FagomraaderFilter = ({
-  activeFilters,
-  onSearch,
-  onRemoveFilter,
-}: Props) => {
+const FagomraaderFilter = ({ data, onFilter }: Props) => {
   const [inputValue, setInputValue] = useState("");
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  useEffect(() => {
+    const filteredData = data.filter((item) =>
+      activeFilters.every(
+        (filter) =>
+          item.kodeFagomraade.toLowerCase().includes(filter.toLowerCase()) ||
+          item.navnFagomraade.toLowerCase().includes(filter.toLowerCase()),
+      ),
+    );
+    onFilter(filteredData);
+  }, [activeFilters, data, onFilter]);
 
   const handleSearch = () => {
     const trimmed = inputValue.trim();
-    if (trimmed) {
-      onSearch(trimmed);
+    if (trimmed && !activeFilters.includes(trimmed)) {
+      setActiveFilters((prev) => [...prev, trimmed]);
       setInputValue("");
     }
+  };
+
+  const handleRemoveFilter = (filter: string) => {
+    setActiveFilters((prev) => prev.filter((f) => f !== filter));
   };
 
   return (
@@ -47,7 +59,7 @@ const FagomraaderFilter = ({
           {activeFilters.map((filter) => (
             <Chips.Removable
               key={filter}
-              onClick={() => onRemoveFilter(filter)}
+              onClick={() => handleRemoveFilter(filter)}
               className={styles["custom-chip"]}
             >
               {filter}
