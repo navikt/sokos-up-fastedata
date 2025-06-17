@@ -17,10 +17,10 @@ export default function App() {
     <BrowserRouter basename={BASENAME}>
       <Routes>
         <Route path={ROOT} element={<FastedataPage />} />
-        <Route path={FAGOMRAADER} element={<FagomraaderPage />} />,
-        <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />,
-        <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />,
-        <Route path={"*"} element={<NotFound />} />,
+        <Route path={FAGOMRAADER} element={<FagomraaderPage />} />
+        <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />
+        <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />
+        <Route path={"*"} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

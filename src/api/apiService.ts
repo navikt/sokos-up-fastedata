@@ -13,9 +13,8 @@ const BASE_URI = {
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
   return {
     fetcher,
-    suspense: true,
-    revalidateOnFocus: false,
-    refreshInterval: 600_000,
+    errorRetryCount: 2,
+    errorRetryInterval: 1000,
   };
 }
 

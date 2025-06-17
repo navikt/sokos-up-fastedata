@@ -1,12 +1,14 @@
-import React from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
+import ContentLoader from "../components/content-loader/ContentLoader";
 import FagomraadeTable from "../components/tables/FagomraadeTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {
-  const { data, error } = useGetFagomraader();
+  const { data, error, isLoading } = useGetFagomraader();
+
+  if (isLoading) return <ContentLoader />;
 
   return (
     <div className={commonstyles["container"]}>
@@ -17,7 +19,7 @@ export const FagomraaderPage = () => {
           level="1"
           className={commonstyles["page-heading"]}
         >
-          Faste data – Fagområder
+          Faste data - Fagområder
         </Heading>
 
         <BackHomeBox />
