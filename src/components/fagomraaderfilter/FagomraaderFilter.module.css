@@ -13,3 +13,28 @@
   max-width: 300px;
   margin-bottom: 1rem;
 }
+
+.suggestions-list {
+  margin-top: 8px;
+  padding: 0;
+  list-style: none;
+  border: 1px solid gray;
+  border-radius: 4px;
+  background-color: #fff;
+  max-height: 100px;
+  overflow-y: auto;
+  margin-bottom: -1rem;
+}
+
+.suggestion-item {
+  padding: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}

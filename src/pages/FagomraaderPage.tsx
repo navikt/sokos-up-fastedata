@@ -17,6 +17,7 @@ export const FagomraaderPage = () => {
   };
 
   if (isLoading) return <ContentLoader />;
+
   return (
     <div className={commonstyles["container"]}>
       <div className={commonstyles["content-wrapper"]}>
@@ -26,7 +27,7 @@ export const FagomraaderPage = () => {
           level="1"
           className={commonstyles["page-heading"]}
         >
-          Faste data - Fagområder
+          Faste data - Fagområde
         </Heading>
 
         <BackHomeBox />

@@ -11,6 +11,7 @@ interface Props {
 const FagomraaderFilter = ({ data, onFilter }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   useEffect(() => {
     const filteredData = data.filter((item) =>
@@ -23,16 +24,39 @@ const FagomraaderFilter = ({ data, onFilter }: Props) => {
     onFilter(filteredData);
   }, [activeFilters, data, onFilter]);
 
+  useEffect(() => {
+    if (inputValue.trim()) {
+      const matchingSuggestions = data
+        .map((item) => [item.kodeFagomraade, item.navnFagomraade])
+        .flat()
+        .filter((option) =>
+          option.toLowerCase().includes(inputValue.toLowerCase()),
+        );
+      setSuggestions([...new Set(matchingSuggestions)]);
+    } else {
+      setSuggestions([]);
+    }
+  }, [inputValue, data]);
+
   const handleSearch = () => {
     const trimmed = inputValue.trim();
     if (trimmed && !activeFilters.includes(trimmed)) {
       setActiveFilters((prev) => [...prev, trimmed]);
       setInputValue("");
+      setSuggestions([]);
     }
   };
 
   const handleRemoveFilter = (filter: string) => {
     setActiveFilters((prev) => prev.filter((f) => f !== filter));
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    if (!activeFilters.includes(suggestion)) {
+      setActiveFilters((prev) => [...prev, suggestion]);
+    }
+    setInputValue("");
+    setSuggestions([]);
   };
 
   return (
@@ -52,6 +76,24 @@ const FagomraaderFilter = ({ data, onFilter }: Props) => {
             if (e.key === "Enter") handleSearch();
           }}
         />
+        {suggestions.length > 0 ? (
+          <ul className={styles["suggestions-list"]}>
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion}
+                className={styles["suggestion-item"]}
+                onClick={() => handleSuggestionClick(suggestion)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleSuggestionClick(suggestion);
+                  }
+                }}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       {activeFilters.length > 0 && (
