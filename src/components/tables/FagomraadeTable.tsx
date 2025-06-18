@@ -88,12 +88,20 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
-      <Pagination
-        page={currentPage}
-        onPageChange={setCurrentPage}
-        count={totalPages}
-        size="small"
-      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "1rem",
+        }}
+      >
+        <Pagination
+          page={currentPage}
+          onPageChange={setCurrentPage}
+          count={totalPages}
+          size="small"
+        />
+      </div>
     </>
   );
 };
