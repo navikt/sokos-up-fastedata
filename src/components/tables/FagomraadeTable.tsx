@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Pagination, Table } from "@navikt/ds-react";
 import { Fagomraader } from "../../types/Fagomraader";
 import { SortState, sortData } from "../../util/sortUtil";
@@ -22,6 +22,10 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize,
   );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
 
   return (
     <>
