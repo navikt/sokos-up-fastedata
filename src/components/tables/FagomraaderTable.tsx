@@ -9,19 +9,15 @@ import KorrigeringsarsakModal from "../modals/KorrigeringsarsakModal";
 
 interface Props {
   data?: Fagomraader[];
-  currentPage: number;
-  onPageChange: (page: number) => void;
 }
 
-export const FagomraadeTable = ({
-  data = [],
-  currentPage,
-  onPageChange,
-}: Props) => {
+export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
   const sortedData = sortData(data, sort);
+
   const totalPages = Math.ceil(sortedData.length / pageSize);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * pageSize,
@@ -93,10 +89,10 @@ export const FagomraadeTable = ({
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["pagination-container"]}>
+      <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
           count={totalPages}
           size="small"
         />
@@ -105,4 +101,4 @@ export const FagomraadeTable = ({
   );
 };
 
-export default FagomraadeTable;
+export default FagomraaderTable;

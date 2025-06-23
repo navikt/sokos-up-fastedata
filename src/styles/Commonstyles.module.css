@@ -42,7 +42,7 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.pagination-container {
+.table-pagination-container {
   display: flex;
   justify-content: center;
   margin-top: 1rem;

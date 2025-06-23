@@ -6,15 +6,10 @@ import { formatNumber } from "../../util/tallUtil";
 
 type Props = {
   data?: Ventekriterier[];
-  currentPage: number;
-  onPageChange: (page: number) => void;
 };
 
-export const VentekriterierTable = ({
-  data = [],
-  currentPage,
-  onPageChange,
-}: Props) => {
+export const VentekriterierTable = ({ data = [] }: Props) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
   const totalPages = Math.ceil(data.length / pageSize);
@@ -51,10 +46,10 @@ export const VentekriterierTable = ({
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["pagination-container"]}>
+      <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
           count={totalPages}
           size="small"
         />

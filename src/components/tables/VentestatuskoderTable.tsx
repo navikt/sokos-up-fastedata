@@ -6,18 +6,13 @@ import { SortState, sortData } from "../../util/sortUtil";
 
 type Props = {
   data?: Ventestatuskoder[];
-  currentPage: number;
-  onPageChange: (page: number) => void;
 };
 
-const VentestatuskoderTable = ({
-  data = [],
-  currentPage,
-  onPageChange,
-}: Props) => {
+const VentestatuskoderTable = ({ data = [] }: Props) => {
   const [sortState, setSortState] = useState<
     SortState<Ventestatuskoder> | undefined
   >();
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
   const handleSortChange = (sortKey: string) => {
@@ -74,10 +69,10 @@ const VentestatuskoderTable = ({
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["pagination-container"]}>
+      <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
-          onPageChange={onPageChange}
+          onPageChange={setCurrentPage}
           count={totalPages}
           size="small"
         />
