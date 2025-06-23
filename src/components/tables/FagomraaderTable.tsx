@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Pagination, Table } from "@navikt/ds-react";
+import commonstyles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { SortState, sortData } from "../../util/sortUtil";
 import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
@@ -10,7 +11,7 @@ interface Props {
   data?: Fagomraader[];
 }
 
-export const FagomraadeTable = ({ data = [] }: Props) => {
+export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
@@ -88,13 +89,7 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "1rem",
-        }}
-      >
+      <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
           onPageChange={setCurrentPage}
@@ -106,4 +101,4 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
   );
 };
 
-export default FagomraadeTable;
+export default FagomraaderTable;
