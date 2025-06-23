@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetVentekriterier } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -8,7 +7,6 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const VentekriterierPage = () => {
   const { data, error, isLoading } = useGetVentekriterier();
-  const [currentPage, setCurrentPage] = useState(1);
 
   if (isLoading) return <ContentLoader />;
 
@@ -29,11 +27,7 @@ export const VentekriterierPage = () => {
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
         ) : data && data.length > 0 ? (
-          <VentekriterierTable
-            data={data}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
+          <VentekriterierTable data={data} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}
