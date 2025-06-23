@@ -23,6 +23,7 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
     currentPage * pageSize,
   );
 
+  // Reset currentPage to 1 only when the data changes
   useEffect(() => {
     setCurrentPage(1);
   }, [data]);
