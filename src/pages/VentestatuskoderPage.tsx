@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetVentestatuskoder } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -8,7 +7,6 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const VentestatuskoderPage = () => {
   const { data, error, isLoading } = useGetVentestatuskoder();
-  const [currentPage, setCurrentPage] = useState(1);
 
   if (isLoading) return <ContentLoader />;
 
@@ -31,11 +29,7 @@ export const VentestatuskoderPage = () => {
             En feil har oppstått. Prøv igjen senere.
           </Alert>
         ) : data && data.length > 0 ? (
-          <VentestatuskoderTable
-            data={data}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
+          <VentestatuskoderTable data={data} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}
