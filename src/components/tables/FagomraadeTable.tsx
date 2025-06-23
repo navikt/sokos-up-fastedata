@@ -3,7 +3,6 @@ import { Button, Pagination, Table } from "@navikt/ds-react";
 import { Fagomraader } from "../../types/Fagomraader";
 import { SortState, sortData } from "../../util/sortUtil";
 import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
-import FagomraaderFilter from "../fagomraaderfilter/FagomraaderFilter";
 import BilagstypeModal from "../modals/BilagstypeModal";
 import KorrigeringsarsakModal from "../modals/KorrigeringsarsakModal";
 
@@ -13,25 +12,15 @@ interface Props {
 
 export const FagomraadeTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
-  const [filteredData, setFilteredData] = useState<Fagomraader[]>(data);
 
-  const sortedData = sortData(filteredData, sort);
+  const sortedData = sortData(data, sort);
 
   const totalPages = Math.ceil(sortedData.length / pageSize);
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
+  const paginatedData = sortedData.slice(0, pageSize);
 
   return (
     <>
-      <FagomraaderFilter
-        data={data}
-        onFilter={setFilteredData}
-        resetPage={() => setCurrentPage(1)} // Reset page to 1 when filters are applied
-      />
       <Table
         zebraStripes
         size="small"
@@ -102,12 +91,7 @@ export const FagomraadeTable = ({ data = [] }: Props) => {
           marginTop: "1rem",
         }}
       >
-        <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
-          count={totalPages}
-          size="small"
-        />
+        <Pagination page={1} count={totalPages} size="small" />
       </div>
     </>
   );

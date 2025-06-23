@@ -6,10 +6,9 @@ import styles from "./FagomraaderFilter.module.css";
 interface Props {
   data: Fagomraader[];
   onFilter: (filteredData: Fagomraader[]) => void;
-  resetPage: () => void; // Added prop to reset the page
 }
 
-const FagomraaderFilter = ({ data, onFilter, resetPage }: Props) => {
+const FagomraaderFilter = ({ data, onFilter }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -23,8 +22,7 @@ const FagomraaderFilter = ({ data, onFilter, resetPage }: Props) => {
       ),
     );
     onFilter(filteredData);
-    resetPage(); // Reset the page whenever filters are applied
-  }, [activeFilters, data, onFilter, resetPage]);
+  }, [activeFilters, data, onFilter]);
 
   useEffect(() => {
     if (inputValue.trim()) {
