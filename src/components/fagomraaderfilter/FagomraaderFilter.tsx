@@ -1,49 +1,49 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { BodyShort, Chips, Search } from "@navikt/ds-react";
 import { Fagomraader } from "../../types/Fagomraader";
 import styles from "./FagomraaderFilter.module.css";
 
-interface Props {
+interface FagomraaderFilterProps {
   data: Fagomraader[];
   onFilter: (filteredData: Fagomraader[]) => void;
 }
 
-const FagomraaderFilter = ({ data, onFilter }: Props) => {
+const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
   const [inputValue, setInputValue] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  useEffect(() => {
-    const filteredData = data.filter((item) =>
+  const filteredData = useMemo(() => {
+    return data.filter((item) =>
       activeFilters.every(
         (filter) =>
           item.kodeFagomraade.toLowerCase().includes(filter.toLowerCase()) ||
           item.navnFagomraade.toLowerCase().includes(filter.toLowerCase()),
       ),
     );
-    onFilter(filteredData);
-  }, [activeFilters, data, onFilter]);
+  }, [activeFilters, data]);
 
-  useEffect(() => {
-    if (inputValue.trim()) {
-      const matchingSuggestions = data
-        .map((item) => [item.kodeFagomraade, item.navnFagomraade])
-        .flat()
-        .filter((option) =>
-          option.toLowerCase().includes(inputValue.toLowerCase()),
-        );
-      setSuggestions([...new Set(matchingSuggestions)]);
-    } else {
-      setSuggestions([]);
-    }
-  }, [inputValue, data]);
+  useMemo(() => {
+    onFilter(filteredData);
+  }, [filteredData, onFilter]);
+
+  const suggestions = inputValue.trim()
+    ? [
+        ...new Set(
+          data
+            .map((item) => [item.kodeFagomraade, item.navnFagomraade])
+            .flat()
+            .filter((option) =>
+              option.toLowerCase().includes(inputValue.toLowerCase()),
+            ),
+        ),
+      ]
+    : [];
 
   const handleSearch = () => {
     const trimmed = inputValue.trim();
     if (trimmed && !activeFilters.includes(trimmed)) {
       setActiveFilters((prev) => [...prev, trimmed]);
       setInputValue("");
-      setSuggestions([]);
     }
   };
 
@@ -56,7 +56,6 @@ const FagomraaderFilter = ({ data, onFilter }: Props) => {
       setActiveFilters((prev) => [...prev, suggestion]);
     }
     setInputValue("");
-    setSuggestions([]);
   };
 
   return (
@@ -76,7 +75,7 @@ const FagomraaderFilter = ({ data, onFilter }: Props) => {
             if (e.key === "Enter") handleSearch();
           }}
         />
-        {suggestions.length > 0 ? (
+        {suggestions.length > 0 && (
           <ul className={styles["suggestions-list"]}>
             {suggestions.map((suggestion) => (
               <button
@@ -93,7 +92,7 @@ const FagomraaderFilter = ({ data, onFilter }: Props) => {
               </button>
             ))}
           </ul>
-        ) : null}
+        )}
       </div>
 
       {activeFilters.length > 0 && (
