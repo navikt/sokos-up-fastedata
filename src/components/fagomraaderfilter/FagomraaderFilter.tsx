@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { BodyShort, Chips, Search } from "@navikt/ds-react";
 import { Fagomraader } from "../../types/Fagomraader";
+import { getSortedSuggestions } from "../../util/suggestionUtil";
 import styles from "./FagomraaderFilter.module.css";
 
 interface FagomraaderFilterProps {
@@ -35,13 +36,9 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
     );
   }, [data, filteredData, activeFilters]);
 
-  const suggestions = inputValue.trim()
-    ? allOptions.filter((option) =>
-        option.toLowerCase().includes(inputValue.toLowerCase()),
-      )
-    : isFocused
-      ? allOptions
-      : [];
+  const suggestions = useMemo(() => {
+    return getSortedSuggestions(allOptions, inputValue.trim(), isFocused);
+  }, [inputValue, isFocused, allOptions]);
 
   const handleSearch = () => {
     const trimmed = inputValue.trim();
