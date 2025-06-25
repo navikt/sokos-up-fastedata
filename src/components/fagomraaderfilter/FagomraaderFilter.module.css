@@ -38,3 +38,11 @@
 .suggestion-item:hover {
   background-color: #f0f0f0;
 }
+
+.no-results {
+  padding: 4px;
+  cursor: default;
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+}

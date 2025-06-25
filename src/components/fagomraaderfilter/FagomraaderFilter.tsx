@@ -11,6 +11,7 @@ interface FagomraaderFilterProps {
 const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
   const [inputValue, setInputValue] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [isFocused, setIsFocused] = useState(false);
 
   const filteredData = useMemo(() => {
     return data.filter((item) =>
@@ -26,18 +27,25 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
     onFilter(filteredData);
   }, [filteredData, onFilter]);
 
+  const allOptions = useMemo(() => {
+    const sourceData = activeFilters.length > 0 ? filteredData : data;
+
+    return [
+      ...new Set(
+        sourceData
+          .map((item) => [item.kodeFagomraade, item.navnFagomraade])
+          .flat(),
+      ),
+    ];
+  }, [data, filteredData, activeFilters]);
+
   const suggestions = inputValue.trim()
-    ? [
-        ...new Set(
-          data
-            .map((item) => [item.kodeFagomraade, item.navnFagomraade])
-            .flat()
-            .filter((option) =>
-              option.toLowerCase().includes(inputValue.toLowerCase()),
-            ),
-        ),
-      ]
-    : [];
+    ? allOptions.filter((option) =>
+        option.toLowerCase().includes(inputValue.toLowerCase()),
+      )
+    : isFocused
+      ? allOptions
+      : [];
 
   const handleSearch = () => {
     const trimmed = inputValue.trim();
@@ -58,6 +66,8 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
     setInputValue("");
   };
 
+  const shouldShowSuggestionBox = isFocused || inputValue.trim().length > 0;
+
   return (
     <div className={styles["filter-container"]}>
       <BodyShort weight="semibold">
@@ -74,23 +84,29 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         />
-        {suggestions.length > 0 && (
+        {shouldShowSuggestionBox && (
           <ul className={styles["suggestions-list"]}>
-            {suggestions.map((suggestion) => (
-              <button
-                key={suggestion}
-                className={styles["suggestion-item"]}
-                onClick={() => handleSuggestionClick(suggestion)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    handleSuggestionClick(suggestion);
-                  }
-                }}
-              >
-                {suggestion}
-              </button>
-            ))}
+            {suggestions.length > 0 ? (
+              suggestions.map((suggestion) => (
+                <button
+                  key={suggestion}
+                  className={styles["suggestion-item"]}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleSuggestionClick(suggestion);
+                    }
+                  }}
+                >
+                  {suggestion}
+                </button>
+              ))
+            ) : (
+              <li className={styles["no-results"]}>Ingen treff</li>
+            )}
           </ul>
         )}
       </div>
