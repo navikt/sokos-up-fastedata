@@ -12,6 +12,7 @@
 .search-container {
   max-width: 300px;
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .suggestions-list {
@@ -21,9 +22,22 @@
   border: 1px solid gray;
   border-radius: 4px;
   background-color: #fff;
-  max-height: 100px;
+  max-height: 120px;
   overflow-y: auto;
-  margin-bottom: -1rem;
+  margin-bottom: -2.5rem;
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .suggestion-item {

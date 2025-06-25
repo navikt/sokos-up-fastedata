@@ -14,13 +14,14 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const filteredData = useMemo(() => {
-    return data.filter((item) =>
-      activeFilters.every(
-        (filter) =>
-          item.kodeFagomraade.toLowerCase().includes(filter.toLowerCase()) ||
-          item.navnFagomraade.toLowerCase().includes(filter.toLowerCase()),
-      ),
-    );
+    if (activeFilters.length === 0) return data;
+
+    return data.filter((item) => {
+      const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
+      return activeFilters.some((filter) =>
+        combined.toLowerCase().includes(filter.toLowerCase()),
+      );
+    });
   }, [activeFilters, data]);
 
   useMemo(() => {
@@ -29,14 +30,9 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
 
   const allOptions = useMemo(() => {
     const sourceData = activeFilters.length > 0 ? filteredData : data;
-
-    return [
-      ...new Set(
-        sourceData
-          .map((item) => [item.kodeFagomraade, item.navnFagomraade])
-          .flat(),
-      ),
-    ];
+    return sourceData.map(
+      (item) => `${item.kodeFagomraade} - ${item.navnFagomraade}`,
+    );
   }, [data, filteredData, activeFilters]);
 
   const suggestions = inputValue.trim()
@@ -70,9 +66,7 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
 
   return (
     <div className={styles["filter-container"]}>
-      <BodyShort weight="semibold">
-        Filtrer på fagområdekode eller navn
-      </BodyShort>
+      <BodyShort weight="semibold">Filtrer på fagområdekode og navn</BodyShort>
 
       <div className={styles["search-container"]}>
         <Search
