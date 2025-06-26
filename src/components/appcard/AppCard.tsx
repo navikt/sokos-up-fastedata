@@ -7,6 +7,7 @@ interface AppCardProps {
   route: string;
   title: string;
   description: string;
+  disabled?: boolean;
 }
 
 export default function AppCard(props: AppCardProps) {
@@ -17,12 +18,24 @@ export default function AppCard(props: AppCardProps) {
           {props.title}
         </Heading>
       </div>
-      <div className={styles["appcard-description"]}>{props.description}</div>
-      <div className={styles.appcardarrow}>
-        <ChevronRightIcon title="Chevron ikon" />
+      <div className={styles["appcard-description"]}>
+        {props.disabled ? "Kommer snart..." : props.description}
       </div>
+      {!props.disabled && (
+        <div className={styles.appcardarrow}>
+          <ChevronRightIcon title="Chevron ikon" />
+        </div>
+      )}
     </div>
   );
+
+  if (props.disabled) {
+    return (
+      <div className={`${styles["appcard"]} ${styles["disabled"]}`}>
+        {content}
+      </div>
+    );
+  }
 
   return (
     <ReactRouterLink

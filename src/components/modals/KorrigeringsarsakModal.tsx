@@ -48,7 +48,7 @@ const KorrigeringsarsakModal = ({
         width={900}
         onClose={handleClose}
       >
-        <Modal.Body>
+        <Modal.Body style={{ height: "600px", overflow: "auto" }}>
           {error ? (
             <Alert variant="error">
               Feil ved lasting av korrigeringsårsaker
