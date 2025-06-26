@@ -49,9 +49,9 @@
 
 .appcard.disabled {
   background-color: var(--a-surface-neutral-subtle);
-  color: var(--a-text-subtle);
+  color: var(--a-text-default);
   cursor: not-allowed;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .appcard.disabled:hover {
