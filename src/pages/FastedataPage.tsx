@@ -27,6 +27,7 @@ export default function FastedataPage() {
               title={app.title}
               description={app.description}
               route={app.route}
+              disabled={app.disabled}
             />
           ))}
         </div>
