@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -6,15 +6,21 @@ import ContentLoader from "../components/content-loader/ContentLoader";
 import FagomraaderFilter from "../components/fagomraaderfilter/FagomraaderFilter";
 import FagomraaderTable from "../components/tables/FagomraaderTable";
 import commonstyles from "../styles/Commonstyles.module.css";
-import { Fagomraader } from "../types/Fagomraader";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
-  const [filteredData, setFilteredData] = useState<Fagomraader[]>([]);
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
-  const handleFilter = (filtered: Fagomraader[]) => {
-    setFilteredData(filtered || []);
-  };
+  const filteredData = useMemo(() => {
+    if (!data || activeFilters.length === 0) return data || [];
+
+    return data.filter((item) => {
+      const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
+      return activeFilters.some((filter) =>
+        combined.toLowerCase().includes(filter.toLowerCase()),
+      );
+    });
+  }, [data, activeFilters]);
 
   if (isLoading) return <ContentLoader />;
 
@@ -32,7 +38,13 @@ export const FagomraaderPage = () => {
 
         <BackHomeBox />
 
-        {data && <FagomraaderFilter data={data} onFilter={handleFilter} />}
+        {data && (
+          <FagomraaderFilter
+            data={data}
+            activeFilters={activeFilters}
+            onFiltersChange={setActiveFilters}
+          />
+        )}
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
