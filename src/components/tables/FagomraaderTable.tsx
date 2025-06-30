@@ -57,8 +57,8 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {paginatedData.map((row, idx) => (
-            <FagomraaderExpandableSection key={idx} row={row}>
+          {paginatedData.map((row) => (
+            <FagomraaderExpandableSection key={row.kodeFagomraade} row={row}>
               <Table.DataCell>{row.kodeFagomraade}</Table.DataCell>
               <Table.DataCell>{row.navnFagomraade}</Table.DataCell>
               <Table.DataCell>{row.kodeMotregningsgruppe}</Table.DataCell>
