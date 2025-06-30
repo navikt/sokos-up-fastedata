@@ -33,8 +33,8 @@ export const VentekriterierTable = ({ data = [] }: Props) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {paginatedData.map((row, idx) => (
-            <Table.Row key={idx}>
+          {paginatedData.map((row) => (
+            <Table.Row key={row.kodeFaggruppe}>
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.typeBilag}</Table.DataCell>
               <Table.DataCell>{row.datoFom}</Table.DataCell>
