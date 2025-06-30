@@ -57,8 +57,8 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {paginatedData.map((row, idx) => (
-            <Table.Row key={idx}>
+          {paginatedData.map((row) => (
+            <Table.Row key={row.kodeVentestatus}>
               <Table.DataCell>{row.kodeVentestatus}</Table.DataCell>
               <Table.DataCell>{row.beskrivelse}</Table.DataCell>
               <Table.DataCell>{row.prioritet}</Table.DataCell>

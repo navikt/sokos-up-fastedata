@@ -6,35 +6,32 @@ import styles from "./FagomraaderFilter.module.css";
 
 interface FagomraaderFilterProps {
   data: Fagomraader[];
-  onFilter: (filteredData: Fagomraader[]) => void;
+  activeFilters: string[];
+  onFiltersChange: (filters: string[]) => void;
 }
 
-const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
+const FagomraaderFilter = ({
+  data,
+  activeFilters,
+  onFiltersChange,
+}: FagomraaderFilterProps) => {
   const [inputValue, setInputValue] = useState("");
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState(false);
 
-  const filteredData = useMemo(() => {
-    if (activeFilters.length === 0) return data;
-
-    return data.filter((item) => {
-      const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
-      return activeFilters.some((filter) =>
-        combined.toLowerCase().includes(filter.toLowerCase()),
-      );
-    });
-  }, [activeFilters, data]);
-
-  useMemo(() => {
-    onFilter(filteredData);
-  }, [filteredData, onFilter]);
-
   const allOptions = useMemo(() => {
-    const sourceData = activeFilters.length > 0 ? filteredData : data;
+    const sourceData =
+      activeFilters.length > 0
+        ? data.filter((item) => {
+            const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
+            return activeFilters.some((filter) =>
+              combined.toLowerCase().includes(filter.toLowerCase()),
+            );
+          })
+        : data;
     return sourceData.map(
       (item) => `${item.kodeFagomraade} - ${item.navnFagomraade}`,
     );
-  }, [data, filteredData, activeFilters]);
+  }, [data, activeFilters]);
 
   const suggestions = useMemo(() => {
     return getSortedSuggestions(allOptions, inputValue.trim(), isFocused);
@@ -43,18 +40,18 @@ const FagomraaderFilter = ({ data, onFilter }: FagomraaderFilterProps) => {
   const handleSearch = () => {
     const trimmed = inputValue.trim();
     if (trimmed && !activeFilters.includes(trimmed)) {
-      setActiveFilters((prev) => [...prev, trimmed]);
+      onFiltersChange([...activeFilters, trimmed]);
       setInputValue("");
     }
   };
 
   const handleRemoveFilter = (filter: string) => {
-    setActiveFilters((prev) => prev.filter((f) => f !== filter));
+    onFiltersChange(activeFilters.filter((f) => f !== filter));
   };
 
   const handleSuggestionClick = (suggestion: string) => {
     if (!activeFilters.includes(suggestion)) {
-      setActiveFilters((prev) => [...prev, suggestion]);
+      onFiltersChange([...activeFilters, suggestion]);
     }
     setInputValue("");
   };

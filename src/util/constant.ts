@@ -9,25 +9,30 @@ export const appList = [
     title: "Faggrupper",
     description: "Oppslag og forklaring på faggrupper.",
     route: "",
+    disabled: true,
   },
   {
     title: "Fagområder",
     description: "Fagområder og motregningsgrupper",
     route: "fagomraader",
+    disabled: false,
   },
   {
     title: "Klassekoder",
     description: "Klassekoder med tilhørende kontonummer",
     route: "",
+    disabled: true,
   },
   {
     title: "Ventestatuskoder",
     description: "Forklaring og oppslag",
     route: "ventestatuskoder",
+    disabled: false,
   },
   {
     title: "Ventekriterier",
     description: "Forklaring og oppslag",
     route: "ventekriterier",
+    disabled: false,
   },
 ];
