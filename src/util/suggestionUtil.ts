@@ -11,8 +11,15 @@ export const getSortedSuggestions = (
   );
 
   return matchingOptions.sort((a, b) => {
-    const [codeA] = a.split(" - ");
-    const [codeB] = b.split(" - ");
+    const codeA = a.includes(" - ") ? a.split(" - ")[0] : a;
+    const codeB = b.includes(" - ") ? b.split(" - ")[0] : b;
+
+    const nameA = a.includes(" - ")
+      ? a.substring(a.indexOf(" - ") + 3).toLowerCase()
+      : "";
+    const nameB = b.includes(" - ")
+      ? b.substring(b.indexOf(" - ") + 3).toLowerCase()
+      : "";
 
     const codeAStartsWithQuery = codeA
       .toLowerCase()
@@ -23,9 +30,6 @@ export const getSortedSuggestions = (
 
     if (codeAStartsWithQuery && !codeBStartsWithQuery) return -1;
     if (!codeAStartsWithQuery && codeBStartsWithQuery) return 1;
-
-    const nameA = a.substring(a.indexOf(" - ") + 3).toLowerCase();
-    const nameB = b.substring(b.indexOf(" - ") + 3).toLowerCase();
 
     const nameAStartsWithQuery = nameA.startsWith(query.toLowerCase());
     const nameBStartsWithQuery = nameB.startsWith(query.toLowerCase());
