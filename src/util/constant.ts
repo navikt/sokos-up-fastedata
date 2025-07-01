@@ -3,6 +3,7 @@ export const ROOT = "/fastedata";
 export const VENTEKRITERIER = "/fastedata/ventekriterier";
 export const VENTESTATUSKODER = "/fastedata/ventestatuskoder";
 export const FAGOMRAADER = "/fastedata/fagomraader";
+export const KLASSEKODER = "/fastedata/klassekoder";
 
 export const appList = [
   {
@@ -20,8 +21,8 @@ export const appList = [
   {
     title: "Klassekoder",
     description: "Klassekoder med tilhørende kontonummer",
-    route: "",
-    disabled: true,
+    route: "klassekoder",
+    disabled: false,
   },
   {
     title: "Ventestatuskoder",
