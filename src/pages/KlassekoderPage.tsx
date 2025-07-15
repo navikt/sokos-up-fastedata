@@ -1,9 +1,15 @@
-import { Heading } from "@navikt/ds-react";
+import { Alert, Heading } from "@navikt/ds-react";
+import { useGetKlassekoder } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
+import ContentLoader from "../components/content-loader/ContentLoader";
 import KlassekoderTable from "../components/tables/KlassekoderTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
-const KlassekoderPage = () => {
+export const KlassekoderPage = () => {
+  const { data, error, isLoading } = useGetKlassekoder();
+
+  if (isLoading) return <ContentLoader />;
+
   return (
     <div className={commonstyles["container"]}>
       <div className={commonstyles["content-wrapper"]}>
@@ -18,7 +24,13 @@ const KlassekoderPage = () => {
 
         <BackHomeBox />
 
-        <KlassekoderTable />
+        {error ? (
+          <Alert variant="error">Nettverksfeil</Alert>
+        ) : data && data.length > 0 ? (
+          <KlassekoderTable data={data} />
+        ) : (
+          <Alert variant="info">Ingen data tilgjengelig</Alert>
+        )}
       </div>
     </div>
   );

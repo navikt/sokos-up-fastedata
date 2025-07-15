@@ -1,6 +1,7 @@
 import useSWRImmutable from "swr/immutable";
 import { Bilagstype } from "../types/Bilagstype";
 import { Fagomraader } from "../types/Fagomraader";
+import { Klassekoder } from "../types/Klassekoder";
 import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import { Ventekriterier } from "../types/Ventekriterier";
 import { Ventestatuskoder } from "../types/Ventestatuskoder";
@@ -69,6 +70,17 @@ export function useGetBilagstyper(kodeFagomraade: string) {
     kodeFagomraade ? `/fagomraader/${kodeFagomraade}/bilagstyper` : null,
     swrConfig<Bilagstype[]>((url) =>
       axiosFetcher<Bilagstype[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
+
+export function useGetKlassekoder() {
+  const { data, error, isValidating } = useSWRImmutable<Klassekoder[]>(
+    `/klassekoder`,
+    swrConfig<Klassekoder[]>((url) =>
+      axiosFetcher<Klassekoder[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;

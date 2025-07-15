@@ -1,18 +1,91 @@
-import React from "react";
-import { Table } from "@navikt/ds-react";
+import React, { useState } from "react";
+import { Pagination, Table } from "@navikt/ds-react";
+import commonstyles from "../../styles/Commonstyles.module.css";
+import { Klassekoder } from "../../types/Klassekoder";
+import { SortState, sortData } from "../../util/sortUtil";
 
-const KlassekoderTable = () => {
+interface Props {
+  data?: Klassekoder[];
+}
+
+export const KlassekoderTable = ({ data = [] }: Props) => {
+  const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10);
+
+  const sortedData = sortData(data, sort);
+
+  const totalPages = Math.ceil(sortedData.length / pageSize);
+  const paginatedData = sortedData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
+  );
+
   return (
-    <Table zebraStripes size="small">
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Kode</Table.HeaderCell>
-          <Table.HeaderCell>Beskrivelse</Table.HeaderCell>
-          <Table.HeaderCell>Type</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body></Table.Body>
-    </Table>
+    <>
+      <Table
+        zebraStripes
+        size="small"
+        sort={sort}
+        onSortChange={(key) => {
+          setSort((prev) => {
+            const orderBy = key as keyof Klassekoder;
+            const direction =
+              prev?.orderBy === orderBy && prev?.direction === "ascending"
+                ? "descending"
+                : "ascending";
+            return { orderBy, direction };
+          });
+        }}
+      >
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader sortKey="kodeKlasse" sortable>
+              Kode Klasse
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="kodeFagomraade" sortable>
+              Kode Fagområde
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="artID" sortable>
+              Art ID
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="datoFom" sortable>
+              Dato Fra
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="datoTom" sortable>
+              Dato Til
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="hovedkontoNr" sortable>
+              Hovedkonto Nr
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="underkontoNr" sortable>
+              Underkonto Nr
+            </Table.ColumnHeader>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {paginatedData.map((row) => (
+            <Table.Row key={row.kodeKlasse}>
+              <Table.DataCell>{row.kodeKlasse}</Table.DataCell>
+              <Table.DataCell>{row.kodeFagomraade || "Ingen"}</Table.DataCell>
+              <Table.DataCell>{row.artID}</Table.DataCell>
+              <Table.DataCell>{row.datoFom}</Table.DataCell>
+              <Table.DataCell>{row.datoTom}</Table.DataCell>
+              <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
+              <Table.DataCell>{row.underkontoNr}</Table.DataCell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+      <div className={commonstyles["table-pagination-container"]}>
+        <Pagination
+          page={currentPage}
+          onPageChange={setCurrentPage}
+          count={totalPages}
+          size="small"
+        />
+      </div>
+    </>
   );
 };
 
