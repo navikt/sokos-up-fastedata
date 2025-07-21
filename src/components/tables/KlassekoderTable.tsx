@@ -41,38 +41,28 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader sortKey="kodeKlasse" sortable>
-              Kode Klasse
-            </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="kodeFagomraade" sortable>
-              Kode Fagområde
+              Klasskoder
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="artID" sortable>
               Art ID
             </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="datoFom" sortable>
-              Dato Fra
-            </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="datoTom" sortable>
-              Dato Til
-            </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="hovedkontoNr" sortable>
-              Hovedkonto Nr
-            </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="underkontoNr" sortable>
-              Underkonto Nr
-            </Table.ColumnHeader>
+            <Table.ColumnHeader>Dato fom</Table.ColumnHeader>
+            <Table.ColumnHeader>Dato tom</Table.ColumnHeader>
+            <Table.ColumnHeader>Hovedkontonr</Table.ColumnHeader>
+            <Table.ColumnHeader>Underkontonr</Table.ColumnHeader>
+            <Table.ColumnHeader>Fagområde</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {paginatedData.map((row) => (
             <Table.Row key={row.kodeKlasse}>
               <Table.DataCell>{row.kodeKlasse}</Table.DataCell>
-              <Table.DataCell>{row.kodeFagomraade || "Ingen"}</Table.DataCell>
               <Table.DataCell>{row.artID}</Table.DataCell>
               <Table.DataCell>{row.datoFom}</Table.DataCell>
               <Table.DataCell>{row.datoTom}</Table.DataCell>
               <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
               <Table.DataCell>{row.underkontoNr}</Table.DataCell>
+              <Table.DataCell>{row.kodeFagomraade || "Ingen"}</Table.DataCell>
             </Table.Row>
           ))}
         </Table.Body>

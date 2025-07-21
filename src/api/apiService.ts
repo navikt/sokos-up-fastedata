@@ -9,6 +9,7 @@ import { axiosFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
   BACKEND_API: "/oppdrag-api/api/v1/fastedata",
+  FAGOMRAADER_API: "/oppdrag-api/api/v1/fastedata/fagomraader",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
@@ -81,6 +82,17 @@ export function useGetKlassekoder() {
     `/klassekoder`,
     swrConfig<Klassekoder[]>((url) =>
       axiosFetcher<Klassekoder[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
+
+export function useGetFagomraaderKlassekoder() {
+  const { data, error, isValidating } = useSWRImmutable<Klassekoder[]>(
+    `/klassekoder`,
+    swrConfig<Klassekoder[]>((url) =>
+      axiosFetcher<Klassekoder[]>(BASE_URI.FAGOMRAADER_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;
