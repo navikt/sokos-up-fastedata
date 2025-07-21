@@ -87,14 +87,3 @@ export function useGetKlassekoder() {
   const isLoading = (!error && !data) || isValidating;
   return { data, error, isLoading };
 }
-
-export function useGetFagomraaderKlassekoder() {
-  const { data, error, isValidating } = useSWRImmutable<Klassekoder[]>(
-    `/klassekoder`,
-    swrConfig<Klassekoder[]>((url) =>
-      axiosFetcher<Klassekoder[]>(BASE_URI.FAGOMRAADER_API, url),
-    ),
-  );
-  const isLoading = (!error && !data) || isValidating;
-  return { data, error, isLoading };
-}
