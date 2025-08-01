@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { BodyShort, Chips, Search } from "@navikt/ds-react";
-import { Fagomraader } from "../../types/Fagomraader";
-import { getSortedSuggestions } from "../../util/suggestionUtil";
+import { Fagomraader } from "../../../types/Fagomraader";
+import { getSortedSuggestions } from "../../../util/suggestionUtil";
 import styles from "./FagomraaderFilter.module.css";
 
 interface FagomraaderFilterProps {
