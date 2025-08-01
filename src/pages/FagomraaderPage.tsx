@@ -3,7 +3,7 @@ import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
-import FagomraaderFilter from "../components/fagomraaderfilter/FagomraaderFilter";
+import FagomraaderFilter from "../components/filters/fagomraaderfilter/FagomraaderFilter";
 import FagomraaderTable from "../components/tables/FagomraaderTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
