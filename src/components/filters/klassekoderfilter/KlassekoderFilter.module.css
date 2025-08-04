@@ -2,15 +2,50 @@
   background-color: #dbeafe;
   border-radius: 12px;
   padding: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  margin-bottom: 1rem;
 }
 
-.search-container {
-  max-width: 300px;
-  margin-bottom: 1rem;
-  position: relative;
+.filter-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 180px;
+}
+
+.input-wrapper {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.icon-button {
+  border: none;
+  background: transparent;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background-color: #f3f4f6;
 }
