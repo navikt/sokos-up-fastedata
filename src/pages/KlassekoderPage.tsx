@@ -9,16 +9,58 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
-  const [filters, setFilters] = useState<string[]>([]);
+
+  const [filters, setFilters] = useState({
+    klassekoder: [] as string[],
+    hovedkontoNr: [] as string[],
+    underkontoNr: [] as string[],
+    artID: [] as string[],
+  });
+
+  const handleFilterChange = (
+    field: keyof typeof filters,
+    values: string[],
+  ) => {
+    setFilters((prev) => ({
+      ...prev,
+      [field]: values,
+    }));
+  };
 
   const filteredData = useMemo(() => {
     if (!data) return [];
 
-    if (filters.length === 0) return data;
-
     return data.filter((item) => {
-      const value = item.kodeKlasse.toLowerCase();
-      return filters.some((filter) => value.includes(filter.toLowerCase()));
+      const matches = {
+        klassekoder:
+          filters.klassekoder.length === 0 ||
+          filters.klassekoder.some((f) =>
+            item.kodeKlasse.toLowerCase().includes(f.toLowerCase()),
+          ),
+        hovedkontoNr:
+          filters.hovedkontoNr.length === 0 ||
+          filters.hovedkontoNr.some((f) =>
+            item.hovedkontoNr?.toLowerCase().includes(f.toLowerCase()),
+          ),
+        underkontoNr:
+          filters.underkontoNr.length === 0 ||
+          filters.underkontoNr.some((f) =>
+            item.underkontoNr?.toLowerCase().includes(f.toLowerCase()),
+          ),
+        artID:
+          filters.artID.length === 0 ||
+          filters.artID.some((f) => {
+            const filterNumber = parseInt(f, 10);
+            return !isNaN(filterNumber) && item.artID === filterNumber;
+          }),
+      };
+
+      return (
+        matches.klassekoder &&
+        matches.hovedkontoNr &&
+        matches.underkontoNr &&
+        matches.artID
+      );
     });
   }, [data, filters]);
 
@@ -40,9 +82,14 @@ export const KlassekoderPage = () => {
 
         {data && (
           <KlassekoderFilter
-            options={data.map((item) => item.kodeKlasse)}
+            options={{
+              klassekoder: data.map((item) => item.kodeKlasse),
+              hovedkontoNr: data.map((item) => item.hovedkontoNr),
+              underkontoNr: data.map((item) => item.underkontoNr),
+              artID: data.map((item) => item.artID.toString()), // Convert number to string for input options
+            }}
             activeFilters={filters}
-            onFiltersChange={setFilters}
+            onFiltersChange={handleFilterChange}
           />
         )}
 

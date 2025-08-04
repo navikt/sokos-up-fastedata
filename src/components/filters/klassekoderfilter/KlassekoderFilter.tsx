@@ -1,131 +1,92 @@
-import { useMemo, useState } from "react";
-import { BodyShort, Chips, Search } from "@navikt/ds-react";
-import { getSortedSuggestions } from "../../../util/suggestionUtil";
+import { Chips } from "@navikt/ds-react";
+import FilterInputWithSuggestions from "./FilterInputWithSuggestions";
 import styles from "./KlassekoderFilter.module.css";
 
+interface ActiveFilters {
+  klassekoder: string[];
+  hovedkontoNr: string[];
+  underkontoNr: string[];
+  artID: string[];
+}
+
 interface KlassekoderFilterProps {
-  options: string[];
-  activeFilters: string[];
-  onFiltersChange: (filters: string[]) => void;
-  onFieldValuesChange?: (fields: {
-    hovedkonto: string;
-    underkonto: string;
-    artId: string;
-  }) => void; // Optional if lifting state
+  options: {
+    klassekoder: string[];
+    hovedkontoNr: string[];
+    underkontoNr: string[];
+    artID: string[];
+  };
+  activeFilters: ActiveFilters;
+  onFiltersChange: (field: keyof ActiveFilters, values: string[]) => void;
 }
 
 const KlassekoderFilter = ({
   options,
   activeFilters,
   onFiltersChange,
-  onFieldValuesChange,
 }: KlassekoderFilterProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [fields, setFields] = useState({
-    hovedkonto: "",
-    underkonto: "",
-    artId: "",
-  });
+  const handleAddFilter = (field: keyof ActiveFilters, value: string) => {
+    // For artID, allow only numeric input
+    if (field === "artID" && isNaN(Number(value))) return;
 
-  const suggestions = useMemo(() => {
-    return getSortedSuggestions(options, inputValue.trim(), isFocused);
-  }, [inputValue, isFocused, options]);
-
-  const handleSearch = () => {
-    const trimmed = inputValue.trim();
-    if (trimmed && !activeFilters.includes(trimmed)) {
-      onFiltersChange([...activeFilters, trimmed]);
-      setInputValue("");
+    const currentValues = activeFilters[field];
+    if (!currentValues.includes(value)) {
+      onFiltersChange(field, [...currentValues, value]);
     }
   };
 
-  const handleRemoveFilter = (filter: string) => {
-    onFiltersChange(activeFilters.filter((f) => f !== filter));
+  const handleRemoveFilter = (field: keyof ActiveFilters, value: string) => {
+    const updated = activeFilters[field].filter((f) => f !== value);
+    onFiltersChange(field, updated);
   };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    if (!activeFilters.includes(suggestion)) {
-      onFiltersChange([...activeFilters, suggestion]);
-    }
-    setInputValue("");
-  };
-
-  const handleFieldChange = (key: keyof typeof fields, value: string) => {
-    const updated = { ...fields, [key]: value };
-    setFields(updated);
-    onFieldValuesChange?.(updated);
-  };
-
-  const shouldShowSuggestionBox = isFocused || inputValue.trim().length > 0;
 
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-group"]}>
-        <div className={styles["filter-field"]}>
-          <BodyShort size="small">Klassekode</BodyShort>
-          <div className={styles["search-container"]}>
-            <Search
-              label="Søk"
-              size="small"
-              value={inputValue}
-              onChange={setInputValue}
-              onSearchClick={handleSearch}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch();
-              }}
-            />
-            {shouldShowSuggestionBox && (
-              <ul className={styles["suggestions-list"]}>
-                {suggestions.length > 0 ? (
-                  suggestions.map((suggestion) => (
-                    <button
-                      key={suggestion}
-                      className={styles["suggestion-item"]}
-                      onClick={() => handleSuggestionClick(suggestion)}
-                    >
-                      {suggestion}
-                    </button>
-                  ))
-                ) : (
-                  <li className={styles["no-results"]}>Ingen treff</li>
-                )}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        {["Hovedkontonr", "Underkontonr", "Art-ID"].map((label) => {
-          const key = label
-            .toLowerCase()
-            .replace("-", "") as keyof typeof fields;
-          return (
-            <div key={label} className={styles["filter-field"]}>
-              <BodyShort size="small">{label}</BodyShort>
-              <input
-                className={styles["input"]}
-                type="text"
-                value={fields[key]}
-                onChange={(e) => handleFieldChange(key, e.target.value)}
-              />
-            </div>
-          );
-        })}
+        <FilterInputWithSuggestions
+          label="Klassekode"
+          options={options.klassekoder}
+          activeValues={activeFilters.klassekoder}
+          onValueAdd={(val) => handleAddFilter("klassekoder", val)}
+        />
+        <FilterInputWithSuggestions
+          label="Hovedkontonr"
+          options={options.hovedkontoNr}
+          activeValues={activeFilters.hovedkontoNr}
+          onValueAdd={(val) => handleAddFilter("hovedkontoNr", val)}
+        />
+        <FilterInputWithSuggestions
+          label="Underkontonr"
+          options={options.underkontoNr}
+          activeValues={activeFilters.underkontoNr}
+          onValueAdd={(val) => handleAddFilter("underkontoNr", val)}
+        />
+        <FilterInputWithSuggestions
+          label="Art-ID"
+          options={options.artID}
+          activeValues={activeFilters.artID}
+          onValueAdd={(val) => handleAddFilter("artID", val)}
+        />
       </div>
 
-      {activeFilters.length > 0 && (
+      {/* Active filters display */}
+      {Object.entries(activeFilters).some(
+        ([, values]) => values.length > 0,
+      ) && (
         <Chips className={styles["filter-tags"]}>
-          {activeFilters.map((filter) => (
-            <Chips.Removable
-              key={filter}
-              onClick={() => handleRemoveFilter(filter)}
-              className={styles["custom-chip"]}
-            >
-              {filter}
-            </Chips.Removable>
-          ))}
+          {Object.entries(activeFilters).map(([field, values]) =>
+            values.map((value: string) => (
+              <Chips.Removable
+                key={`${field}-${value}`}
+                onClick={() =>
+                  handleRemoveFilter(field as keyof ActiveFilters, value)
+                }
+                className={styles["custom-chip"]}
+              >
+                {`${value}`}
+              </Chips.Removable>
+            )),
+          )}
         </Chips>
       )}
     </div>
