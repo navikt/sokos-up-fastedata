@@ -18,6 +18,7 @@
   flex-direction: column;
   gap: 0.25rem;
   min-width: 180px;
+  position: relative;
 }
 
 .input-wrapper {
@@ -48,4 +49,72 @@
 
 .icon-button:hover {
   background-color: #f3f4f6;
+}
+
+.suggestions-list {
+  margin-top: 8px;
+  padding: 0;
+  list-style: none;
+  border: 1px solid gray;
+  border-radius: 4px;
+  background-color: #fff;
+  max-height: 120px;
+  overflow-y: auto;
+  animation: fade-in 0.2s ease-out;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.suggestion-item {
+  padding: 4px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.no-results {
+  padding: 4px;
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.filter-tags {
+  margin-top: 1rem;
+}
+
+.custom-chip {
+  background-color: #e5e7eb;
+  color: #333;
+  border-radius: 16px;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.custom-chip:hover {
+  background-color: #ccc;
+}
+
+.custom-chip:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #2563eb;
 }

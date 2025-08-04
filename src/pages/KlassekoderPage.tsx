@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetKlassekoder } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -8,6 +9,18 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const filteredData = useMemo(() => {
+    if (!data) return [];
+
+    if (filters.length === 0) return data;
+
+    return data.filter((item) => {
+      const value = item.kodeKlasse.toLowerCase();
+      return filters.some((filter) => value.includes(filter.toLowerCase()));
+    });
+  }, [data, filters]);
 
   if (isLoading) return <ContentLoader />;
 
@@ -25,12 +38,18 @@ export const KlassekoderPage = () => {
 
         <BackHomeBox />
 
-        <KlassekoderFilter />
+        {data && (
+          <KlassekoderFilter
+            options={data.map((item) => item.kodeKlasse)}
+            activeFilters={filters}
+            onFiltersChange={setFilters}
+          />
+        )}
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
-        ) : data && data.length > 0 ? (
-          <KlassekoderTable data={data} />
+        ) : filteredData.length > 0 ? (
+          <KlassekoderTable data={filteredData} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}
