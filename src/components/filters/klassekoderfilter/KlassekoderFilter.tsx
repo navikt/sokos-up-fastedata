@@ -91,7 +91,6 @@ const KlassekoderFilter = ({
                 <Chips.Removable
                   key={`${key}-${value}`}
                   onClick={() => handleRemove(key, value)}
-                  className={styles["custom-chip"]}
                 >
                   {`${labelPrefix(key)}: ${value}`}
                 </Chips.Removable>
