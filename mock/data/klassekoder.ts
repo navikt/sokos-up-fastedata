@@ -220,7 +220,7 @@ export const klassekoderList: Klassekoder[] = [
   {
     kodeKlasse: "UTBETALING",
     kodeFagomraade: "MPENBAL",
-    artID: 26,
+    artID: 76,
     datoFom: "1900-01-01",
     datoTom: "9999-12-31",
     hovedkontoNr: "063",
@@ -229,7 +229,7 @@ export const klassekoderList: Klassekoder[] = [
   {
     kodeKlasse: "UTBETALING",
     kodeFagomraade: "MPENDIV",
-    artID: 26,
+    artID: 16,
     datoFom: "1900-01-01",
     datoTom: "9999-12-31",
     hovedkontoNr: "063",
@@ -238,7 +238,7 @@ export const klassekoderList: Klassekoder[] = [
   {
     kodeKlasse: "UTBETALING",
     kodeFagomraade: "MPENALLE",
-    artID: 26,
+    artID: 66,
     datoFom: "1900-01-01",
     datoTom: "9999-12-31",
     hovedkontoNr: "063",

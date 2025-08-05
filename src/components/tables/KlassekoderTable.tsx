@@ -14,7 +14,6 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   const [pageSize] = useState(10);
 
   const sortedData = sortData(data, sort);
-
   const totalPages = Math.ceil(sortedData.length / pageSize);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * pageSize,
@@ -41,16 +40,16 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader sortKey="kodeKlasse" sortable>
-              Klasskoder
+              Klassekoder
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="artID" sortable>
               Art ID
             </Table.ColumnHeader>
-            <Table.ColumnHeader>Dato fom</Table.ColumnHeader>
-            <Table.ColumnHeader>Dato tom</Table.ColumnHeader>
-            <Table.ColumnHeader>Hovedkontonr</Table.ColumnHeader>
-            <Table.ColumnHeader>Underkontonr</Table.ColumnHeader>
-            <Table.ColumnHeader>Fagområde</Table.ColumnHeader>
+            <Table.HeaderCell>Dato fom</Table.HeaderCell>
+            <Table.HeaderCell>Dato tom</Table.HeaderCell>
+            <Table.HeaderCell>Hovedkontonr</Table.HeaderCell>
+            <Table.HeaderCell>Underkontonr</Table.HeaderCell>
+            <Table.HeaderCell>Fagområde</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -67,6 +66,7 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
+
       <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
