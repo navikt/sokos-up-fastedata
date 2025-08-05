@@ -26,7 +26,6 @@ const KlassekoderFilter = ({
   onFiltersChange,
 }: KlassekoderFilterProps) => {
   const handleAddFilter = (field: keyof ActiveFilters, value: string) => {
-    // For artID, allow only numeric input
     if (field === "artID" && isNaN(Number(value))) return;
 
     const currentValues = activeFilters[field];
@@ -69,13 +68,12 @@ const KlassekoderFilter = ({
         />
       </div>
 
-      {/* Active filters display */}
       {Object.entries(activeFilters).some(
         ([, values]) => values.length > 0,
       ) && (
         <Chips className={styles["filter-tags"]}>
           {Object.entries(activeFilters).map(([field, values]) =>
-            values.map((value: string) => (
+            (values as string[]).map((value: string) => (
               <Chips.Removable
                 key={`${field}-${value}`}
                 onClick={() =>
@@ -83,7 +81,7 @@ const KlassekoderFilter = ({
                 }
                 className={styles["custom-chip"]}
               >
-                {`${value}`}
+                {value}
               </Chips.Removable>
             )),
           )}

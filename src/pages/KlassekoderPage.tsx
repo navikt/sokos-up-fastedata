@@ -69,7 +69,7 @@ export const KlassekoderPage = () => {
       klassekoder: [...new Set(filteredData.map((item) => item.kodeKlasse))],
       hovedkontoNr: [...new Set(filteredData.map((item) => item.hovedkontoNr))],
       underkontoNr: [...new Set(filteredData.map((item) => item.underkontoNr))],
-      artID: [...new Set(filteredData.map((item) => item.artID.toString()))], // convert to string for input
+      artID: [...new Set(filteredData.map((item) => item.artID.toString()))],
     };
   }, [filteredData]);
 
