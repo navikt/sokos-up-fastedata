@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
@@ -13,6 +13,11 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
+  // Reset to page 1 when filtered data changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
+
   const sortedData = sortData(data, sort);
   const totalPages = Math.ceil(sortedData.length / pageSize);
   const paginatedData = sortedData.slice(
@@ -20,8 +25,8 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
     currentPage * pageSize,
   );
 
-  const filterKey = JSON.stringify(data.map((d) => d.kodeKlasse).sort());
-  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${filterKey}`;
+  // Safer table key based on data length only
+  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${data.length}`;
 
   return (
     <>
