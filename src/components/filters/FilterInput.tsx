@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { BodyShort, Search } from "@navikt/ds-react";
-import { getSortedSuggestions } from "../../../util/suggestionUtil";
-import styles from "./klassekoderfilter.module.css";
+import { getSortedSuggestions } from "../../util/suggestionUtil";
+import styles from "./klassekoderfilter/KlassekoderFilter.module.css";
 
 interface FilterInputWithSuggestionsProps {
   label: string;

@@ -1,5 +1,6 @@
+import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
-import FilterInput from "./FilterInput";
+import FilterInput from "../FilterInput";
 import styles from "./KlassekoderFilter.module.css";
 
 const fields = [
@@ -103,6 +104,8 @@ const KlassekoderFilter = ({
             size="small"
             onClick={handleResetFilters}
             className={styles["reset-button"]}
+            iconPosition="right"
+            icon={<XMarkIcon aria-hidden />}
           >
             Nullstill Filter
           </Button>
