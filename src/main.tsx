@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@navikt/ds-css";
 import App from "./App";
 import "./index.css";
 

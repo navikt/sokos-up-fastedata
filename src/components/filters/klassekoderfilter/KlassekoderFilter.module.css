@@ -128,9 +128,9 @@
 .custom-chip {
   background-color: #2563eb;
   color: white;
-  border-radius: 16px;
-  padding: 4px 8px;
-  font-size: 14px;
+  border-radius: 1rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 }
 
 .custom-chip:hover {
