@@ -6,6 +6,10 @@ import ContentLoader from "../components/content-loader/ContentLoader";
 import KlassekoderFilter from "../components/filters/klassekoderfilter/KlassekoderFilter";
 import KlassekoderTable from "../components/tables/KlassekoderTable";
 import commonstyles from "../styles/Commonstyles.module.css";
+import {
+  filterKlassekoder,
+  getAvailableOptions,
+} from "../util/filterKlassekoder";
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
@@ -29,48 +33,11 @@ export const KlassekoderPage = () => {
 
   const filteredData = useMemo(() => {
     if (!data) return [];
-
-    return data.filter((item) => {
-      const matches = {
-        klassekoder:
-          filters.klassekoder.length === 0 ||
-          filters.klassekoder.some((f) =>
-            item.kodeKlasse.toLowerCase().includes(f.toLowerCase()),
-          ),
-        hovedkontoNr:
-          filters.hovedkontoNr.length === 0 ||
-          filters.hovedkontoNr.some((f) =>
-            item.hovedkontoNr?.toLowerCase().includes(f.toLowerCase()),
-          ),
-        underkontoNr:
-          filters.underkontoNr.length === 0 ||
-          filters.underkontoNr.some((f) =>
-            item.underkontoNr?.toLowerCase().includes(f.toLowerCase()),
-          ),
-        artID:
-          filters.artID.length === 0 ||
-          filters.artID.some((f) => {
-            const filterNumber = parseInt(f, 10);
-            return !isNaN(filterNumber) && item.artID === filterNumber;
-          }),
-      };
-
-      return (
-        matches.klassekoder &&
-        matches.hovedkontoNr &&
-        matches.underkontoNr &&
-        matches.artID
-      );
-    });
+    return filterKlassekoder(data, filters);
   }, [data, filters]);
 
   const availableOptions = useMemo(() => {
-    return {
-      klassekoder: [...new Set(filteredData.map((item) => item.kodeKlasse))],
-      hovedkontoNr: [...new Set(filteredData.map((item) => item.hovedkontoNr))],
-      underkontoNr: [...new Set(filteredData.map((item) => item.underkontoNr))],
-      artID: [...new Set(filteredData.map((item) => item.artID.toString()))],
-    };
+    return getAvailableOptions(filteredData);
   }, [filteredData]);
 
   if (isLoading) return <ContentLoader />;

@@ -1,5 +1,5 @@
 import { Chips } from "@navikt/ds-react";
-import FilterInputWithSuggestions from "./FilterInputWithSuggestions";
+import FilterInput from "./FilterInput";
 import styles from "./KlassekoderFilter.module.css";
 
 interface ActiveFilters {
@@ -42,25 +42,25 @@ const KlassekoderFilter = ({
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-group"]}>
-        <FilterInputWithSuggestions
+        <FilterInput
           label="Klassekode"
           options={options.klassekoder}
           activeValues={activeFilters.klassekoder}
           onValueAdd={(val) => handleAddFilter("klassekoder", val)}
         />
-        <FilterInputWithSuggestions
+        <FilterInput
           label="Hovedkontonr"
           options={options.hovedkontoNr}
           activeValues={activeFilters.hovedkontoNr}
           onValueAdd={(val) => handleAddFilter("hovedkontoNr", val)}
         />
-        <FilterInputWithSuggestions
+        <FilterInput
           label="Underkontonr"
           options={options.underkontoNr}
           activeValues={activeFilters.underkontoNr}
           onValueAdd={(val) => handleAddFilter("underkontoNr", val)}
         />
-        <FilterInputWithSuggestions
+        <FilterInput
           label="Art-ID"
           options={options.artID}
           activeValues={activeFilters.artID}

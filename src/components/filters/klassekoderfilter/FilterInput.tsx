@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { BodyShort, Search } from "@navikt/ds-react";
 import { getSortedSuggestions } from "../../../util/suggestionUtil";
-import styles from "./FilterInputWithSuggestions.module.css";
+import styles from "./klassekoderfilter.module.css";
 
 interface FilterInputWithSuggestionsProps {
   label: string;
@@ -10,7 +10,7 @@ interface FilterInputWithSuggestionsProps {
   onValueAdd: (value: string) => void;
 }
 
-const FilterInputWithSuggestions = ({
+const FilterInput = ({
   label,
   options,
   activeValues,
@@ -78,4 +78,4 @@ const FilterInputWithSuggestions = ({
   );
 };
 
-export default FilterInputWithSuggestions;
+export default FilterInput;

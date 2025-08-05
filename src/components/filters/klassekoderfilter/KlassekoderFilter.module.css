@@ -51,8 +51,12 @@
   background-color: #f3f4f6;
 }
 
+.search-container {
+  position: relative;
+}
+
 .suggestions-list {
-  margin-top: 70px;
+  margin-top: 0.25rem; /* Kept the smaller value for consistent spacing */
   padding: 0;
   list-style: none;
   border: 1px solid gray;
@@ -79,12 +83,13 @@
 }
 
 .suggestion-item {
-  padding: 4px;
+  padding: 4px 8px; /* Kept the more complete padding */
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   width: 100%;
+  font-size: 0.95rem; /* Kept the more specific font-size */
 }
 
 .suggestion-item:hover {
@@ -92,10 +97,11 @@
 }
 
 .no-results {
-  padding: 4px;
+  padding: 4px 8px; /* Unified padding */
   text-align: center;
   color: #6b7280;
   font-style: italic;
+  font-size: 0.9rem; /* Kept the more specific font-size */
 }
 
 .filter-tags {
