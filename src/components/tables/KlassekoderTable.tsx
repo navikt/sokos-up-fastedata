@@ -23,6 +23,7 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   return (
     <>
       <Table
+        key={`${sort?.orderBy}-${sort?.direction}-${currentPage}`}
         zebraStripes
         size="small"
         sort={sort}
