@@ -20,10 +20,13 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
     currentPage * pageSize,
   );
 
+  const filterKey = JSON.stringify(data.map((d) => d.kodeKlasse).sort());
+  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${filterKey}`;
+
   return (
     <>
       <Table
-        key={`${sort?.orderBy}-${sort?.direction}-${currentPage}`}
+        key={tableKey}
         zebraStripes
         size="small"
         sort={sort}
