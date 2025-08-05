@@ -64,6 +64,15 @@ export const KlassekoderPage = () => {
     });
   }, [data, filters]);
 
+  const availableOptions = useMemo(() => {
+    return {
+      klassekoder: [...new Set(filteredData.map((item) => item.kodeKlasse))],
+      hovedkontoNr: [...new Set(filteredData.map((item) => item.hovedkontoNr))],
+      underkontoNr: [...new Set(filteredData.map((item) => item.underkontoNr))],
+      artID: [...new Set(filteredData.map((item) => item.artID.toString()))], // convert to string for input
+    };
+  }, [filteredData]);
+
   if (isLoading) return <ContentLoader />;
 
   return (
@@ -82,12 +91,7 @@ export const KlassekoderPage = () => {
 
         {data && (
           <KlassekoderFilter
-            options={{
-              klassekoder: data.map((item) => item.kodeKlasse),
-              hovedkontoNr: data.map((item) => item.hovedkontoNr),
-              underkontoNr: data.map((item) => item.underkontoNr),
-              artID: data.map((item) => item.artID.toString()), // Convert number to string for input options
-            }}
+            options={availableOptions}
             activeFilters={filters}
             onFiltersChange={handleFilterChange}
           />
