@@ -17,8 +17,22 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  min-width: 180px;
   position: relative;
+  flex: 1 1 100%;
+  max-width: 320px;
+}
+
+.small-filter-field {
+  flex: 1 1 40%;
+  max-width: 180px;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .input-wrapper {
@@ -56,7 +70,7 @@
 }
 
 .suggestions-list {
-  margin-top: 0.25rem; /* Kept the smaller value for consistent spacing */
+  margin-top: 0.25rem;
   padding: 0;
   list-style: none;
   border: 1px solid gray;
@@ -83,13 +97,13 @@
 }
 
 .suggestion-item {
-  padding: 4px 8px; /* Kept the more complete padding */
+  padding: 4px 8px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   width: 100%;
-  font-size: 0.95rem; /* Kept the more specific font-size */
+  font-size: 0.95rem;
 }
 
 .suggestion-item:hover {
@@ -97,30 +111,40 @@
 }
 
 .no-results {
-  padding: 4px 8px; /* Unified padding */
+  padding: 4px 8px;
   text-align: center;
   color: #6b7280;
   font-style: italic;
-  font-size: 0.9rem; /* Kept the more specific font-size */
+  font-size: 0.9rem;
 }
 
 .filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-top: 1rem;
 }
 
 .custom-chip {
-  background-color: #e5e7eb;
-  color: #333;
+  background-color: #2563eb;
+  color: white;
   border-radius: 16px;
   padding: 4px 8px;
   font-size: 14px;
 }
 
 .custom-chip:hover {
-  background-color: #ccc;
+  background-color: #1d4ed8;
 }
 
 .custom-chip:focus {
   outline: none;
   box-shadow: 0 0 0 2px #2563eb;
+}
+
+.reset-button {
+  color: #2563eb;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.25rem;
 }

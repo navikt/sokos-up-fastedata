@@ -1,6 +1,15 @@
-import { Chips } from "@navikt/ds-react";
+import { Button, Chips } from "@navikt/ds-react";
 import FilterInput from "./FilterInput";
 import styles from "./KlassekoderFilter.module.css";
+
+const fields = [
+  { key: "klassekoder", label: "Klassekode", isSmall: false },
+  { key: "hovedkontoNr", label: "Hovedkontonr", isSmall: true },
+  { key: "underkontoNr", label: "Underkontonr", isSmall: true },
+  { key: "artID", label: "Art-ID", isSmall: true },
+] as const;
+
+type FilterKey = (typeof fields)[number]["key"];
 
 interface ActiveFilters {
   klassekoder: string[];
@@ -10,14 +19,9 @@ interface ActiveFilters {
 }
 
 interface KlassekoderFilterProps {
-  options: {
-    klassekoder: string[];
-    hovedkontoNr: string[];
-    underkontoNr: string[];
-    artID: string[];
-  };
+  options: ActiveFilters;
   activeFilters: ActiveFilters;
-  onFiltersChange: (field: keyof ActiveFilters, values: string[]) => void;
+  onFiltersChange: (field: FilterKey, values: string[]) => void;
 }
 
 const KlassekoderFilter = ({
@@ -25,67 +29,84 @@ const KlassekoderFilter = ({
   activeFilters,
   onFiltersChange,
 }: KlassekoderFilterProps) => {
-  const handleAddFilter = (field: keyof ActiveFilters, value: string) => {
+  const handleAdd = (field: FilterKey, value: string) => {
     if (field === "artID" && isNaN(Number(value))) return;
-
-    const currentValues = activeFilters[field];
-    if (!currentValues.includes(value)) {
-      onFiltersChange(field, [...currentValues, value]);
+    if (!activeFilters[field].includes(value)) {
+      onFiltersChange(field, [...activeFilters[field], value]);
     }
   };
 
-  const handleRemoveFilter = (field: keyof ActiveFilters, value: string) => {
-    const updated = activeFilters[field].filter((f) => f !== value);
-    onFiltersChange(field, updated);
+  const handleRemove = (field: FilterKey, value: string) => {
+    onFiltersChange(
+      field,
+      activeFilters[field].filter((f) => f !== value),
+    );
+  };
+
+  const handleResetFilters = () => {
+    fields.forEach(({ key }) => {
+      onFiltersChange(key, []);
+    });
+  };
+
+  const labelPrefix = (key: FilterKey) => {
+    switch (key) {
+      case "klassekoder":
+        return "Klassekode";
+      case "hovedkontoNr":
+        return "Hovedkontonr";
+      case "underkontoNr":
+        return "Underkontonr";
+      case "artID":
+        return "Art-ID";
+    }
   };
 
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-group"]}>
-        <FilterInput
-          label="Klassekode"
-          options={options.klassekoder}
-          activeValues={activeFilters.klassekoder}
-          onValueAdd={(val) => handleAddFilter("klassekoder", val)}
-        />
-        <FilterInput
-          label="Hovedkontonr"
-          options={options.hovedkontoNr}
-          activeValues={activeFilters.hovedkontoNr}
-          onValueAdd={(val) => handleAddFilter("hovedkontoNr", val)}
-        />
-        <FilterInput
-          label="Underkontonr"
-          options={options.underkontoNr}
-          activeValues={activeFilters.underkontoNr}
-          onValueAdd={(val) => handleAddFilter("underkontoNr", val)}
-        />
-        <FilterInput
-          label="Art-ID"
-          options={options.artID}
-          activeValues={activeFilters.artID}
-          onValueAdd={(val) => handleAddFilter("artID", val)}
-        />
+        {fields.map(({ key, label, isSmall }) => (
+          <div
+            key={key}
+            className={`${styles["filter-field"]} ${
+              isSmall ? styles["small-filter-field"] : ""
+            }`}
+          >
+            <FilterInput
+              label={label}
+              options={options[key]}
+              activeValues={activeFilters[key]}
+              onValueAdd={(val) => handleAdd(key, val)}
+            />
+          </div>
+        ))}
       </div>
 
-      {Object.entries(activeFilters).some(
-        ([, values]) => values.length > 0,
-      ) && (
-        <Chips className={styles["filter-tags"]}>
-          {Object.entries(activeFilters).map(([field, values]) =>
-            (values as string[]).map((value: string) => (
-              <Chips.Removable
-                key={`${field}-${value}`}
-                onClick={() =>
-                  handleRemoveFilter(field as keyof ActiveFilters, value)
-                }
-                className={styles["custom-chip"]}
-              >
-                {value}
-              </Chips.Removable>
-            )),
-          )}
-        </Chips>
+      {fields.some(({ key }) => activeFilters[key].length > 0) && (
+        <div className={styles["filter-actions"]}>
+          <Chips className={styles["filter-tags"]}>
+            {fields.flatMap(({ key }) =>
+              activeFilters[key].map((value) => (
+                <Chips.Removable
+                  key={`${key}-${value}`}
+                  onClick={() => handleRemove(key, value)}
+                  className={styles["custom-chip"]}
+                >
+                  {`${labelPrefix(key)}: ${value}`}
+                </Chips.Removable>
+              )),
+            )}
+          </Chips>
+
+          <Button
+            variant="tertiary"
+            size="small"
+            onClick={handleResetFilters}
+            className={styles["reset-button"]}
+          >
+            Nullstill Filter
+          </Button>
+        </div>
       )}
     </div>
   );
