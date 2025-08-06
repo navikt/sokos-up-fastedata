@@ -8,6 +8,7 @@ const fields = [
   { key: "hovedkontoNr", label: "Hovedkontonr", isSmall: true },
   { key: "underkontoNr", label: "Underkontonr", isSmall: true },
   { key: "artID", label: "Art-ID", isSmall: true },
+  { key: "fagomraade", label: "Fagområde", isSmall: true },
 ] as const;
 
 type FilterKey = (typeof fields)[number]["key"];
@@ -17,6 +18,7 @@ interface ActiveFilters {
   hovedkontoNr: string[];
   underkontoNr: string[];
   artID: string[];
+  fagomraade: string[];
 }
 
 interface KlassekoderFilterProps {
@@ -60,6 +62,8 @@ const KlassekoderFilter = ({
         return "Underkontonr";
       case "artID":
         return "Art-ID";
+      case "fagomraade":
+        return "Fagområde";
     }
   };
 

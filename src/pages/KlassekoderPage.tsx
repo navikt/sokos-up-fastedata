@@ -19,6 +19,7 @@ export const KlassekoderPage = () => {
     hovedkontoNr: [] as string[],
     underkontoNr: [] as string[],
     artID: [] as string[],
+    fagomraade: [] as string[],
   });
 
   const handleFilterChange = (

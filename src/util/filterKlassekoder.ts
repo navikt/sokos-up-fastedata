@@ -1,16 +1,15 @@
 import { Klassekoder } from "../types/Klassekoder";
 
-// correct file name
-
 export interface Filters {
   klassekoder: string[];
   hovedkontoNr: string[];
   underkontoNr: string[];
   artID: string[];
+  fagomraade: string[];
 }
 
 export const filterKlassekoder = (
-  data: Klassekoder[], // <-- use the correct type here
+  data: Klassekoder[],
   filters: Filters,
 ): Klassekoder[] => {
   return data.filter((item) => {
@@ -39,11 +38,20 @@ export const filterKlassekoder = (
         return !isNaN(filterNumber) && item.artID === filterNumber;
       });
 
+    const matchesFagomraade =
+      filters.fagomraade.length === 0 ||
+      filters.fagomraade.some((f) =>
+        (item.kodeFagomraade || "Ingen")
+          .toLowerCase()
+          .includes(f.toLowerCase()),
+      );
+
     return (
       matchesKlassekoder &&
       matchesHovedkontoNr &&
       matchesUnderkontoNr &&
-      matchesArtID
+      matchesArtID &&
+      matchesFagomraade
     );
   });
 };
@@ -54,5 +62,8 @@ export const getAvailableOptions = (data: Klassekoder[]) => {
     hovedkontoNr: [...new Set(data.map((item) => item.hovedkontoNr))],
     underkontoNr: [...new Set(data.map((item) => item.underkontoNr))],
     artID: [...new Set(data.map((item) => item.artID.toString()))],
+    fagomraade: [
+      ...new Set(data.map((item) => item.kodeFagomraade || "Ingen")),
+    ],
   };
 };
