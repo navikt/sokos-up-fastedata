@@ -1,29 +1,13 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
+import commonStyles from "../CommonFilterStyles.module.css";
 import FilterInput from "../FilterInput";
 import styles from "./KlassekoderFilter.module.css";
-
-const fields = [
-  { key: "klassekoder", label: "Klassekode" },
-  { key: "hovedkontoNr", label: "Hovedkontonr" },
-  { key: "underkontoNr", label: "Underkontonr" },
-  { key: "artID", label: "Art-ID" },
-  { key: "fagomraade", label: "Fagområde" },
-] as const;
-
-type FilterKey = (typeof fields)[number]["key"];
-
-interface ActiveFilters {
-  klassekoder: string[];
-  hovedkontoNr: string[];
-  underkontoNr: string[];
-  artID: string[];
-  fagomraade: string[];
-}
+import { FilterKey, klassekoderFields } from "./fieldConfig";
 
 interface KlassekoderFilterProps {
-  options: ActiveFilters;
-  activeFilters: ActiveFilters;
+  options: Record<FilterKey, string[]>;
+  activeFilters: Record<FilterKey, string[]>;
   onFiltersChange: (field: FilterKey, values: string[]) => void;
 }
 
@@ -47,30 +31,20 @@ const KlassekoderFilter = ({
   };
 
   const handleResetFilters = () => {
-    fields.forEach(({ key }) => {
+    klassekoderFields.forEach(({ key }) => {
       onFiltersChange(key, []);
     });
   };
 
   const labelPrefix = (key: FilterKey) => {
-    switch (key) {
-      case "klassekoder":
-        return "Klassekode";
-      case "hovedkontoNr":
-        return "Hovedkontonr";
-      case "underkontoNr":
-        return "Underkontonr";
-      case "artID":
-        return "Art-ID";
-      case "fagomraade":
-        return "Fagområde";
-    }
+    const label = klassekoderFields.find((f) => f.key === key)?.label;
+    return label || key;
   };
 
   return (
-    <div className={styles["filter-container"]}>
+    <div className={commonStyles["filter-container"]}>
       <div className={styles["filter-group"]}>
-        {fields.map(({ key, label }) => (
+        {klassekoderFields.map(({ key, label }) => (
           <div
             key={key}
             className={`${styles["filter-field"]} ${styles[`${key}-filter-field`] || ""}`}
@@ -85,10 +59,10 @@ const KlassekoderFilter = ({
         ))}
       </div>
 
-      {fields.some(({ key }) => activeFilters[key].length > 0) && (
+      {klassekoderFields.some(({ key }) => activeFilters[key].length > 0) && (
         <div className={styles["filter-actions"]}>
           <Chips className={styles["filter-tags"]}>
-            {fields.flatMap(({ key }) =>
+            {klassekoderFields.flatMap(({ key }) =>
               activeFilters[key].map((value) => (
                 <Chips.Removable
                   key={`${key}-${value}`}

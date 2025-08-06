@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { BodyShort, Search } from "@navikt/ds-react";
 import { getSortedSuggestions } from "../../util/suggestionUtil";
-import styles from "./klassekoderfilter/KlassekoderFilter.module.css";
+import styles from "./CommonFilterStyles.module.css";
 
-interface FilterInputWithSuggestionsProps {
+interface FilterInputProps {
   label: string;
   options: string[];
   activeValues: string[];
@@ -15,7 +15,7 @@ const FilterInput = ({
   options,
   activeValues,
   onValueAdd,
-}: FilterInputWithSuggestionsProps) => {
+}: FilterInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -41,7 +41,7 @@ const FilterInput = ({
   const shouldShowSuggestionBox = isFocused || inputValue.trim().length > 0;
 
   return (
-    <div className={styles["filter-field"]}>
+    <div>
       <BodyShort size="small">{label}</BodyShort>
       <div className={styles["search-container"]}>
         <Search

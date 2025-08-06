@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
-import { BodyShort, Chips, Search } from "@navikt/ds-react";
+import { useMemo } from "react";
+import { Chips } from "@navikt/ds-react";
 import { Fagomraader } from "../../../types/Fagomraader";
-import { getSortedSuggestions } from "../../../util/suggestionUtil";
+import commonStyles from "../CommonFilterStyles.module.css";
+import FilterInput from "../FilterInput";
 import styles from "./FagomraaderFilter.module.css";
 
 interface FagomraaderFilterProps {
@@ -15,96 +16,37 @@ const FagomraaderFilter = ({
   activeFilters,
   onFiltersChange,
 }: FagomraaderFilterProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-
   const allOptions = useMemo(() => {
-    const sourceData =
-      activeFilters.length > 0
-        ? data.filter((item) => {
-            const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
-            return activeFilters.some((filter) =>
-              combined.toLowerCase().includes(filter.toLowerCase()),
-            );
-          })
-        : data;
-    return sourceData.map(
+    return data.map(
       (item) => `${item.kodeFagomraade} - ${item.navnFagomraade}`,
     );
-  }, [data, activeFilters]);
+  }, [data]);
 
-  const suggestions = useMemo(() => {
-    return getSortedSuggestions(allOptions, inputValue.trim(), isFocused);
-  }, [inputValue, isFocused, allOptions]);
-
-  const handleSearch = () => {
-    const trimmed = inputValue.trim();
-    if (trimmed && !activeFilters.includes(trimmed)) {
-      onFiltersChange([...activeFilters, trimmed]);
-      setInputValue("");
+  const handleAdd = (value: string) => {
+    if (!activeFilters.includes(value)) {
+      onFiltersChange([...activeFilters, value]);
     }
   };
 
-  const handleRemoveFilter = (filter: string) => {
-    onFiltersChange(activeFilters.filter((f) => f !== filter));
+  const handleRemove = (value: string) => {
+    onFiltersChange(activeFilters.filter((f) => f !== value));
   };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    if (!activeFilters.includes(suggestion)) {
-      onFiltersChange([...activeFilters, suggestion]);
-    }
-    setInputValue("");
-  };
-
-  const shouldShowSuggestionBox = isFocused || inputValue.trim().length > 0;
 
   return (
-    <div className={styles["filter-container"]}>
-      <BodyShort weight="semibold">Filtrer på fagområdekode og navn</BodyShort>
-
-      <div className={styles["search-container"]}>
-        <Search
-          label="Søk"
-          size="small"
-          value={inputValue}
-          onChange={(val) => setInputValue(val)}
-          onSearchClick={handleSearch}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSearch();
-          }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-        />
-        {shouldShowSuggestionBox && (
-          <ul className={styles["suggestions-list"]}>
-            {suggestions.length > 0 ? (
-              suggestions.map((suggestion) => (
-                <button
-                  key={suggestion}
-                  className={styles["suggestion-item"]}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      handleSuggestionClick(suggestion);
-                    }
-                  }}
-                >
-                  {suggestion}
-                </button>
-              ))
-            ) : (
-              <li className={styles["no-results"]}>Ingen treff</li>
-            )}
-          </ul>
-        )}
-      </div>
+    <div className={commonStyles["filter-container"]}>
+      <FilterInput
+        label="Filtrer på fagområdekode og navn"
+        options={allOptions}
+        activeValues={activeFilters}
+        onValueAdd={handleAdd}
+      />
 
       {activeFilters.length > 0 && (
         <Chips className={styles["filter-tags"]}>
           {activeFilters.map((filter) => (
             <Chips.Removable
               key={filter}
-              onClick={() => handleRemoveFilter(filter)}
+              onClick={() => handleRemove(filter)}
               className={styles["custom-chip"]}
             >
               {filter}

@@ -24,9 +24,9 @@
   max-width: 20rem;
 }
 
-.hovedkonto-nr-filter-field,
-.underkonto-nr-filter-field,
-.art-id-filter-field {
+.hovedkontonr-filter-field,
+.underkontonr-filter-field,
+.artid-filter-field {
   flex: 1 1 40%;
   max-width: 14%;
 }
@@ -93,18 +93,6 @@
   width: 100%;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .suggestion-item {
   padding: 4px 8px;
   cursor: pointer;
@@ -125,33 +113,4 @@
   color: #6b7280;
   font-style: italic;
   font-size: 0.9rem;
-}
-
-.filter-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.custom-chip {
-  background-color: #2563eb;
-  color: white;
-  border-radius: 1rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
-.custom-chip:hover {
-  background-color: #1d4ed8;
-}
-
-.custom-chip:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #2563eb;
-}
-
-.reset-button {
-  color: #2563eb;
-  font-weight: bold;
-  cursor: pointer;
 }
