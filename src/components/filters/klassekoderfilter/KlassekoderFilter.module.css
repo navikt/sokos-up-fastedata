@@ -21,12 +21,17 @@
   gap: 0.25rem;
   position: relative;
   flex: 1 1 100%;
-  max-width: 16rem;
+  max-width: 20rem;
 }
 
 .small-filter-field {
   flex: 1 1 40%;
-  max-width: 17.5%;
+  max-width: 14%;
+}
+
+.fagomraade-filter-field {
+  flex: 1 1 35%;
+  max-width: 22%;
 }
 
 .filter-actions {

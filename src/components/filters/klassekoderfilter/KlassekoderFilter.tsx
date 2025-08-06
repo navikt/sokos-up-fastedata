@@ -8,7 +8,7 @@ const fields = [
   { key: "hovedkontoNr", label: "Hovedkontonr", isSmall: true },
   { key: "underkontoNr", label: "Underkontonr", isSmall: true },
   { key: "artID", label: "Art-ID", isSmall: true },
-  { key: "fagomraade", label: "Fagområde", isSmall: true },
+  { key: "fagomraade", label: "Fagområde", isSmall: false },
 ] as const;
 
 type FilterKey = (typeof fields)[number]["key"];
@@ -74,7 +74,11 @@ const KlassekoderFilter = ({
           <div
             key={key}
             className={`${styles["filter-field"]} ${
-              isSmall ? styles["small-filter-field"] : ""
+              key === "fagomraade"
+                ? styles["fagomraade-filter-field"]
+                : isSmall
+                  ? styles["small-filter-field"]
+                  : ""
             }`}
           >
             <FilterInput

@@ -45,6 +45,7 @@ const FilterInput = ({
       <BodyShort size="small">{label}</BodyShort>
       <div className={styles["search-container"]}>
         <Search
+          variant="simple"
           label={label}
           size="small"
           value={inputValue}
