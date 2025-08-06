@@ -4,11 +4,11 @@ import FilterInput from "../FilterInput";
 import styles from "./KlassekoderFilter.module.css";
 
 const fields = [
-  { key: "klassekoder", label: "Klassekode", isSmall: false },
-  { key: "hovedkontoNr", label: "Hovedkontonr", isSmall: true },
-  { key: "underkontoNr", label: "Underkontonr", isSmall: true },
-  { key: "artID", label: "Art-ID", isSmall: true },
-  { key: "fagomraade", label: "Fagområde", isSmall: false },
+  { key: "klassekoder", label: "Klassekode" },
+  { key: "hovedkontoNr", label: "Hovedkontonr" },
+  { key: "underkontoNr", label: "Underkontonr" },
+  { key: "artID", label: "Art-ID" },
+  { key: "fagomraade", label: "Fagområde" },
 ] as const;
 
 type FilterKey = (typeof fields)[number]["key"];
@@ -70,16 +70,10 @@ const KlassekoderFilter = ({
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-group"]}>
-        {fields.map(({ key, label, isSmall }) => (
+        {fields.map(({ key, label }) => (
           <div
             key={key}
-            className={`${styles["filter-field"]} ${
-              key === "fagomraade"
-                ? styles["fagomraade-filter-field"]
-                : isSmall
-                  ? styles["small-filter-field"]
-                  : ""
-            }`}
+            className={`${styles["filter-field"]} ${styles[`${key}-filter-field`] || ""}`}
           >
             <FilterInput
               label={label}
