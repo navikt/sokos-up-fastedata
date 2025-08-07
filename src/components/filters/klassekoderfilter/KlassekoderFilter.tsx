@@ -44,10 +44,10 @@ const KlassekoderFilter = ({
   return (
     <div className={commonStyles["filter-container"]}>
       <div className={styles["search-bar-group"]}>
-        {klassekoderFields.map(({ key, label }) => (
+        {klassekoderFields.map(({ key, label, name }) => (
           <div
             key={key}
-            className={`${styles["search-container"]} ${styles[`${label}-filter-field`] || ""}`}
+            className={`${styles["search-container"]} ${styles[`${name}-search-container`] || ""}`}
           >
             <FilterInput
               label={label}

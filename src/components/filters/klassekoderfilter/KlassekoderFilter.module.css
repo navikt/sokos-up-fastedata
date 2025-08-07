@@ -1,37 +1,25 @@
-.filter-container {
-  background-color: #dbeafe;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.filter-group {
+.search-bar-group {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
-.filter-field {
+.search-container {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
   position: relative;
   flex: 1 1 100%;
   max-width: 20rem;
 }
 
-.hovedkontonr-filter-field,
-.underkontonr-filter-field,
-.artid-filter-field {
+.hovedkonto-search-container,
+.underkonto-search-container,
+.artid-search-container {
   flex: 1 1 40%;
   max-width: 14%;
 }
 
-.fagomraade-filter-field {
+.fagomraade-search-container {
   flex: 1 1 35%;
   max-width: 22%;
 }
@@ -42,75 +30,4 @@
   gap: 1rem;
   margin-top: 1rem;
   flex-wrap: wrap;
-}
-
-.input-wrapper {
-  display: flex;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: white;
-}
-
-.input {
-  flex: 1;
-  border: none;
-  padding: 0.5rem;
-  font-size: 1rem;
-  outline: none;
-}
-
-.icon-button {
-  border: none;
-  background: transparent;
-  padding: 0 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.icon-button:hover {
-  background-color: #f3f4f6;
-}
-
-.search-container {
-  position: relative;
-}
-
-.suggestions-list {
-  margin-top: 0.25rem;
-  padding: 0;
-  list-style: none;
-  border: 1px solid gray;
-  border-radius: 4px;
-  background-color: #fff;
-  max-height: 120px;
-  overflow-y: auto;
-  animation: fade-in 0.2s ease-out;
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-}
-
-.suggestion-item {
-  padding: 4px 8px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  text-align: left;
-  width: 100%;
-  font-size: 0.95rem;
-}
-
-.suggestion-item:hover {
-  background-color: #f0f0f0;
-}
-
-.no-results {
-  padding: 4px 8px;
-  text-align: center;
-  color: #6b7280;
-  font-style: italic;
-  font-size: 0.9rem;
 }
