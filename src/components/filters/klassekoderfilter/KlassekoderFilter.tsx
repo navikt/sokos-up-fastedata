@@ -43,11 +43,11 @@ const KlassekoderFilter = ({
 
   return (
     <div className={commonStyles["filter-container"]}>
-      <div className={styles["filter-group"]}>
+      <div className={styles["search-bar-group"]}>
         {klassekoderFields.map(({ key, label }) => (
           <div
             key={key}
-            className={`${styles["filter-field"]} ${styles[`${key}-filter-field`] || ""}`}
+            className={`${styles["search-container"]} ${styles[`${label}-filter-field`] || ""}`}
           >
             <FilterInput
               label={label}
@@ -61,7 +61,7 @@ const KlassekoderFilter = ({
 
       {klassekoderFields.some(({ key }) => activeFilters[key].length > 0) && (
         <div className={styles["filter-actions"]}>
-          <Chips className={styles["filter-tags"]}>
+          <Chips>
             {klassekoderFields.flatMap(({ key }) =>
               activeFilters[key].map((value) => (
                 <Chips.Removable
@@ -78,7 +78,6 @@ const KlassekoderFilter = ({
             variant="tertiary"
             size="small"
             onClick={handleResetFilters}
-            className={styles["reset-button"]}
             iconPosition="right"
             icon={<XMarkIcon aria-hidden />}
           >

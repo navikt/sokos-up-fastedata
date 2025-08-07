@@ -2,17 +2,17 @@
   background-color: #dbeafe;
   border-radius: 12px;
   padding: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 .search-container {
   max-width: 300px;
-  margin-bottom: 1rem;
   position: relative;
+  margin-top: 0.6rem;
 }
 
 .suggestions-list {

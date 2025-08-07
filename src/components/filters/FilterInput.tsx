@@ -42,7 +42,9 @@ const FilterInput = ({
 
   return (
     <div>
-      <BodyShort size="small">{label}</BodyShort>
+      <BodyShort weight="semibold" size="small">
+        {label}
+      </BodyShort>
       <div className={styles["search-container"]}>
         <Search
           variant="simple"

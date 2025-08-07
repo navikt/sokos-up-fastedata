@@ -3,7 +3,6 @@ import { Chips } from "@navikt/ds-react";
 import { Fagomraader } from "../../../types/Fagomraader";
 import commonStyles from "../CommonFilterStyles.module.css";
 import FilterInput from "../FilterInput";
-import styles from "./FagomraaderFilter.module.css";
 
 interface FagomraaderFilterProps {
   data: Fagomraader[];
@@ -34,26 +33,27 @@ const FagomraaderFilter = ({
 
   return (
     <div className={commonStyles["filter-container"]}>
-      <FilterInput
-        label="Filtrer på fagområdekode og navn"
-        options={allOptions}
-        activeValues={activeFilters}
-        onValueAdd={handleAdd}
-      />
+      <div>
+        <FilterInput
+          label="Filtrer på fagområdekode og navn"
+          options={allOptions}
+          activeValues={activeFilters}
+          onValueAdd={handleAdd}
+        />
 
-      {activeFilters.length > 0 && (
-        <Chips className={styles["filter-tags"]}>
-          {activeFilters.map((filter) => (
-            <Chips.Removable
-              key={filter}
-              onClick={() => handleRemove(filter)}
-              className={styles["custom-chip"]}
-            >
-              {filter}
-            </Chips.Removable>
-          ))}
-        </Chips>
-      )}
+        {activeFilters.length > 0 && (
+          <Chips style={{ marginTop: "1.5rem" }}>
+            {activeFilters.map((filter) => (
+              <Chips.Removable
+                key={filter}
+                onClick={() => handleRemove(filter)}
+              >
+                {filter}
+              </Chips.Removable>
+            ))}
+          </Chips>
+        )}
+      </div>
     </div>
   );
 };
