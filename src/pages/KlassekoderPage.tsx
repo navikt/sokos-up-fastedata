@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetKlassekoder } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -13,6 +14,7 @@ import {
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [filters, setFilters] = useState({
     klassekoder: [] as string[],
@@ -22,6 +24,16 @@ export const KlassekoderPage = () => {
     fagomraade: [] as string[],
   });
 
+  useEffect(() => {
+    const fagomraadeParam = searchParams.get("fagomraade");
+    if (fagomraadeParam) {
+      setFilters((prev) => ({
+        ...prev,
+        fagomraade: [fagomraadeParam],
+      }));
+    }
+  }, [searchParams]);
+
   const handleFilterChange = (
     field: keyof typeof filters,
     values: string[],
@@ -30,6 +42,16 @@ export const KlassekoderPage = () => {
       ...prev,
       [field]: values,
     }));
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (field === "fagomraade") {
+      if (values.length > 0) {
+        newSearchParams.set("fagomraade", values[0]);
+      } else {
+        newSearchParams.delete("fagomraade");
+      }
+      setSearchParams(newSearchParams);
+    }
   };
 
   const filteredData = useMemo(() => {
@@ -38,8 +60,8 @@ export const KlassekoderPage = () => {
   }, [data, filters]);
 
   const availableOptions = useMemo(() => {
-    return getAvailableOptions(filteredData);
-  }, [filteredData]);
+    return getAvailableOptions(data || []);
+  }, [data]);
 
   if (isLoading) return <ContentLoader />;
 
