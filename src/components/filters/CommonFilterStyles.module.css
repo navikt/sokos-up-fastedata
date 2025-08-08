@@ -2,21 +2,21 @@
   background-color: #dbeafe;
   border-radius: 12px;
   padding: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 .search-container {
   max-width: 300px;
-  margin-bottom: 1rem;
   position: relative;
+  margin-top: 0.6rem;
 }
 
 .suggestions-list {
-  margin-top: 8px;
+  margin-top: 0.25rem;
   padding: 0;
   list-style: none;
   border: 1px solid gray;
@@ -24,8 +24,10 @@
   background-color: #fff;
   max-height: 120px;
   overflow-y: auto;
-  margin-bottom: -2.5rem;
   animation: fade-in 0.2s ease-out;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
 }
 
 @keyframes fade-in {
@@ -41,12 +43,13 @@
 }
 
 .suggestion-item {
-  padding: 4px;
+  padding: 4px 8px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   width: 100%;
+  font-size: 0.95rem;
 }
 
 .suggestion-item:hover {
