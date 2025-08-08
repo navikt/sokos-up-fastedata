@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -9,7 +10,38 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    const fagomraadeParam = searchParams.get("fagomraade");
+    if (fagomraadeParam && data && !isInitialized) {
+      const matchingItem = data.find(
+        (item) => item.kodeFagomraade === fagomraadeParam,
+      );
+      if (matchingItem) {
+        const filterValue = `${matchingItem.kodeFagomraade} - ${matchingItem.navnFagomraade}`;
+        setActiveFilters([filterValue]);
+      }
+      setIsInitialized(true);
+    } else if (!fagomraadeParam && data && !isInitialized) {
+      setIsInitialized(true);
+    }
+  }, [searchParams, data, isInitialized]);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (activeFilters.length > 0) {
+      const fagomraadeCode = activeFilters[0].split(" - ")[0];
+      newSearchParams.set("fagomraade", fagomraadeCode);
+    } else {
+      newSearchParams.delete("fagomraade");
+    }
+    setSearchParams(newSearchParams, { replace: true });
+  }, [activeFilters, isInitialized, searchParams, setSearchParams]);
 
   const filteredData = useMemo(() => {
     if (!data || activeFilters.length === 0) return data || [];

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { Button, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
+import { KLASSEKODER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
 import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
 import BilagstypeModal from "../modals/BilagstypeModal";
@@ -15,6 +17,7 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
+  const navigate = useNavigate();
 
   const sortedData = sortData(data, sort);
 
@@ -23,6 +26,10 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize,
   );
+
+  const handleKlassekodeClick = (fagomraade: string) => {
+    navigate(`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade)}`);
+  };
 
   return (
     <>
@@ -81,6 +88,7 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
                   variant="tertiary"
                   size="xsmall"
                   disabled={!row.klassekodeFinnes}
+                  onClick={() => handleKlassekodeClick(row.kodeFagomraade)}
                 >
                   Klassekode
                 </Button>

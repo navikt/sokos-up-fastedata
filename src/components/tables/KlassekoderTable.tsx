@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Pagination, Table } from "@navikt/ds-react";
+import { useNavigate } from "react-router";
+import { Button, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
+import { FAGOMRAADER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
 
 interface Props {
@@ -12,11 +14,16 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
+  const navigate = useNavigate();
 
   // Reset to page 1 when filtered data changes
   useEffect(() => {
     setCurrentPage(1);
   }, [data]);
+
+  const handleFagomraadeClick = (fagomraade: string) => {
+    navigate(`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade)}`);
+  };
 
   const sortedData = sortData(data, sort);
   const totalPages = Math.ceil(sortedData.length / pageSize);
@@ -70,7 +77,19 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.datoTom}</Table.DataCell>
               <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
               <Table.DataCell>{row.underkontoNr}</Table.DataCell>
-              <Table.DataCell>{row.kodeFagomraade || "Ingen"}</Table.DataCell>
+              <Table.DataCell>
+                {row.kodeFagomraade ? (
+                  <Button
+                    variant="tertiary"
+                    size="xsmall"
+                    onClick={() => handleFagomraadeClick(row.kodeFagomraade!)}
+                  >
+                    {row.kodeFagomraade}
+                  </Button>
+                ) : (
+                  "Ingen"
+                )}
+              </Table.DataCell>
             </Table.Row>
           ))}
         </Table.Body>
