@@ -1,4 +1,3 @@
-// src/components/tables/KlassekoderTable.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";

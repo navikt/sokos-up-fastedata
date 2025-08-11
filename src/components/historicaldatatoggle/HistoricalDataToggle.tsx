@@ -1,4 +1,3 @@
-// src/components/historicaldatatoggle/HistoricalDataToggle.tsx
 import { Switch } from "@navikt/ds-react";
 import styles from "./HistoricalDataToggle.module.css";
 
@@ -13,7 +12,11 @@ export default function HistoricalDataToggle({
 }: HistoricalDataToggleProps) {
   return (
     <div className={styles["toggle-container"]}>
-      <Switch checked={checked} onChange={(e) => onChange(e.target.checked)}>
+      <Switch
+        position="right"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+      >
         Vis historiske data
       </Switch>
     </div>
