@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetKlassekoder } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -13,13 +14,17 @@ import {
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
+  const [urlParameters, setUrlParameters] = useSearchParams();
 
-  const [filters, setFilters] = useState({
-    klassekoder: [] as string[],
-    hovedkontoNr: [] as string[],
-    underkontoNr: [] as string[],
-    artID: [] as string[],
-    fagomraade: [] as string[],
+  const [filters, setFilters] = useState(() => {
+    const fagomraadeUrlParam = urlParameters.get("fagomraade");
+    return {
+      klassekoder: [] as string[],
+      hovedkontoNr: [] as string[],
+      underkontoNr: [] as string[],
+      artID: [] as string[],
+      fagomraade: fagomraadeUrlParam ? [fagomraadeUrlParam] : ([] as string[]),
+    };
   });
 
   const handleFilterChange = (
@@ -30,6 +35,12 @@ export const KlassekoderPage = () => {
       ...prev,
       [field]: values,
     }));
+
+    if (field === "fagomraade" && values.length === 0) {
+      const newUrlParameter = new URLSearchParams(urlParameters);
+      newUrlParameter.delete("fagomraade");
+      setUrlParameters(newUrlParameter, { replace: true });
+    }
   };
 
   const filteredData = useMemo(() => {
