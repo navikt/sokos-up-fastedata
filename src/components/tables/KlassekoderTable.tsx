@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+// src/components/tables/KlassekoderTable.tsx
+import React, { useEffect, useMemo, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { SortState, sortData } from "../../util/sortUtil";
+import HistoricalDataToggle from "../historicaldatatoggle/HistoricalDataToggle";
 import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
 
 interface Props {
@@ -13,19 +15,34 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [showHistorical, setShowHistorical] = useState(false);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [data]);
+  }, [data, showHistorical, rowsPerPage]);
 
-  const sortedData = sortData(data, sort);
+  const filteredData = useMemo(() => {
+    if (showHistorical) return data;
+    const getYear = (s?: string | null) => {
+      if (!s) return undefined;
+      const m = String(s).match(/\d{4}/);
+      return m ? parseInt(m[0], 10) : undefined;
+    };
+    return data.filter((item) => {
+      const year = getYear(item.datoTom);
+      if (year && year <= 2017) return false;
+      return true;
+    });
+  }, [data, showHistorical]);
+
+  const sortedData = sortData(filteredData, sort);
   const totalPages = Math.ceil(sortedData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage,
   );
 
-  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${data.length}`;
+  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
 
   const updateRowsPerPage = (rows: number) => {
     setRowsPerPage(rows);
@@ -34,13 +51,19 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 
   return (
     <>
-      <RowsPerPageSelector
-        rowsPerPage={rowsPerPage}
-        updateRowsPerPage={updateRowsPerPage}
-        totalCount={data.length}
-        currentPage={currentPage}
-        pageCount={totalPages}
-      />
+      <div className={commonstyles["table-controls"]}>
+        <RowsPerPageSelector
+          rowsPerPage={rowsPerPage}
+          updateRowsPerPage={updateRowsPerPage}
+          totalCount={filteredData.length}
+          currentPage={currentPage}
+          pageCount={totalPages}
+        />
+        <HistoricalDataToggle
+          checked={showHistorical}
+          onChange={setShowHistorical}
+        />
+      </div>
 
       <Table
         key={tableKey}

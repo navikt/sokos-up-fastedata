@@ -47,3 +47,10 @@
   justify-content: center;
   margin-top: 1rem;
 }
+
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
