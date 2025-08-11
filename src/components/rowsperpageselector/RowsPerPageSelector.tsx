@@ -5,20 +5,18 @@ import styles from "./RowsPerPageSelector.module.css";
 interface RowsPerPageSelectorProps {
   rowsPerPage: number;
   updateRowsPerPage: (rows: number) => void;
-  totalCount: number;
-  currentPage?: number;
-  pageCount?: number;
 }
 
-export default function RowsPerPageSelector(props: RowsPerPageSelectorProps) {
-  const { totalCount, currentPage, pageCount, rowsPerPage } = props;
-
+export default function RowsPerPageSelector({
+  rowsPerPage,
+  updateRowsPerPage,
+}: RowsPerPageSelectorProps) {
   return (
     <div className={styles["selector-container"]}>
       <Dropdown>
         <Button
           size="small"
-          variant="primary"
+          variant="tertiary"
           as={Dropdown.Toggle}
           className={styles["selector-button"]}
         >
@@ -34,7 +32,7 @@ export default function RowsPerPageSelector(props: RowsPerPageSelectorProps) {
             {[5, 10, 25, 50].map((rows) => (
               <Dropdown.Menu.GroupedList.Item
                 key={rows}
-                onClick={() => props.updateRowsPerPage(rows)}
+                onClick={() => updateRowsPerPage(rows)}
               >
                 {rows}
               </Dropdown.Menu.GroupedList.Item>
@@ -42,14 +40,6 @@ export default function RowsPerPageSelector(props: RowsPerPageSelectorProps) {
           </Dropdown.Menu.GroupedList>
         </Dropdown.Menu>
       </Dropdown>
-
-      <p className={styles["treff-info"]}>
-        {`${totalCount} treff`}
-        {totalCount > rowsPerPage &&
-          currentPage &&
-          pageCount &&
-          `, ${currentPage} av ${pageCount} sider`}
-      </p>
     </div>
   );
 }

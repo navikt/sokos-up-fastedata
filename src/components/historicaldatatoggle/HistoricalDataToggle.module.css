@@ -1,6 +1,11 @@
 .toggle-container {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   justify-content: flex-end;
-  margin-bottom: 0.75rem;
+}
+
+.treff-info {
+  font-style: italic;
+  color: #4b5563;
 }
