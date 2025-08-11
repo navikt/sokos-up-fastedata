@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetKlassekoder } from "../api/apiService";
@@ -14,31 +14,32 @@ import {
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [urlParameters, setUrlParameters] = useSearchParams();
 
-  const filters = useMemo(() => {
-    const fagomraadeParam = searchParams.get("fagomraade");
+  const [filters, setFilters] = useState(() => {
+    const fagomraadeUrlParam = urlParameters.get("fagomraade");
     return {
       klassekoder: [] as string[],
       hovedkontoNr: [] as string[],
       underkontoNr: [] as string[],
       artID: [] as string[],
-      fagomraade: fagomraadeParam ? [fagomraadeParam] : ([] as string[]),
+      fagomraade: fagomraadeUrlParam ? [fagomraadeUrlParam] : ([] as string[]),
     };
-  }, [searchParams]);
+  });
 
   const handleFilterChange = (
     field: keyof typeof filters,
     values: string[],
   ) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-    if (field === "fagomraade") {
-      if (values.length > 0) {
-        newSearchParams.set("fagomraade", values[0]);
-      } else {
-        newSearchParams.delete("fagomraade");
-      }
-      setSearchParams(newSearchParams);
+    setFilters((prev) => ({
+      ...prev,
+      [field]: values,
+    }));
+
+    if (field === "fagomraade" && values.length === 0) {
+      const newUrlParameter = new URLSearchParams(urlParameters);
+      newUrlParameter.delete("fagomraade");
+      setUrlParameters(newUrlParameter, { replace: true });
     }
   };
 
