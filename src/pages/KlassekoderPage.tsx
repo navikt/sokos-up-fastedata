@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetKlassekoder } from "../api/apiService";
@@ -16,33 +16,21 @@ export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [filters, setFilters] = useState({
-    klassekoder: [] as string[],
-    hovedkontoNr: [] as string[],
-    underkontoNr: [] as string[],
-    artID: [] as string[],
-    fagomraade: [] as string[],
-  });
-
-  useEffect(() => {
+  const filters = useMemo(() => {
     const fagomraadeParam = searchParams.get("fagomraade");
-    if (fagomraadeParam) {
-      setFilters((prev) => ({
-        ...prev,
-        fagomraade: [fagomraadeParam],
-      }));
-    }
+    return {
+      klassekoder: [] as string[],
+      hovedkontoNr: [] as string[],
+      underkontoNr: [] as string[],
+      artID: [] as string[],
+      fagomraade: fagomraadeParam ? [fagomraadeParam] : ([] as string[]),
+    };
   }, [searchParams]);
 
   const handleFilterChange = (
     field: keyof typeof filters,
     values: string[],
   ) => {
-    setFilters((prev) => ({
-      ...prev,
-      [field]: values,
-    }));
-
     const newSearchParams = new URLSearchParams(searchParams);
     if (field === "fagomraade") {
       if (values.length > 0) {
