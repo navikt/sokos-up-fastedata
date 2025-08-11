@@ -49,8 +49,8 @@ export const KlassekoderPage = () => {
   }, [data, filters]);
 
   const availableOptions = useMemo(() => {
-    return getAvailableOptions(data || []);
-  }, [data]);
+    return getAvailableOptions(filteredData);
+  }, [filteredData]);
 
   if (isLoading) return <ContentLoader />;
 
