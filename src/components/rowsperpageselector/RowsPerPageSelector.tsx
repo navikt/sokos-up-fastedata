@@ -5,6 +5,9 @@ import styles from "./RowsPerPageSelector.module.css";
 interface RowsPerPageSelectorProps {
   rowsPerPage: number;
   updateRowsPerPage: (rows: number) => void;
+  totalCount?: number;
+  currentPage?: number;
+  pageCount?: number;
 }
 
 export default function RowsPerPageSelector({
