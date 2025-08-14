@@ -1,0 +1,43 @@
+.selector-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.selector-button {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+}
+
+.treff-info {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #4b5563;
+}
+
+.arrow-icon {
+  font-size: 1.5rem;
+  margin-bottom: -6px;
+  margin-left: 0.3rem;
+}
+
+.dropdown-menu {
+  margin-top: 2rem;
+  margin-left: 3%;
+  opacity: 0;
+  animation: dropdown-pop 160ms ease-out forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes dropdown-pop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
