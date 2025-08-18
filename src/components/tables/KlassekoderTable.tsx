@@ -51,18 +51,25 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
   return (
     <>
       <div className={commonstyles["table-controls"]}>
-        <HistoricalDataToggle
-          checked={showHistorical}
-          onChange={setShowHistorical}
-          totalCount={filteredData.length}
-          currentPage={currentPage}
-          pageCount={totalPages}
-          rowsPerPage={rowsPerPage}
-        />
-        <RowsPerPageSelector
-          rowsPerPage={rowsPerPage}
-          updateRowsPerPage={updateRowsPerPage}
-        />
+        <div className={commonstyles["controls-row"]}>
+          <div className={commonstyles["left-controls"]}>
+            <HistoricalDataToggle
+              checked={showHistorical}
+              onChange={setShowHistorical}
+            />
+            <p className={commonstyles["treff-info"]}>
+              {`${filteredData.length} treff`}
+              {rowsPerPage &&
+                filteredData.length > rowsPerPage &&
+                totalPages > 1 &&
+                `, ${currentPage} av ${totalPages} sider`}
+            </p>
+          </div>
+          <RowsPerPageSelector
+            rowsPerPage={rowsPerPage}
+            updateRowsPerPage={updateRowsPerPage}
+          />
+        </div>
       </div>
 
       <Table
