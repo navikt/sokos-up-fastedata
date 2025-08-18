@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Ventekriterier } from "../../types/Ventekriterier";
 import { formatNumber } from "../../util/tallUtil";
+import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
 
 type Props = {
   data?: Ventekriterier[];
@@ -10,16 +11,32 @@ type Props = {
 
 export const VentekriterierTable = ({ data = [] }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const totalPages = Math.ceil(data.length / pageSize);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data, rowsPerPage]);
+
+  const totalPages = Math.ceil(data.length / rowsPerPage);
   const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage,
   );
+
+  const updateRowsPerPage = (rows: number) => {
+    setRowsPerPage(rows);
+    setCurrentPage(1);
+  };
 
   return (
     <>
+      <div className={commonstyles["table-controls"]}>
+        <RowsPerPageSelector
+          rowsPerPage={rowsPerPage}
+          updateRowsPerPage={updateRowsPerPage}
+        />
+      </div>
+
       <Table zebraStripes size="small">
         <Table.Header>
           <Table.Row>
@@ -46,6 +63,7 @@ export const VentekriterierTable = ({ data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
+
       <div className={commonstyles["table-pagination-container"]}>
         <Pagination
           page={currentPage}
