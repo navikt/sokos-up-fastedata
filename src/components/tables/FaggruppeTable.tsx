@@ -3,6 +3,7 @@ import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { SortState, sortData } from "../../util/sortUtil";
+import FaggrupperExpandableSection from "../expandablesections/FaggrupperExpandableSection";
 
 interface Props {
   data?: Faggruppe[];
@@ -47,14 +48,16 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
             <Table.ColumnHeader sortKey="navnFaggruppe" sortable>
               Navn
             </Table.ColumnHeader>
+            <Table.ColumnHeader>Extra</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {paginatedData.map((row) => (
-            <>
+            <FaggrupperExpandableSection key={row.kodeFaggruppe} row={row}>
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.navnFaggruppe}</Table.DataCell>
-            </>
+              <div>Ekstra</div>
+            </FaggrupperExpandableSection>
           ))}
         </Table.Body>
       </Table>
