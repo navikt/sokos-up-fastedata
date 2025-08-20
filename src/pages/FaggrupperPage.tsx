@@ -8,15 +8,15 @@ import FaggruppeFilter from "../components/filters/faggruppefilter/FaggruppeFilt
 import FaggruppeTable from "../components/tables/FaggruppeTable";
 import commonstyles from "../styles/Commonstyles.module.css";
 
-export const FagomraaderPage = () => {
+export const FaggrupperPage = () => {
   const { data, error, isLoading } = useGetFaggrupper();
   const [urlParameters, setUrlParameters] = useSearchParams();
 
   const [filters, setFilters] = useState(() => {
-    const fagomraadeUrlParam = urlParameters.get("fagomraade");
-    if (!fagomraadeUrlParam) return [];
+    const faggruppeUrlParam = urlParameters.get("faggruppe");
+    if (!faggruppeUrlParam) return [];
 
-    return [fagomraadeUrlParam];
+    return [faggruppeUrlParam];
   });
 
   const displayFilters = useMemo(() => {
@@ -65,7 +65,7 @@ export const FagomraaderPage = () => {
           level="1"
           className={commonstyles["page-heading"]}
         >
-          Faste data - Fagområde
+          Faste data - Faggrupper
         </Heading>
 
         <BackHomeBox />
@@ -90,4 +90,4 @@ export const FagomraaderPage = () => {
   );
 };
 
-export default FagomraaderPage;
+export default FaggrupperPage;
