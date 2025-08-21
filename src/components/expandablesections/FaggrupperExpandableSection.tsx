@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "@navikt/ds-react";
+import commonstyles from "../../styles/Commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 
 interface Props {
@@ -10,15 +11,7 @@ interface Props {
 const FaggrupperExpandableSection = ({ row, children }: Props) => (
   <Table.ExpandableRow
     content={
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr", // 3 columns
-          gap: "1rem",
-          padding: "1rem",
-          borderRadius: "8px",
-        }}
-      >
+      <div className={commonstyles["expandable-section-content"]}>
         <div>
           <b>Kode:</b> {row.kodeFaggruppe}
         </div>
