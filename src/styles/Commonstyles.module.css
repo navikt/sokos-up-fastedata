@@ -47,3 +47,12 @@
   justify-content: center;
   margin-top: 1rem;
 }
+
+.expandable-section-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}

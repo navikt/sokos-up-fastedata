@@ -3,14 +3,15 @@ export const ROOT = "/fastedata";
 export const VENTEKRITERIER = "/fastedata/ventekriterier";
 export const VENTESTATUSKODER = "/fastedata/ventestatuskoder";
 export const FAGOMRAADER = "/fastedata/fagomraader";
+export const FAGGRUPPER = "/fastedata/faggrupper";
 export const KLASSEKODER = "/fastedata/klassekoder";
 
 export const appList = [
   {
     title: "Faggrupper",
     description: "Oppslag og forklaring på faggrupper.",
-    route: "",
-    disabled: true,
+    route: "faggrupper",
+    disabled: false,
   },
   {
     title: "Fagområder",

@@ -1,5 +1,6 @@
 import { HttpResponse, http } from "msw";
 import { bilagstyperMAAP } from "./data/bilagstyper";
+import { faggrupper } from "./data/faggrupper";
 import { fagomraaderList } from "./data/fagomraader";
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
@@ -10,6 +11,7 @@ const baseUrl = "/oppdrag-api/api/v1/fastedata";
 const ventestatuskoderUrl = `${baseUrl}/ventestatuskoder`;
 const ventekriterierUrl = `${baseUrl}/ventekriterier`;
 const fagomraaderUrl = `${baseUrl}/fagomraader`;
+const faggrupperUrl = `${baseUrl}/faggrupper`;
 const klassekoderUrl = `${baseUrl}/klassekoder`;
 
 export const handlers = [
@@ -21,6 +23,9 @@ export const handlers = [
   }),
   http.get(fagomraaderUrl, () => {
     return HttpResponse.json(fagomraaderList, { status: 200 });
+  }),
+  http.get(faggrupperUrl, () => {
+    return HttpResponse.json(faggrupper, { status: 200 });
   }),
   http.get(klassekoderUrl, () => {
     return HttpResponse.json(klassekoderList, { status: 200 });
