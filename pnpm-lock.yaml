@@ -971,6 +971,9 @@ packages:
     peerDependencies:
       "@types/react": ">=17.0.30"
       react: ">=17.0.0 || >19.0.0-rc"
+    peerDependenciesMeta:
+      "@types/react":
+        optional: true
 
   "@navikt/ds-tokens@7.25.1":
     resolution:
@@ -1922,16 +1925,10 @@ packages:
       }
     engines: { node: ">=6" }
 
-  caniuse-lite@1.0.30001705:
+  caniuse-lite@1.0.30001737:
     resolution:
       {
-        integrity: sha512-S0uyMMiYvA7CxNgomYBwwwPUnWzFD83f3B1ce5jHUfHTH//QL6hHsreI8RVC5606R4ssqravelYO5TU6t8sEyg==,
-      }
-
-  caniuse-lite@1.0.30001724:
-    resolution:
-      {
-        integrity: sha512-WqJo7p0TbHDOythNTqYujmaJTvtYRZrjpP8TCvH6Vb9CYJerJNKamKzIWOM4BkQatWj9H2lYulpdAQNBe7QhNA==,
+        integrity: sha512-BiloLiXtQNrY5UyF0+1nSJLXUENuhka2pzy2Fx5pGxqavdrxSCW4U6Pn/PoG3Efspi2frRbHpBV2XsrPE6EDlw==,
       }
 
   chai@5.2.0:
@@ -5447,11 +5444,12 @@ snapshots:
       "@floating-ui/react-dom": 2.1.4(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       "@navikt/aksel-icons": 7.25.1
       "@navikt/ds-tokens": 7.25.1
-      "@types/react": 19.1.9
       clsx: 2.1.1
       date-fns: 4.1.0
       react: 19.1.1
       react-day-picker: 9.7.0(react@19.1.1)
+    optionalDependencies:
+      "@types/react": 19.1.9
     transitivePeerDependencies:
       - react-dom
 
@@ -5950,7 +5948,7 @@ snapshots:
   autoprefixer@10.4.21(postcss@8.5.6):
     dependencies:
       browserslist: 4.24.4
-      caniuse-lite: 1.0.30001705
+      caniuse-lite: 1.0.30001737
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -5994,14 +5992,14 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
-      caniuse-lite: 1.0.30001705
+      caniuse-lite: 1.0.30001737
       electron-to-chromium: 1.5.119
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
   browserslist@4.25.0:
     dependencies:
-      caniuse-lite: 1.0.30001724
+      caniuse-lite: 1.0.30001737
       electron-to-chromium: 1.5.171
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.25.0)
@@ -6039,9 +6037,7 @@ snapshots:
 
   callsites@3.1.0: {}
 
-  caniuse-lite@1.0.30001705: {}
-
-  caniuse-lite@1.0.30001724: {}
+  caniuse-lite@1.0.30001737: {}
 
   chai@5.2.0:
     dependencies:
