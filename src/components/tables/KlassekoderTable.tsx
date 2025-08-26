@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useMemo} from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
+import HistoricalDataToggle from "../historicaldatatoggle/HistoricalDataToggle";
+import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
 
 interface Props {
   data?: Klassekoder[];
@@ -13,25 +16,65 @@ interface Props {
 export const KlassekoderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [showHistorical, setShowHistorical] = useState(false);
 
-  // Reset to page 1 when filtered data changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [data]);
+  }, [data, showHistorical, rowsPerPage]);
 
-  const sortedData = sortData(data, sort);
-  const totalPages = Math.ceil(sortedData.length / pageSize);
+  const filteredData = useMemo(() => {
+    if (showHistorical) return data;
+    const getYear = (s?: string | null) => {
+      if (!s) return undefined;
+      const m = String(s).match(/\d{4}/);
+      return m ? parseInt(m[0], 10) : undefined;
+    };
+    return data.filter((item) => {
+      const year = getYear(item.datoTom);
+      if (year && year <= 2017) return false;
+      return true;
+    });
+  }, [data, showHistorical]);
+
+  const sortedData = sortData(filteredData, sort);
+  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
   const paginatedData = sortedData.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage,
   );
 
-  // Safer table key based on data length only
-  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${data.length}`;
+  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
+
+  const updateRowsPerPage = (rows: number) => {
+    setRowsPerPage(rows);
+    setCurrentPage(1);
+  };
 
   return (
     <>
+      <div className={commonstyles["table-controls"]}>
+        <div className={commonstyles["controls-row"]}>
+          <div className={commonstyles["left-controls"]}>
+            <HistoricalDataToggle
+              checked={showHistorical}
+              onChange={setShowHistorical}
+            />
+            <p className={commonstyles["treff-info"]}>
+              {`${filteredData.length} treff`}
+              {rowsPerPage &&
+                filteredData.length > rowsPerPage &&
+                totalPages > 1 &&
+                `, ${currentPage} av ${totalPages} sider`}
+            </p>
+          </div>
+          <RowsPerPageSelector
+            rowsPerPage={rowsPerPage}
+            updateRowsPerPage={updateRowsPerPage}
+          />
+        </div>
+      </div>
+
       <Table
         key={tableKey}
         zebraStripes
@@ -89,14 +132,16 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         </Table.Body>
       </Table>
 
-      <div className={commonstyles["table-pagination-container"]}>
-        <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
-          count={totalPages}
-          size="small"
-        />
-      </div>
+      {totalPages > 1 && (
+        <div className={commonstyles["table-pagination-container"]}>
+          <Pagination
+            page={currentPage}
+            onPageChange={setCurrentPage}
+            count={totalPages}
+            size="small"
+          />
+        </div>
+      )}
     </>
   );
 };

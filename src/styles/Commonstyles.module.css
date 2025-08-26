@@ -47,3 +47,28 @@
   justify-content: center;
   margin-top: 1rem;
 }
+
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.treff-info {
+  font-style: italic;
+  color: #4b5563;
+  margin: 0;
+}
