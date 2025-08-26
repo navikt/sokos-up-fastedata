@@ -6,7 +6,7 @@ import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
 import KlassekoderFilter from "../components/filters/klassekoderfilter/KlassekoderFilter";
 import KlassekoderTable from "../components/tables/KlassekoderTable";
-import commonstyles from "../styles/Commonstyles.module.css";
+import commonstyles from "../styles/commonstyles.module.css";
 import {
   filterKlassekoder,
   getAvailableOptions,

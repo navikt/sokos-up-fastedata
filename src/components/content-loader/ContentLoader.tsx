@@ -1,5 +1,5 @@
 import { Loader } from "@navikt/ds-react";
-import commonstyles from "../../styles/Commonstyles.module.css";
+import commonstyles from "../../styles/commonstyles.module.css";
 import styles from "./ContentLoader.module.css";
 
 export default function ContentLoader() {

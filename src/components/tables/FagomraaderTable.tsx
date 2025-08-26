@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import commonstyles from "../../styles/Commonstyles.module.css";
+import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
@@ -17,7 +17,7 @@ interface Props {
 export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
 
   useEffect(() => {
     setCurrentPage(1);

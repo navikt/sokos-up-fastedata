@@ -54,6 +54,12 @@
   justify-content: space-between;
 }
 
+.table-controls-end-aligned {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
 .controls-row {
   display: flex;
   align-items: center;

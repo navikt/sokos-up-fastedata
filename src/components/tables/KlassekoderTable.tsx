@@ -1,8 +1,7 @@
-
-import { useEffect, useState, useMemo} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import commonstyles from "../../styles/Commonstyles.module.css";
+import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
@@ -16,7 +15,7 @@ interface Props {
 export const KlassekoderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [showHistorical, setShowHistorical] = useState(false);
 
   useEffect(() => {
