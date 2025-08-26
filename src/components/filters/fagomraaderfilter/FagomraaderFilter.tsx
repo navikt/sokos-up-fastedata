@@ -39,6 +39,7 @@ const FagomraaderFilter = ({
           options={allOptions}
           activeValues={activeFilters}
           onValueAdd={handleAdd}
+          shouldFocus={true}
         />
 
         {activeFilters.length > 0 && (
