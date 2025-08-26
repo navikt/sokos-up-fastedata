@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router";
-import { Link, Pagination, Table, Button } from "@navikt/ds-react";
+import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/constant";
@@ -40,9 +40,6 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
       <RowsPerPageSelector
         rowsPerPage={rowsPerPage}
         updateRowsPerPage={updateRowsPerPage}
-        totalCount={data.length}
-        currentPage={currentPage}
-        pageCount={totalPages}
       />
 
       <Table
