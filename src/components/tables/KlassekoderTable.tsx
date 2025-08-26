@@ -1,7 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Pagination, Table } from "@navikt/ds-react";
+
+import { useEffect, useState, useMemo} from "react";
+import { Link as RouterLink } from "react-router";
+import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
+import { FAGOMRAADER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
 import HistoricalDataToggle from "../historicaldatatoggle/HistoricalDataToggle";
 import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
@@ -112,7 +115,18 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.datoTom}</Table.DataCell>
               <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
               <Table.DataCell>{row.underkontoNr}</Table.DataCell>
-              <Table.DataCell>{row.kodeFagomraade || "Ingen"}</Table.DataCell>
+              <Table.DataCell>
+                {row.kodeFagomraade ? (
+                  <Link
+                    as={RouterLink}
+                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
+                  >
+                    {row.kodeFagomraade}
+                  </Link>
+                ) : (
+                  "Ingen"
+                )}
+              </Table.DataCell>
             </Table.Row>
           ))}
         </Table.Body>

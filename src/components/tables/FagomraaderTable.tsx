@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Pagination, Table } from "@navikt/ds-react";
+import { Link as RouterLink } from "react-router";
+import { Link, Pagination, Table, Button } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
+import { KLASSEKODER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
 import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
 import BilagstypeModal from "../modals/BilagstypeModal";
@@ -94,13 +96,16 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
                 />
               </Table.DataCell>
               <Table.DataCell>
-                <Button
-                  variant="tertiary"
-                  size="xsmall"
-                  disabled={!row.klassekodeFinnes}
-                >
-                  Klassekode
-                </Button>
+                {row.klassekodeFinnes ? (
+                  <Link
+                    as={RouterLink}
+                    to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
+                  >
+                    Klassekode
+                  </Link>
+                ) : (
+                  "Ingen"
+                )}
               </Table.DataCell>
             </FagomraaderExpandableSection>
           ))}

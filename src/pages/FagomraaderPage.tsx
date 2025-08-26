@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
@@ -9,18 +10,49 @@ import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [urlParameters, setUrlParameters] = useSearchParams();
+
+  const [filters, setFilters] = useState(() => {
+    const fagomraadeUrlParam = urlParameters.get("fagomraade");
+    if (!fagomraadeUrlParam) return [];
+
+    return [fagomraadeUrlParam];
+  });
+
+  const displayFilters = useMemo(() => {
+    if (!data || filters.length === 0) return [];
+
+    return filters.map((kodeFagomraade) => {
+      const matchingItem = data.find(
+        (item) => item.kodeFagomraade === kodeFagomraade,
+      );
+
+      if (matchingItem) {
+        return `${matchingItem.kodeFagomraade} - ${matchingItem.navnFagomraade}`;
+      }
+
+      return kodeFagomraade;
+    });
+  }, [data, filters]);
+
+  const handleFiltersChange = (newFilters: string[]) => {
+    const kodeFagomraade = newFilters.map((filter) => filter.split(" - ")[0]);
+    setFilters(kodeFagomraade);
+
+    if (newFilters.length === 0) {
+      const newUrlParams = new URLSearchParams(urlParameters);
+      newUrlParams.delete("fagomraade");
+      setUrlParameters(newUrlParams, { replace: true });
+    }
+  };
 
   const filteredData = useMemo(() => {
-    if (!data || activeFilters.length === 0) return data || [];
+    if (!data || filters.length === 0) return data || [];
 
     return data.filter((item) => {
-      const combined = `${item.kodeFagomraade} - ${item.navnFagomraade}`;
-      return activeFilters.some((filter) =>
-        combined.toLowerCase().includes(filter.toLowerCase()),
-      );
+      return filters.includes(item.kodeFagomraade);
     });
-  }, [data, activeFilters]);
+  }, [data, filters]);
 
   if (isLoading) return <ContentLoader />;
 
@@ -41,15 +73,15 @@ export const FagomraaderPage = () => {
         {data && (
           <FagomraaderFilter
             data={data}
-            activeFilters={activeFilters}
-            onFiltersChange={setActiveFilters}
+            activeFilters={displayFilters}
+            onFiltersChange={handleFiltersChange}
           />
         )}
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
         ) : filteredData.length > 0 ? (
-          <FagomraaderTable key={activeFilters.join(",")} data={filteredData} />
+          <FagomraaderTable key={filters.join(",")} data={filteredData} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}
