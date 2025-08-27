@@ -47,7 +47,7 @@ const FilterInput = ({
     setInputValue("");
   };
 
-  const shouldShowSuggestionBox = inputValue.trim().length > 0;
+  const shouldShowSuggestionBox = inputValue.trim().length > 0 && isFocused;
 
   return (
     <div>
