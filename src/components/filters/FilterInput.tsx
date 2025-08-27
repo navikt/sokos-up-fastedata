@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { BodyShort, Search } from "@navikt/ds-react";
 import { getSortedSuggestions } from "../../util/suggestionUtil";
 import styles from "./CommonFilterStyles.module.css";
@@ -8,7 +8,7 @@ interface FilterInputProps {
   options: string[];
   activeValues: string[];
   onValueAdd: (value: string) => void;
-  shouldFocus?: boolean;
+  autoFocus?: boolean;
 }
 
 const FilterInput = ({
@@ -16,17 +16,10 @@ const FilterInput = ({
   options,
   activeValues,
   onValueAdd,
-  shouldFocus = false,
+  autoFocus = false,
 }: FilterInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (shouldFocus) {
-      inputRef.current?.focus();
-    }
-  }, [shouldFocus]);
 
   const suggestions = useMemo(() => {
     return getSortedSuggestions(options, inputValue.trim(), isFocused);
@@ -56,7 +49,6 @@ const FilterInput = ({
       </BodyShort>
       <div className={styles["search-container"]}>
         <Search
-          ref={inputRef}
           variant="simple"
           label={label}
           size="small"
@@ -68,6 +60,8 @@ const FilterInput = ({
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={autoFocus}
         />
         {shouldShowSuggestionBox && (
           <ul className={styles["suggestions-list"]}>
