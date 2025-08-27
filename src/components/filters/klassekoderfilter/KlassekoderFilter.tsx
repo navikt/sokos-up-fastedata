@@ -44,7 +44,7 @@ const KlassekoderFilter = ({
   return (
     <div className={commonStyles["filter-container"]}>
       <div className={styles["search-bar-group"]}>
-        {klassekoderFields.map(({ key, label, name }) => (
+        {klassekoderFields.map(({ key, label, name }, inputFieldIndex) => (
           <div
             key={key}
             className={`${styles["search-container"]} ${styles[`${name}-search-container`] || ""}`}
@@ -54,11 +54,12 @@ const KlassekoderFilter = ({
               options={options[key]}
               activeValues={activeFilters[key]}
               onValueAdd={(val) => handleAdd(key, val)}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus={inputFieldIndex === 0}
             />
           </div>
         ))}
       </div>
-
       {klassekoderFields.some(({ key }) => activeFilters[key].length > 0) && (
         <div className={styles["filter-actions"]}>
           <Chips>
@@ -73,7 +74,6 @@ const KlassekoderFilter = ({
               )),
             )}
           </Chips>
-
           <Button
             variant="tertiary"
             size="small"

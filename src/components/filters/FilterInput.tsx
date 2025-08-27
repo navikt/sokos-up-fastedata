@@ -8,6 +8,7 @@ interface FilterInputProps {
   options: string[];
   activeValues: string[];
   onValueAdd: (value: string) => void;
+  autoFocus?: boolean;
 }
 
 const FilterInput = ({
@@ -15,6 +16,7 @@ const FilterInput = ({
   options,
   activeValues,
   onValueAdd,
+  autoFocus = false,
 }: FilterInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -38,7 +40,7 @@ const FilterInput = ({
     setInputValue("");
   };
 
-  const shouldShowSuggestionBox = isFocused || inputValue.trim().length > 0;
+  const shouldShowSuggestionBox = inputValue.trim().length > 0 && isFocused;
 
   return (
     <div>
@@ -58,6 +60,8 @@ const FilterInput = ({
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={autoFocus}
         />
         {shouldShowSuggestionBox && (
           <ul className={styles["suggestions-list"]}>

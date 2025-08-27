@@ -39,6 +39,8 @@ const FagomraaderFilter = ({
           options={allOptions}
           activeValues={activeFilters}
           onValueAdd={handleAdd}
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={true}
         />
 
         {activeFilters.length > 0 && (
