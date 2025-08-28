@@ -23,11 +23,3 @@
   flex: 1 1 35%;
   max-width: 22%;
 }
-
-.filter-actions {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
