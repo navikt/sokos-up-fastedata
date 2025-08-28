@@ -66,10 +66,10 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
             <Table.ColumnHeader sortKey="navnFagomraade" sortable>
               Navn
             </Table.ColumnHeader>
+            <Table.HeaderCell>Klassekode</Table.HeaderCell>
             <Table.HeaderCell>Motregningsgruppe</Table.HeaderCell>
             <Table.HeaderCell>Korrigeringsårsak</Table.HeaderCell>
             <Table.HeaderCell>Bilagstype</Table.HeaderCell>
-            <Table.HeaderCell>Klassekode</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -77,6 +77,18 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
             <FagomraaderExpandableSection key={row.kodeFagomraade} row={row}>
               <Table.DataCell>{row.kodeFagomraade}</Table.DataCell>
               <Table.DataCell>{row.navnFagomraade}</Table.DataCell>
+              <Table.DataCell>
+                {row.klassekodeFinnes ? (
+                  <Link
+                    as={RouterLink}
+                    to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
+                  >
+                    Klassekode
+                  </Link>
+                ) : (
+                  "Ingen"
+                )}
+              </Table.DataCell>
               <Table.DataCell>{row.kodeMotregningsgruppe}</Table.DataCell>
               <Table.DataCell>
                 <KorrigeringsarsakModal
@@ -91,18 +103,6 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
                   buttonText="Bilagstype"
                   disabled={!row.bilagstypeFinnes}
                 />
-              </Table.DataCell>
-              <Table.DataCell>
-                {row.klassekodeFinnes ? (
-                  <Link
-                    as={RouterLink}
-                    to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
-                  >
-                    Klassekode
-                  </Link>
-                ) : (
-                  "Ingen"
-                )}
               </Table.DataCell>
             </FagomraaderExpandableSection>
           ))}
