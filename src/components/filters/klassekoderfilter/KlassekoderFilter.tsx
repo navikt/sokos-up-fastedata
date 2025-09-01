@@ -61,7 +61,7 @@ const KlassekoderFilter = ({
         ))}
       </div>
       {klassekoderFields.some(({ key }) => activeFilters[key].length > 0) && (
-        <div className={styles["filter-actions"]}>
+        <div className={commonStyles["filter-actions"]}>
           <Chips>
             {klassekoderFields.flatMap(({ key }) =>
               activeFilters[key].map((value) => (
