@@ -6,7 +6,7 @@ import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
 import FagomraaderFilter from "../components/filters/fagomraaderfilter/FagomraaderFilter";
 import FagomraaderTable from "../components/tables/FagomraaderTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import commonstyles from "../styles/Commonstyles.module.css";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
@@ -15,30 +15,11 @@ export const FagomraaderPage = () => {
   const [filters, setFilters] = useState(() => {
     const fagomraadeUrlParam = urlParameters.get("fagomraade");
     if (!fagomraadeUrlParam) return [];
-
     return [fagomraadeUrlParam];
   });
 
-  const displayFilters = useMemo(() => {
-    if (!data || filters.length === 0) return [];
-
-    return filters.map((kodeFagomraade) => {
-      const matchingItem = data.find(
-        (item) => item.kodeFagomraade === kodeFagomraade,
-      );
-
-      if (matchingItem) {
-        return `${matchingItem.kodeFagomraade} - ${matchingItem.navnFagomraade}`;
-      }
-
-      return kodeFagomraade;
-    });
-  }, [data, filters]);
-
   const handleFiltersChange = (newFilters: string[]) => {
-    const kodeFagomraade = newFilters.map((filter) => filter.split(" - ")[0]);
-    setFilters(kodeFagomraade);
-
+    setFilters(newFilters);
     if (newFilters.length === 0) {
       const newUrlParams = new URLSearchParams(urlParameters);
       newUrlParams.delete("fagomraade");
@@ -46,11 +27,15 @@ export const FagomraaderPage = () => {
     }
   };
 
+  const normalize = (s: string) =>
+    s.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
+
   const filteredData = useMemo(() => {
     if (!data || filters.length === 0) return data || [];
-
+    const terms = filters.map((f) => normalize(f));
     return data.filter((item) => {
-      return filters.includes(item.kodeFagomraade);
+      const hay = normalize(`${item.kodeFagomraade} ${item.navnFagomraade}`);
+      return terms.every((t) => hay.includes(t));
     });
   }, [data, filters]);
 
@@ -72,8 +57,8 @@ export const FagomraaderPage = () => {
 
         {data && (
           <FagomraaderFilter
-            data={data}
-            activeFilters={displayFilters}
+            data={filteredData}
+            activeFilters={filters}
             onFiltersChange={handleFiltersChange}
           />
         )}
