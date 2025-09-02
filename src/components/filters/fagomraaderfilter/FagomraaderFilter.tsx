@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
 import { Fagomraader } from "../../../types/Fagomraader";
+import { filterData, uniqueOptions } from "../../../util/filterCommon";
 import commonStyles from "../CommonFilterStyles.module.css";
 import FilterInput from "../FilterInput";
 
@@ -20,27 +21,25 @@ const FagomraaderFilter = ({ data, onDataChange }: FagomraaderFilterProps) => {
     return [fagomraadeUrlParam];
   });
 
-  const normalize = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
+  const toHaystack = (i: Fagomraader) =>
+    `${i.kodeFagomraade} ${i.navnFagomraade}`;
 
   const filteredData = useMemo(() => {
-    if (activeFilters.length === 0) return data;
-    const terms = activeFilters.map((f) => normalize(f));
-    return data.filter((item) => {
-      const hay = normalize(`${item.kodeFagomraade} ${item.navnFagomraade}`);
-      return terms.every((t) => hay.includes(t));
-    });
+    return filterData(data, activeFilters, toHaystack);
   }, [data, activeFilters]);
 
   useEffect(() => {
     onDataChange(filteredData);
   }, [filteredData, onDataChange]);
 
-  const availableOptions = useMemo(() => {
-    return filteredData.map(
-      (item) => `${item.kodeFagomraade} - ${item.navnFagomraade}`,
-    );
-  }, [filteredData]);
+  const allOptions = useMemo(
+    () =>
+      uniqueOptions(
+        filteredData,
+        (i) => `${i.kodeFagomraade} - ${i.navnFagomraade}`,
+      ),
+    [filteredData],
+  );
 
   const toTerm = (value: string) =>
     value.includes(" - ") ? value.split(" - ")[0] : value;
@@ -81,7 +80,7 @@ const FagomraaderFilter = ({ data, onDataChange }: FagomraaderFilterProps) => {
         >
           <FilterInput
             label="Filtrer på fagområdekode og navn"
-            options={availableOptions}
+            options={allOptions}
             activeValues={activeFilters}
             onValueAdd={handleAdd}
             // eslint-disable-next-line jsx-a11y/no-autofocus
