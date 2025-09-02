@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BodyShort, Search } from "@navikt/ds-react";
 import { getSortedSuggestions } from "../../util/suggestionUtil";
 import styles from "./CommonFilterStyles.module.css";
@@ -20,6 +20,13 @@ const FilterInput = ({
 }: FilterInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus) {
+      inputRef.current?.focus();
+    }
+  }, [autoFocus]);
 
   const suggestions = useMemo(() => {
     return getSortedSuggestions(options, inputValue.trim(), isFocused);
@@ -49,6 +56,7 @@ const FilterInput = ({
       </BodyShort>
       <div className={styles["search-container"]}>
         <Search
+          ref={inputRef}
           variant="simple"
           label={label}
           size="small"
@@ -60,8 +68,6 @@ const FilterInput = ({
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSearch();
           }}
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus={autoFocus}
         />
         {shouldShowSuggestionBox && (
           <ul className={styles["suggestions-list"]}>
@@ -70,6 +76,7 @@ const FilterInput = ({
                 <button
                   key={suggestion}
                   className={styles["suggestion-item"]}
+                  onMouseDown={(e) => e.preventDefault()}
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
