@@ -48,7 +48,10 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
             <Table.ColumnHeader sortKey="navnFaggruppe" sortable>
               Navn
             </Table.ColumnHeader>
-            <Table.ColumnHeader>Extra</Table.ColumnHeader>
+            <Table.ColumnHeader>Ventedager</Table.ColumnHeader>
+            <Table.ColumnHeader>Kjøreplan</Table.ColumnHeader>
+            <Table.ColumnHeader>Fagområde</Table.ColumnHeader>
+            <Table.ColumnHeader>Redusert skatt</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -56,7 +59,10 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
             <FaggrupperExpandableSection key={row.kodeFaggruppe} row={row}>
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.navnFaggruppe}</Table.DataCell>
-              <div>Ekstra</div>
+              <Table.DataCell>{row.ventedager}</Table.DataCell>
+              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>placeholder</Table.DataCell>
             </FaggrupperExpandableSection>
           ))}
         </Table.Body>
