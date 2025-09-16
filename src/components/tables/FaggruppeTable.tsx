@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Pagination, Table } from "@navikt/ds-react";
+import { Link as RouterLink } from "react-router";
+import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/Commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
+import { FAGOMRAADER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";
 import FaggrupperExpandableSection from "../expandablesections/FaggrupperExpandableSection";
 
@@ -61,7 +63,14 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.navnFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.ventedager}</Table.DataCell>
               <Table.DataCell>placeholder</Table.DataCell>
-              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>
+                <Link
+                  as={RouterLink}
+                  to={`${FAGOMRAADER}?faggruppe=${encodeURIComponent(row.kodeFaggruppe)}`}
+                >
+                  Fagområder
+                </Link>
+              </Table.DataCell>
               <Table.DataCell>placeholder</Table.DataCell>
             </FaggrupperExpandableSection>
           ))}
