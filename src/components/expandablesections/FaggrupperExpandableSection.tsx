@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "@navikt/ds-react";
-import commonstyles from "../../styles/commonstyles2.module.css";
+import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 
 interface Props {

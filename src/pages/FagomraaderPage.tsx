@@ -6,7 +6,7 @@ import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
 import FagomraaderFilter from "../components/filters/fagomraaderfilter/FagomraaderFilter";
 import FagomraaderTable from "../components/tables/FagomraaderTable";
-import commonstyles from "../styles/commonstyles2.module.css";
+import commonstyles from "../styles/commonstyles.module.css";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
