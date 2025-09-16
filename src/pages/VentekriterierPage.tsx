@@ -3,7 +3,7 @@ import { useGetVentekriterier } from "../api/apiService";
 import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
 import VentekriterierTable from "../components/tables/VentekriterierTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import commonstyles from "../styles/commonstyles2.module.css";
 
 export const VentekriterierPage = () => {
   const { data, error, isLoading } = useGetVentekriterier();

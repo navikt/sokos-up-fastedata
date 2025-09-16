@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import commonstyles from "../../styles/commonstyles.module.css";
+import commonstyles from "../../styles/commonstyles2.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/constant";
 import { SortState, sortData } from "../../util/sortUtil";

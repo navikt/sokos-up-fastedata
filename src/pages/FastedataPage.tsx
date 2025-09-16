@@ -1,7 +1,7 @@
 import { Heading } from "@navikt/ds-react";
 import AppCard from "../components/appcard/AppCard";
 import styles from "../styles/Fastedata.module.css";
-import commonstyles from "../styles/commonstyles.module.css";
+import commonstyles from "../styles/commonstyles2.module.css";
 import { appList } from "../util/constant";
 
 export default function FastedataPage() {

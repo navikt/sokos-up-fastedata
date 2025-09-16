@@ -6,7 +6,7 @@ import BackHomeBox from "../components/backhomebox/BackHomeBox";
 import ContentLoader from "../components/content-loader/ContentLoader";
 import FaggruppeFilter from "../components/filters/faggruppefilter/FaggruppeFilter";
 import FaggruppeTable from "../components/tables/FaggruppeTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import commonstyles from "../styles/commonstyles2.module.css";
 
 export const FaggrupperPage = () => {
   const { data, error, isLoading } = useGetFaggrupper();
@@ -15,7 +15,6 @@ export const FaggrupperPage = () => {
   const [filters, setFilters] = useState(() => {
     const faggruppeUrlParam = urlParameters.get("faggruppe");
     if (!faggruppeUrlParam) return [];
-
     return [faggruppeUrlParam];
   });
 
