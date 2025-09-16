@@ -78,3 +78,12 @@
   color: #4b5563;
   margin: 0;
 }
+
+.expandable-section-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
