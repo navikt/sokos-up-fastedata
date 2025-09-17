@@ -1,6 +1,6 @@
 import { Link as RouterLink } from "react-router";
 import { ArrowLeftIcon } from "@navikt/aksel-icons";
-import { ROOT } from "../../util/constant";
+import { ROOT } from "../util/paths";
 import styles from "./BackHomeBox.module.css";
 
 type Props = {

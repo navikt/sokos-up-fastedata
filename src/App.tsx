@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import NotFound from "./components/notfoundpage/NotFound";
-import FaggrupperPage from "./pages/FaggrupperPage";
-import FagomraaderPage from "./pages/FagomraaderPage";
-import FastedataPage from "./pages/FastedataPage";
-import KlassekoderPage from "./pages/KlassekoderPage";
-import VentekriterierPage from "./pages/VentekriterierPage";
-import VentestatuskoderPage from "./pages/VentestatuskoderPage";
+import FaggrupperPage from "./components/faggrupper/FaggrupperPage";
+import FagomraaderPage from "./components/fagomraader/FagomraaderPage";
+import KlassekoderPage from "./components/klassekoder/KlassekoderPage";
+import VentekriterierPage from "./components/ventekriterier/VentekriterierPage";
+import VentestatuskoderPage from "./components/ventestatuskoder/VentestatuskoderPage";
+import FastedataPage from "./pages/fastedata/FastedataPage";
+import NotFound from "./pages/notfound/NotFound";
 import {
   BASENAME,
   FAGGRUPPER,
@@ -14,7 +14,7 @@ import {
   ROOT,
   VENTEKRITERIER,
   VENTESTATUSKODER,
-} from "./util/constant";
+} from "./util/paths";
 
 export default function App() {
   return (

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Chips } from "@navikt/ds-react";
-import { Faggruppe } from "../../../types/Faggruppe";
+import { Faggruppe } from "../../types/Faggruppe";
 import commonStyles from "../CommonFilterStyles.module.css";
 import FilterInput from "../FilterInput";
 

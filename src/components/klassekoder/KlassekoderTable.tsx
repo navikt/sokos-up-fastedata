@@ -3,10 +3,10 @@ import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
-import { FAGOMRAADER } from "../../util/constant";
+import { FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
-import HistoricalDataToggle from "../historicaldatatoggle/HistoricalDataToggle";
-import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
+import RowsPerPageSelector from "../RowsPerPageSelector";
+import HistoricalDataToggle from "./HistoricalDataToggle";
 
 interface Props {
   data?: Klassekoder[];

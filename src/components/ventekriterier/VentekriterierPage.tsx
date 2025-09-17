@@ -1,9 +1,9 @@
 import { Alert, Heading } from "@navikt/ds-react";
-import { useGetVentekriterier } from "../api/apiService";
-import BackHomeBox from "../components/backhomebox/BackHomeBox";
-import ContentLoader from "../components/content-loader/ContentLoader";
-import VentekriterierTable from "../components/tables/VentekriterierTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import { useGetVentekriterier } from "../../api/apiService";
+import commonstyles from "../../styles/commonstyles.module.css";
+import BackHomeBox from "../BackHomeBox";
+import ContentLoader from "../ContentLoader";
+import VentekriterierTable from "./VentekriterierTable";
 
 export const VentekriterierPage = () => {
   const { data, error, isLoading } = useGetVentekriterier();

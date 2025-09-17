@@ -3,9 +3,9 @@ import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
-import { FAGOMRAADER } from "../../util/constant";
+import { FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
-import FaggrupperExpandableSection from "../expandablesections/FaggrupperExpandableSection";
+import FaggrupperExpandableSection from "./FaggrupperExpandableSection";
 
 interface Props {
   data?: Faggruppe[];

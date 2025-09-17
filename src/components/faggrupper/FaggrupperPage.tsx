@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
-import { useGetFaggrupper } from "../api/apiService";
-import BackHomeBox from "../components/backhomebox/BackHomeBox";
-import ContentLoader from "../components/content-loader/ContentLoader";
-import FaggruppeFilter from "../components/filters/faggruppefilter/FaggruppeFilter";
-import FaggruppeTable from "../components/tables/FaggruppeTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import { useGetFaggrupper } from "../../api/apiService";
+import commonstyles from "../../styles/commonstyles.module.css";
+import BackHomeBox from "../BackHomeBox";
+import ContentLoader from "../ContentLoader";
+import FaggruppeFilter from "./FaggruppeFilter";
+import FaggruppeTable from "./FaggruppeTable";
 
 export const FaggrupperPage = () => {
   const { data, error, isLoading } = useGetFaggrupper();

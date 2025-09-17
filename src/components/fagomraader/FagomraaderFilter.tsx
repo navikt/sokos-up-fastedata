@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
-import { Fagomraader } from "../../../types/Fagomraader";
+import { Fagomraader } from "../../types/Fagomraader";
 import commonStyles from "../CommonFilterStyles.module.css";
 import FilterInput from "../FilterInput";
 

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventekriterier } from "../../types/Ventekriterier";
-import { formatNumber } from "../../util/tallUtil";
-import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
+import RowsPerPageSelector from "../RowsPerPageSelector";
+import { formatNumber } from "./tallUtil";
 
 type Props = {
   data?: Ventekriterier[];

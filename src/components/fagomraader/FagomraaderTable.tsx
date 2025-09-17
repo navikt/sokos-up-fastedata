@@ -3,12 +3,12 @@ import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
-import { KLASSEKODER } from "../../util/constant";
+import { KLASSEKODER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
-import FagomraaderExpandableSection from "../expandablesections/FagomraaderExpandableSection";
-import BilagstypeModal from "../modals/BilagstypeModal";
-import KorrigeringsarsakModal from "../modals/KorrigeringsarsakModal";
-import RowsPerPageSelector from "../rowsperpageselector/RowsPerPageSelector";
+import RowsPerPageSelector from "../RowsPerPageSelector";
+import BilagstypeModal from "./BilagstypeModal";
+import FagomraaderExpandableSection from "./FagomraaderExpandableSection";
+import KorrigeringsarsakModal from "./KorrigeringsarsakModal";
 
 interface Props {
   data?: Fagomraader[];

@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
-import { useGetFagomraader } from "../api/apiService";
-import BackHomeBox from "../components/backhomebox/BackHomeBox";
-import ContentLoader from "../components/content-loader/ContentLoader";
-import FagomraaderFilter from "../components/filters/fagomraaderfilter/FagomraaderFilter";
-import FagomraaderTable from "../components/tables/FagomraaderTable";
-import commonstyles from "../styles/commonstyles.module.css";
+import { useGetFagomraader } from "../../api/apiService";
+import commonstyles from "../../styles/commonstyles.module.css";
+import BackHomeBox from "../BackHomeBox";
+import ContentLoader from "../ContentLoader";
+import FagomraaderFilter from "./FagomraaderFilter";
+import FagomraaderTable from "./FagomraaderTable";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();

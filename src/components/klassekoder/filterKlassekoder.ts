@@ -1,4 +1,4 @@
-import { Klassekoder } from "../types/Klassekoder";
+import { Klassekoder } from "../../types/Klassekoder";
 
 export interface Filters {
   klassekoder: string[];
