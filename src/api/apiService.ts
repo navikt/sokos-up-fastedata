@@ -1,5 +1,6 @@
 import useSWRImmutable from "swr/immutable";
 import { Bilagstype } from "../types/Bilagstype";
+import { Faggruppe } from "../types/Faggruppe";
 import { Fagomraader } from "../types/Fagomraader";
 import { Klassekoder } from "../types/Klassekoder";
 import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
@@ -9,6 +10,7 @@ import { axiosFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
   BACKEND_API: "/oppdrag-api/api/v1/fastedata",
+  FAGGRUPPER_API: "/oppdrag-api/api/v1/fastedata/faggrupper",
   FAGOMRAADER_API: "/oppdrag-api/api/v1/fastedata/fagomraader",
 };
 
@@ -47,6 +49,17 @@ export function useGetFagomraader() {
     `/fagomraader`,
     swrConfig<Fagomraader[]>((url) =>
       axiosFetcher<Fagomraader[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
+
+export function useGetFaggrupper() {
+  const { data, error, isValidating } = useSWRImmutable<Faggruppe[]>(
+    `/faggrupper`,
+    swrConfig<Faggruppe[]>((url) =>
+      axiosFetcher<Faggruppe[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;
