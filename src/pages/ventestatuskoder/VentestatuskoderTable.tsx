@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
+import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventestatuskoder } from "../../types/Ventestatuskoder";
 import { SortState, sortData } from "../../util/sortUtil";
-import RowsPerPageSelector from "../RowsPerPageSelector";
 
 type Props = {
   data?: Ventestatuskoder[];

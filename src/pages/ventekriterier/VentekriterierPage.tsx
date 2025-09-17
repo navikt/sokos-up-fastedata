@@ -1,8 +1,8 @@
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetVentekriterier } from "../../api/apiService";
+import BackHomeBox from "../../common/BackHomeBox";
+import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
-import BackHomeBox from "../BackHomeBox";
-import ContentLoader from "../ContentLoader";
 import VentekriterierTable from "./VentekriterierTable";
 
 export const VentekriterierPage = () => {

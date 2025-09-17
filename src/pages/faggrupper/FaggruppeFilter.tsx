@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { Chips } from "@navikt/ds-react";
+import commonStyles from "../../common/CommonFilterStyles.module.css";
+import FilterInput from "../../common/FilterInput";
 import { Faggruppe } from "../../types/Faggruppe";
-import commonStyles from "../CommonFilterStyles.module.css";
-import FilterInput from "../FilterInput";
 
 interface FaggruppeFilterProps {
   data: Faggruppe[];

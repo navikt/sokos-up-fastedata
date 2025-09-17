@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
+import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
-import RowsPerPageSelector from "../RowsPerPageSelector";
 import HistoricalDataToggle from "./HistoricalDataToggle";
 
 interface Props {

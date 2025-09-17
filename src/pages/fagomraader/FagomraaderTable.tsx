@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
+import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
-import RowsPerPageSelector from "../RowsPerPageSelector";
 import BilagstypeModal from "./BilagstypeModal";
 import FagomraaderExpandableSection from "./FagomraaderExpandableSection";
 import KorrigeringsarsakModal from "./KorrigeringsarsakModal";
