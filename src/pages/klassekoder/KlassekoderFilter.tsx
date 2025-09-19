@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
-import commonStyles from "../CommonFilterStyles.module.css";
-import FilterInput from "../FilterInput";
+import commonStyles from "../../common/CommonFilterStyles.module.css";
+import FilterInput from "../../common/FilterInput";
 import styles from "./KlassekoderFilter.module.css";
 import { FilterKey, klassekoderFields } from "./fieldConfig";
 

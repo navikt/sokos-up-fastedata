@@ -1,16 +1,13 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
-import { useGetKlassekoder } from "../api/apiService";
-import BackHomeBox from "../components/backhomebox/BackHomeBox";
-import ContentLoader from "../components/content-loader/ContentLoader";
-import KlassekoderFilter from "../components/filters/klassekoderfilter/KlassekoderFilter";
-import KlassekoderTable from "../components/tables/KlassekoderTable";
-import commonstyles from "../styles/commonstyles.module.css";
-import {
-  filterKlassekoder,
-  getAvailableOptions,
-} from "../util/filterKlassekoder";
+import { useGetKlassekoder } from "../../api/apiService";
+import BackHomeBox from "../../common/BackHomeBox";
+import ContentLoader from "../../common/ContentLoader";
+import commonstyles from "../../styles/commonstyles.module.css";
+import KlassekoderFilter from "./KlassekoderFilter";
+import KlassekoderTable from "./KlassekoderTable";
+import { filterKlassekoder, getAvailableOptions } from "./filterKlassekoder";
 
 export const KlassekoderPage = () => {
   const { data, error, isLoading } = useGetKlassekoder();
