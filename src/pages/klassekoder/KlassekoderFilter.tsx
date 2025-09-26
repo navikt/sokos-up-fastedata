@@ -3,7 +3,7 @@ import { Button, Chips } from "@navikt/ds-react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import FilterInput from "../../common/FilterInput";
 import styles from "./KlassekoderFilter.module.css";
-import { FilterKey, klassekoderFields } from "./fieldConfig";
+import { FilterKey, klassekoderFields } from "./filterKlassekoder";
 
 interface KlassekoderFilterProps {
   options: Record<FilterKey, string[]>;

@@ -1,57 +1,20 @@
-import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFaggrupper } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { Faggruppe } from "../../types/Faggruppe";
 import FaggruppeFilter from "./FaggruppeFilter";
 import FaggruppeTable from "./FaggruppeTable";
 
 export const FaggrupperPage = () => {
   const { data, error, isLoading } = useGetFaggrupper();
-  const [urlParameters, setUrlParameters] = useSearchParams();
+  const [filteredData, setFilteredData] = useState<Faggruppe[]>([]);
 
-  const [filters, setFilters] = useState(() => {
-    const faggruppeUrlParam = urlParameters.get("faggruppe");
-    if (!faggruppeUrlParam) return [];
-    return [faggruppeUrlParam];
-  });
-
-  const displayFilters = useMemo(() => {
-    if (!data || filters.length === 0) return [];
-
-    return filters.map((kodeFaggruppe) => {
-      const matchingItem = data.find(
-        (item) => item.kodeFaggruppe === kodeFaggruppe,
-      );
-
-      if (matchingItem) {
-        return `${matchingItem.kodeFaggruppe} - ${matchingItem.navnFaggruppe}`;
-      }
-
-      return kodeFaggruppe;
-    });
-  }, [data, filters]);
-
-  const handleFiltersChange = (newFilters: string[]) => {
-    const kodeFaggruppe = newFilters.map((filter) => filter.split(" - ")[0]);
-    setFilters(kodeFaggruppe);
-
-    if (newFilters.length === 0) {
-      const newUrlParams = new URLSearchParams(urlParameters);
-      newUrlParams.delete("faggruppe");
-      setUrlParameters(newUrlParams, { replace: true });
-    }
-  };
-
-  const filteredData = useMemo(() => {
-    if (!data || filters.length === 0) return data || [];
-
-    return data.filter((item) => {
-      return filters.includes(item.kodeFaggruppe);
-    });
-  }, [data, filters]);
+  useEffect(() => {
+    if (data) setFilteredData(data);
+  }, [data]);
 
   if (isLoading) return <ContentLoader />;
 
@@ -69,18 +32,12 @@ export const FaggrupperPage = () => {
 
         <BackHomeBox />
 
-        {data && (
-          <FaggruppeFilter
-            data={data}
-            activeFilters={displayFilters}
-            onFiltersChange={handleFiltersChange}
-          />
-        )}
+        {data && <FaggruppeFilter data={data} onDataChange={setFilteredData} />}
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
         ) : filteredData.length > 0 ? (
-          <FaggruppeTable key={filters.join(",")} data={filteredData} />
+          <FaggruppeTable data={filteredData} />
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}

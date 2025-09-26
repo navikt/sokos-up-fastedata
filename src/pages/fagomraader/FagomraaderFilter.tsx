@@ -1,39 +1,75 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import FilterInput from "../../common/FilterInput";
 import { Fagomraader } from "../../types/Fagomraader";
+import { filterData, uniqueOptions } from "../../util/filterCommon";
 
 interface FagomraaderFilterProps {
   data: Fagomraader[];
-  activeFilters: string[];
-  onFiltersChange: (filters: string[]) => void;
+  onDataChange: (filtered: Fagomraader[]) => void;
 }
 
-const FagomraaderFilter = ({
-  data,
-  activeFilters,
-  onFiltersChange,
-}: FagomraaderFilterProps) => {
-  const allOptions = useMemo(() => {
-    return data.map(
-      (item) => `${item.kodeFagomraade} - ${item.navnFagomraade}`,
-    );
-  }, [data]);
+const FagomraaderFilter = ({ data, onDataChange }: FagomraaderFilterProps) => {
+  const [urlParameters, setUrlParameters] = useSearchParams();
+
+  const [activeFilters, setActiveFilters] = useState<string[]>(() => {
+    const fagomraadeUrlParam = urlParameters.get("fagomraade");
+    if (!fagomraadeUrlParam) return [];
+    return [fagomraadeUrlParam];
+  });
+
+  const toHaystack = (i: Fagomraader) =>
+    `${i.kodeFagomraade} ${i.navnFagomraade}`;
+
+  const filteredData = useMemo(() => {
+    return filterData(data, activeFilters, toHaystack);
+  }, [data, activeFilters]);
+
+  useEffect(() => {
+    onDataChange(filteredData);
+  }, [filteredData, onDataChange]);
+
+  const allOptions = useMemo(
+    () =>
+      uniqueOptions(
+        filteredData,
+        (i) => `${i.kodeFagomraade} - ${i.navnFagomraade}`,
+      ),
+    [filteredData],
+  );
+
+  const toTerm = (value: string) =>
+    value.includes(" - ") ? value.split(" - ")[0] : value;
 
   const handleAdd = (value: string) => {
-    if (!activeFilters.includes(value)) {
-      onFiltersChange([...activeFilters, value]);
+    const term = toTerm(value);
+    const exists = activeFilters.some(
+      (f) => f.toLowerCase() === term.toLowerCase(),
+    );
+    if (!exists) {
+      const next = [...activeFilters, term];
+      setActiveFilters(next);
     }
   };
 
   const handleRemove = (value: string) => {
-    onFiltersChange(activeFilters.filter((f) => f !== value));
+    const next = activeFilters.filter((f) => f !== value);
+    setActiveFilters(next);
+    if (next.length === 0) {
+      const newUrlParams = new URLSearchParams(urlParameters);
+      newUrlParams.delete("fagomraade");
+      setUrlParameters(newUrlParams, { replace: true });
+    }
   };
 
   const handleResetFilters = () => {
-    onFiltersChange([]);
+    setActiveFilters([]);
+    const newUrlParams = new URLSearchParams(urlParameters);
+    newUrlParams.delete("fagomraade");
+    setUrlParameters(newUrlParams, { replace: true });
   };
 
   return (
