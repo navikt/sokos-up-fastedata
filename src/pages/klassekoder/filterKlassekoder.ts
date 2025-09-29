@@ -38,13 +38,13 @@ export const filterKlassekoder = (
         return !isNaN(filterNumber) && item.artID === filterNumber;
       });
 
+    const fagomraader = (item.kodeFagomraade || "Ingen")
+      .split(",")
+      .map((f) => f.trim().toLowerCase());
+
     const matchesFagomraade =
       filters.fagomraade.length === 0 ||
-      filters.fagomraade.some((f) =>
-        (item.kodeFagomraade || "Ingen")
-          .toLowerCase()
-          .includes(f.toLowerCase()),
-      );
+      filters.fagomraade.some((f) => fagomraader.includes(f.toLowerCase()));
 
     return (
       matchesKlassekoder &&
@@ -60,10 +60,16 @@ export const getAvailableOptions = (data: Klassekoder[]) => {
   return {
     klassekoder: [...new Set(data.map((item) => item.kodeKlasse))],
     hovedkontoNr: [...new Set(data.map((item) => item.hovedkontoNr))],
-    underkontoNr: [...new Set(data.map((item) => item.underkontoNr))],
+    underkontoNr: [
+      ...new Set(data.map((item) => item.underkontoNr).filter(Boolean)),
+    ] as string[],
     artID: [...new Set(data.map((item) => item.artID.toString()))],
     fagomraade: [
-      ...new Set(data.map((item) => item.kodeFagomraade || "Ingen")),
+      ...new Set(
+        data.flatMap((item) =>
+          (item.kodeFagomraade || "Ingen").split(",").map((f) => f.trim()),
+        ),
+      ),
     ],
   };
 };

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
-import { Link, Pagination, Table } from "@navikt/ds-react";
+import { Link, Pagination, Table, Tooltip } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
@@ -108,17 +108,51 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         <Table.Body>
           {paginatedData.map((row) => (
             <Table.Row key={row.kodeKlasse}>
-              <Table.DataCell>{row.kodeKlasse}</Table.DataCell>
-              <Table.DataCell>{row.artID}</Table.DataCell>
+              <Table.DataCell>
+                {row.beskrKlasse ? (
+                  <Tooltip content={row.beskrKlasse}>
+                    <span>{row.kodeKlasse}</span>
+                  </Tooltip>
+                ) : (
+                  row.kodeKlasse
+                )}
+              </Table.DataCell>
+              <Table.DataCell>
+                {row.beskrArt ? (
+                  <Tooltip content={row.beskrArt}>
+                    <span>{row.artID}</span>
+                  </Tooltip>
+                ) : (
+                  row.artID
+                )}
+              </Table.DataCell>
               <Table.DataCell>{row.datoFom}</Table.DataCell>
               <Table.DataCell>{row.datoTom}</Table.DataCell>
-              <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
-              <Table.DataCell>{row.underkontoNr}</Table.DataCell>
+              <Table.DataCell>
+                {row.hovedkontoNavn ? (
+                  <Tooltip content={row.hovedkontoNavn}>
+                    <span>{row.hovedkontoNr}</span>
+                  </Tooltip>
+                ) : (
+                  row.hovedkontoNr
+                )}
+              </Table.DataCell>
+              <Table.DataCell>
+                {row.underkontoNavn ? (
+                  <Tooltip content={row.underkontoNavn}>
+                    <span>{row.underkontoNr}</span>
+                  </Tooltip>
+                ) : (
+                  row.underkontoNr
+                )}
+              </Table.DataCell>
               <Table.DataCell>
                 {row.kodeFagomraade ? (
                   <Link
                     as={RouterLink}
-                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
+                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(
+                      row.kodeFagomraade,
+                    )}`}
                   >
                     {row.kodeFagomraade}
                   </Link>
