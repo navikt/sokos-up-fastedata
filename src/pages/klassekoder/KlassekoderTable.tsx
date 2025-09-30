@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
@@ -40,10 +40,11 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 
   const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
 
-  const updateRowsPerPage = useCallback((rows: number) => {
+  // no useCallback here, just a normal function
+  const updateRowsPerPage = (rows: number) => {
     setRowsPerPage(rows);
     setCurrentPage(1);
-  }, []);
+  };
 
   return (
     <>
