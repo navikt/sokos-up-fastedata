@@ -4,7 +4,6 @@ import { Link, Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
-import { FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
 import HistoricalDataToggle from "./HistoricalDataToggle";
 import HoverInfoCell from "./HoverInfoCell";
@@ -40,7 +39,6 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 
   const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
 
-  // no useCallback here, just a normal function
   const updateRowsPerPage = (rows: number) => {
     setRowsPerPage(rows);
     setCurrentPage(1);
@@ -118,13 +116,8 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
               />
               <Table.DataCell>
                 {row.kodeFagomraade ? (
-                  <Link
-                    as={RouterLink}
-                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(
-                      row.kodeFagomraade,
-                    )}`}
-                  >
-                    {row.kodeFagomraade}
+                  <Link as={RouterLink} to="">
+                    Fagområde
                   </Link>
                 ) : (
                   "Ingen"
