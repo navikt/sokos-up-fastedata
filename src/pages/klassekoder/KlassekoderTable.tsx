@@ -7,6 +7,7 @@ import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
 import HistoricalDataToggle from "./HistoricalDataToggle";
+import HoverInfoCell from "./HoverInfoCell";
 
 interface Props {
   data?: Klassekoder[];
@@ -24,15 +25,9 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 
   const filteredData = useMemo(() => {
     if (showHistorical) return data;
-    const getYear = (s?: string | null) => {
-      if (!s) return undefined;
-      const m = String(s).match(/\d{4}/);
-      return m ? parseInt(m[0], 10) : undefined;
-    };
     return data.filter((item) => {
-      const year = getYear(item.datoTom);
-      if (year && year <= 2017) return false;
-      return true;
+      const year = item.datoTom?.match(/\d{4}/)?.[0];
+      return !year || parseInt(year, 10) > 2017;
     });
   }, [data, showHistorical]);
 
@@ -45,6 +40,7 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 
   const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
 
+  // no useCallback here, just a normal function
   const updateRowsPerPage = (rows: number) => {
     setRowsPerPage(rows);
     setCurrentPage(1);
@@ -108,17 +104,25 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         <Table.Body>
           {paginatedData.map((row) => (
             <Table.Row key={row.kodeKlasse}>
-              <Table.DataCell>{row.kodeKlasse}</Table.DataCell>
-              <Table.DataCell>{row.artID}</Table.DataCell>
+              <HoverInfoCell value={row.kodeKlasse} tooltip={row.beskrKlasse} />
+              <HoverInfoCell value={row.artID} tooltip={row.beskrArt} />
               <Table.DataCell>{row.datoFom}</Table.DataCell>
               <Table.DataCell>{row.datoTom}</Table.DataCell>
-              <Table.DataCell>{row.hovedkontoNr}</Table.DataCell>
-              <Table.DataCell>{row.underkontoNr}</Table.DataCell>
+              <HoverInfoCell
+                value={row.hovedkontoNr}
+                tooltip={row.hovedkontoNavn}
+              />
+              <HoverInfoCell
+                value={row.underkontoNr}
+                tooltip={row.underkontoNavn}
+              />
               <Table.DataCell>
                 {row.kodeFagomraade ? (
                   <Link
                     as={RouterLink}
-                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(row.kodeFagomraade)}`}
+                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(
+                      row.kodeFagomraade,
+                    )}`}
                   >
                     {row.kodeFagomraade}
                   </Link>
