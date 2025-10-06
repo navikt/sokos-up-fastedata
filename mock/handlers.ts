@@ -31,7 +31,7 @@ export const handlers = [
   http.get(klassekoderUrl, () => {
     return HttpResponse.json(klassekoderList, { status: 200 });
   }),
-  http.get(`${faggrupperUrl}/:faggruppe/kjoreplaner`, ({ params }) => {
+  http.get(`${faggrupperUrl}/:faggruppe/kjoreplan`, ({ params }) => {
     const { faggruppe } = params;
 
     if (faggruppe === "KORONA3") {
