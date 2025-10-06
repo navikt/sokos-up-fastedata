@@ -41,10 +41,13 @@ export const KjoreplanTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{formatDate(row.datoKjores)}</Table.DataCell>
               <Table.DataCell>{row.status}</Table.DataCell>
-              <Table.DataCell>{formatDate(row.datoOverfores)}</Table.DataCell>
+              <Table.DataCell>
+                {row.datoOverfores ? formatDate(row.datoOverfores) : "-"}
+              </Table.DataCell>
               <Table.DataCell>{formatDate(row.datoForfall)}</Table.DataCell>
               <Table.DataCell>
-                {formatDate(row.datoBeregnFom)}-{formatDate(row.datoBeregnTom)}
+                {formatDate(row.datoBeregnFom)} -{" "}
+                {formatDate(row.datoBeregnTom)}
               </Table.DataCell>
             </Table.Row>
           ))}
