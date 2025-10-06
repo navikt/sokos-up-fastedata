@@ -5,6 +5,7 @@ import commonstyles from "../../../styles/commonstyles.module.css";
 import { Kjoreplan } from "../../../types/Kjoreplan";
 
 interface Props {
+  past?: boolean; // Om dette er kjøreplaner som er kjørt (true) eller planlagt (false)
   data?: Kjoreplan[];
 }
 
@@ -12,7 +13,7 @@ function formatDate(value?: string) {
   return dayjs(value).format("DD.MM.YYYY");
 }
 
-export const KjoreplanTable = ({ data = [] }: Props) => {
+export const KjoreplanTable = ({ past, data = [] }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
@@ -28,7 +29,9 @@ export const KjoreplanTable = ({ data = [] }: Props) => {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader>Faggruppe</Table.ColumnHeader>
-            <Table.ColumnHeader>Dato kjøres</Table.ColumnHeader>
+            <Table.ColumnHeader>
+              {past ? "Dato kjørt" : "Dato kjøres"}
+            </Table.ColumnHeader>
             <Table.ColumnHeader>Status</Table.ColumnHeader>
             <Table.ColumnHeader>Dato overføres</Table.ColumnHeader>
             <Table.ColumnHeader>Dato forfall</Table.ColumnHeader>
