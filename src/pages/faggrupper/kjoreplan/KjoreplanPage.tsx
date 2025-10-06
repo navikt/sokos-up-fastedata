@@ -8,7 +8,9 @@ import KjoreplanTable from "./KjoreplanTable";
 
 const KjoreplanPage = () => {
   const { faggruppe } = useParams();
-  const { data, error, isLoading } = useGetKjoreplaner(faggruppe);
+  const { data, error, isLoading } = useGetKjoreplaner({
+    faggruppe: faggruppe || "",
+  });
 
   if (isLoading) return <ContentLoader />;
 
