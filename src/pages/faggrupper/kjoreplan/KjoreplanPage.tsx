@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { Alert, Heading } from "@navikt/ds-react";
+import { Alert, Heading, Tabs } from "@navikt/ds-react";
 import { useGetKjoreplaner } from "../../../api/apiService";
 import BackHomeBox from "../../../common/BackHomeBox";
 import ContentLoader from "../../../common/ContentLoader";
@@ -31,7 +31,25 @@ const KjoreplanPage = () => {
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
         ) : data && data.length > 0 ? (
-          <KjoreplanTable data={data} />
+          <Tabs defaultValue="PLAN" style={{ marginBottom: "1.5rem" }}>
+            <Tabs.List>
+              <Tabs.Tab value="PLAN" label="Planlagt" />
+              <Tabs.Tab value="AVSL" label="Avsluttet" />
+            </Tabs.List>
+            <Tabs.Panel value="PLAN">
+              <KjoreplanTable
+                data={data.filter((kjoreplan) => kjoreplan.status === "PLAN")}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="AVSL">
+              <KjoreplanTable
+                past
+                data={data
+                  .filter((kjoreplan) => kjoreplan.status === "AVSL")
+                  .reverse()}
+              />
+            </Tabs.Panel>
+          </Tabs>
         ) : (
           <Alert variant="info">Ingen data tilgjengelig</Alert>
         )}
