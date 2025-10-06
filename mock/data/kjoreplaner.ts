@@ -1083,7 +1083,7 @@ export const kjoreplanList: Kjoreplan[] = [
   },
 ];
 
-export const koronaKjoreplaner = [
+export const koronaKjoreplaner: Kjoreplan[] = [
   {
     kodeFaggruppe: "KORONA3",
     datoKjores: "2020-02-01",
