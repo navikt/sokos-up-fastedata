@@ -104,7 +104,7 @@ export function useGetKlassekoder() {
 
 export function useGetKjoreplaner({ faggruppe }: { faggruppe: string }) {
   const { data, error, isValidating } = useSWRImmutable<Kjoreplan[]>(
-    `/faggrupper/${faggruppe}/kjoreplaner`,
+    `/faggrupper/${faggruppe}/kjoreplan`,
     swrConfig<Kjoreplan[]>((url) =>
       axiosFetcher<Kjoreplan[]>(BASE_URI.BACKEND_API, url),
     ),
