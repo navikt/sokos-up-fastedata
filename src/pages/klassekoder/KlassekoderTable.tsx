@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink, generatePath } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
+import { KLASSEKODER_FAGOMRAADER } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
 import HistoricalDataToggle from "./HistoricalDataToggle";
 import HoverInfoCell from "./HoverInfoCell";
@@ -116,7 +117,13 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
               />
               <Table.DataCell>
                 {row.kodeFagomraade ? (
-                  <Link as={RouterLink} to="">
+                  <Link
+                    as={RouterLink}
+                    to={generatePath(KLASSEKODER_FAGOMRAADER, {
+                      klassekode: row.kodeKlasse,
+                    })}
+                    state={{ klassekode: row }}
+                  >
                     Fagområde
                   </Link>
                 ) : (
