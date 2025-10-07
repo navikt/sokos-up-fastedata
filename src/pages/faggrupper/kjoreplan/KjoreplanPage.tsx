@@ -4,6 +4,7 @@ import { useGetKjoreplaner } from "../../../api/apiService";
 import BackHomeBox from "../../../common/BackHomeBox";
 import ContentLoader from "../../../common/ContentLoader";
 import commonstyles from "../../../styles/commonstyles.module.css";
+import { FAGGRUPPER, ROOT } from "../../../util/paths";
 import KjoreplanTable from "./KjoreplanTable";
 
 const KjoreplanPage = () => {
@@ -26,7 +27,10 @@ const KjoreplanPage = () => {
           Faste data - Faggrupper - Kjøreplan
         </Heading>
 
-        <BackHomeBox />
+        <BackHomeBox
+          to={[ROOT, FAGGRUPPER]}
+          labels={["Tilbake til oversikt", "Tilbake til Faggruppesiden"]}
+        />
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>
