@@ -1693,3 +1693,22 @@ export const koronaKjoreplaner: Kjoreplan[] = [
     datoBeregnTom: "2025-12-31",
   },
 ];
+
+export const ingenopKjoreplaner: Kjoreplan[] = [
+  {
+    kodeFaggruppe: "INGENOPP",
+    datoKjores: "1900-01-01",
+    status: "AVSL",
+    datoForfall: "1900-01-01",
+    datoBeregnFom: "1900-01-01",
+    datoBeregnTom: "1900-01-31",
+  },
+  {
+    kodeFaggruppe: "INGENOPP",
+    datoKjores: "2099-01-11",
+    status: "PLAN",
+    datoForfall: "2099-01-01",
+    datoBeregnFom: "2099-01-01",
+    datoBeregnTom: "2099-01-31",
+  },
+];
