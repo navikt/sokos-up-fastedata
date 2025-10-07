@@ -172,7 +172,7 @@ export const klassekoderList: Klassekoder[] = [
   },
   {
     kodeKlasse: "6300",
-    kodeFagomraade: "MBOSTØTTE,MBIDRAG,MTRYG",
+    kodeFagomraade: "MBOSTØTTE,MBIDRAG,MTRYG, BARNEPE",
     artID: 65,
     datoFom: "2018-01-01",
     datoTom: "9999-12-31",

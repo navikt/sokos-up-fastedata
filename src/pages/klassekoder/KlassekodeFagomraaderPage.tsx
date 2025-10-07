@@ -1,10 +1,15 @@
 import { useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
-import { Alert, BodyShort, Heading, List } from "@navikt/ds-react";
+import {
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router";
+import { Alert, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import BackHomeBox from "../../common/BackHomeBox";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
-import { KLASSEKODER, ROOT } from "../../util/paths";
+import { FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
 import styles from "./KlassekodeFagomraaderPage.module.css";
 
 type LocationState = {
@@ -80,7 +85,15 @@ const KlassekodeFagomraaderPage = () => {
 
             <List>
               {fagomraader.map((fagomraade) => (
-                <List.Item key={fagomraade}>{fagomraade}</List.Item>
+                <List.Item key={fagomraade}>
+                  <Link
+                    as={RouterLink}
+                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade)}`}
+                    state={{ fromKlassekode: klassekode.kodeKlasse }}
+                  >
+                    {fagomraade}
+                  </Link>
+                </List.Item>
               ))}
             </List>
           </>
