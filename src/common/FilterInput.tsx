@@ -1,13 +1,11 @@
-import { useMemo, useState } from "react";
-import { BodyShort, Search } from "@navikt/ds-react";
-import styles from "./CommonFilterStyles.module.css";
-import { getSortedSuggestions } from "./suggestionUtil";
+import { UNSAFE_Combobox } from "@navikt/ds-react";
 
 interface FilterInputProps {
   label: string;
   options: string[];
   activeValues: string[];
   onValueAdd: (value: string) => void;
+  onValueRemove: (value: string) => void;
   autoFocus?: boolean;
 }
 
@@ -16,72 +14,29 @@ const FilterInput = ({
   options,
   activeValues,
   onValueAdd,
+  onValueRemove,
   autoFocus = false,
 }: FilterInputProps) => {
-  const [inputValue, setInputValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-
-  const suggestions = useMemo(() => {
-    return getSortedSuggestions(options, inputValue.trim(), isFocused);
-  }, [inputValue, isFocused, options]);
-
-  const handleSearch = () => {
-    const trimmed = inputValue.trim();
-    if (trimmed && !activeValues.includes(trimmed)) {
-      onValueAdd(trimmed);
-      setInputValue("");
+  const handleToggleSelected = (option: string, isSelected: boolean) => {
+    if (isSelected) {
+      onValueAdd(option);
+    } else {
+      onValueRemove(option);
     }
   };
-
-  const handleSuggestionClick = (suggestion: string) => {
-    if (!activeValues.includes(suggestion)) {
-      onValueAdd(suggestion);
-    }
-    setInputValue("");
-  };
-
-  const shouldShowSuggestionBox = inputValue.trim().length > 0 && isFocused;
 
   return (
-    <div>
-      <BodyShort weight="semibold" size="small">
-        {label}
-      </BodyShort>
-      <div className={styles["search-container"]}>
-        <Search
-          variant="simple"
-          label={label}
-          size="small"
-          value={inputValue}
-          onChange={setInputValue}
-          onSearchClick={handleSearch}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSearch();
-          }}
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus={autoFocus}
-        />
-        {shouldShowSuggestionBox && (
-          <ul className={styles["suggestions-list"]}>
-            {suggestions.length > 0 ? (
-              suggestions.map((suggestion) => (
-                <button
-                  key={suggestion}
-                  className={styles["suggestion-item"]}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                >
-                  {suggestion}
-                </button>
-              ))
-            ) : (
-              <li className={styles["no-results"]}>Ingen treff</li>
-            )}
-          </ul>
-        )}
-      </div>
-    </div>
+    <UNSAFE_Combobox
+      size="small"
+      label={label}
+      options={options}
+      isMultiSelect
+      selectedOptions={activeValues}
+      onToggleSelected={handleToggleSelected}
+      shouldShowSelectedOptions={false}
+      // eslint-disable-next-line jsx-a11y/no-autofocus
+      autoFocus={autoFocus}
+    />
   );
 };
 
