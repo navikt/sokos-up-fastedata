@@ -79,20 +79,29 @@ const KlassekodeFagomraaderPage = () => {
 
         {fagomraader.length > 0 ? (
           <>
-            <Heading spacing level="2" size="small">
+            <Heading spacing level="3" size="xsmall">
               Fagområder:
             </Heading>
 
             <List>
               {fagomraader.map((fagomraade) => (
                 <List.Item key={fagomraade}>
-                  <Link
-                    as={RouterLink}
-                    to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade)}`}
-                    state={{ fromKlassekode: klassekode.kodeKlasse }}
-                  >
-                    {fagomraade}
-                  </Link>
+                  <div className={styles["list-row"]}>
+                    <Link
+                      as={RouterLink}
+                      to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade)}`}
+                      state={{ fromKlassekode: klassekode.kodeKlasse }}
+                    >
+                      {fagomraade}
+                    </Link>
+                    <Link
+                      as={RouterLink}
+                      to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade)}`}
+                      className={styles.secondaryLink}
+                    >
+                      Klassekoder i {fagomraade}
+                    </Link>
+                  </div>
                 </List.Item>
               ))}
             </List>
