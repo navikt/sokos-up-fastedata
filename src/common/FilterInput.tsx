@@ -31,6 +31,7 @@ const FilterInput = ({
       label={label}
       options={options}
       isMultiSelect
+      allowNewValues
       selectedOptions={activeValues}
       onToggleSelected={handleToggleSelected}
       shouldShowSelectedOptions={false}
