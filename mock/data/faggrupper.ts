@@ -21,6 +21,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 1,
+    nesteKjoreplan: "2025-11-13",
   },
   {
     kodeFaggruppe: "BARNBRIL",
@@ -42,6 +43,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 2,
+    nesteKjoreplan: "2025-10-16",
   },
   {
     kodeFaggruppe: "ARBYT",
@@ -63,6 +65,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 0,
+    nesteKjoreplan: "2024-06-13",
   },
   {
     kodeFaggruppe: "OMSTILL",
@@ -84,6 +87,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 0,
+    nesteKjoreplan: "2024-12-10",
   },
   {
     kodeFaggruppe: "INGENOPP",
@@ -105,6 +109,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 1,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 2,
+    nesteKjoreplan: "2099-01-11",
   },
   {
     kodeFaggruppe: "ARBTIL",
@@ -126,6 +131,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 0,
+    nesteKjoreplan: "9999-06-10",
   },
   {
     kodeFaggruppe: "TREKKOPP",
@@ -147,6 +153,7 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 0,
+    nesteKjoreplan: "2099-06-10",
   },
   {
     kodeFaggruppe: "UNG",
@@ -168,5 +175,6 @@ export const faggrupper: Faggruppe[] = [
     antallFagomraader: 0,
     antallRedusertSkatt: 0,
     antallKjoreplaner: 0,
+    nesteKjoreplan: "2025-06-10",
   },
 ];
