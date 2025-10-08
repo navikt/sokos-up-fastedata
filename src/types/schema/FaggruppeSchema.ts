@@ -20,5 +20,5 @@ export const FaggruppeSchema = z.object({
   antallFagomraader: z.number(),
   antallRedusertSkatt: z.number(),
   antallKjoreplaner: z.number(),
-  nesteKjoreplan: z.string().optional(),
+  nesteKjoredato: z.string().optional(),
 });

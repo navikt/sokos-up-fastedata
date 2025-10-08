@@ -60,8 +60,8 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>
                 {row.antallKjoreplaner > 0 && (
                   <Link as={RouterLink} to={`${row.kodeFaggruppe}/kjoreplaner`}>
-                    {row.nesteKjoreplan
-                      ? formatDate(row.nesteKjoreplan)
+                    {row.nesteKjoredato
+                      ? formatDate(row.nesteKjoredato)
                       : "Ingen planlagt kjøring"}
                   </Link>
                 )}
