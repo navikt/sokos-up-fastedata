@@ -124,7 +124,12 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
                     })}
                     state={{ klassekode: row }}
                   >
-                    Fagområde
+                    {row.kodeFagomraade
+                      .split(",")
+                      .map((kode) => kode.trim())
+                      .filter(Boolean).length === 1
+                      ? row.kodeFagomraade.trim()
+                      : "Fagområder"}
                   </Link>
                 ) : (
                   "Ingen"
