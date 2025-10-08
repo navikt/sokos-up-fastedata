@@ -5,12 +5,13 @@ import {
   useNavigate,
   useParams,
 } from "react-router";
-import { Alert, BodyShort, Heading, Link, List } from "@navikt/ds-react";
+import { Alert, Heading, Link, Table } from "@navikt/ds-react";
+import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
+import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
-import styles from "./KlassekodeFagomraaderPage.module.css";
 
 type LocationState = {
   klassekode?: Klassekoder;
@@ -32,15 +33,24 @@ const KlassekodeFagomraaderPage = () => {
   const state = location.state as LocationState | undefined;
   const klassekode = state?.klassekode;
 
+  const { data: allFagomraader, error, isLoading } = useGetFagomraader();
+
   useEffect(() => {
     if (!klassekode) {
       navigate(KLASSEKODER, { replace: true });
     }
   }, [klassekode, navigate]);
 
-  const fagomraader = useMemo(() => {
+  const fagomraaderCodes = useMemo(() => {
     return parseFagomraader(klassekode?.kodeFagomraade);
   }, [klassekode?.kodeFagomraade]);
+
+  const fagomraaderData = useMemo(() => {
+    if (!allFagomraader) return [];
+    return allFagomraader.filter((fo) =>
+      fagomraaderCodes.includes(fo.kodeFagomraade),
+    );
+  }, [allFagomraader, fagomraaderCodes]);
 
   if (!klassekode) {
     return null;
@@ -66,46 +76,44 @@ const KlassekodeFagomraaderPage = () => {
           ]}
         />
 
-        <div className={styles.row}>
-          <BodyShort weight="semibold">Klassekode: </BodyShort>
-          <BodyShort>{klassekode.kodeKlasse}</BodyShort>
-        </div>
-        {klassekode.beskrKlasse && (
-          <div className={styles.row}>
-            <BodyShort weight="semibold">Beskrivelse: </BodyShort>
-            <BodyShort spacing>{klassekode.beskrKlasse}</BodyShort>
-          </div>
-        )}
-
-        {fagomraader.length > 0 ? (
-          <>
-            <Heading spacing level="3" size="xsmall">
-              Fagområder:
-            </Heading>
-
-            <List>
-              {fagomraader.map((fagomraade) => (
-                <List.Item key={fagomraade}>
-                  <div className={styles["list-row"]}>
+        {isLoading ? (
+          <ContentLoader />
+        ) : error ? (
+          <Alert variant="error">Feil ved lasting av fagområder</Alert>
+        ) : fagomraaderData.length > 0 ? (
+          <Table zebraStripes size="small">
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell scope="col">Kode</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+                <Table.HeaderCell scope="col">Klassekoder</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {fagomraaderData.map((fagomraade) => (
+                <Table.Row key={fagomraade.kodeFagomraade}>
+                  <Table.DataCell>
                     <Link
                       as={RouterLink}
-                      to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade)}`}
+                      to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
                       state={{ fromKlassekode: klassekode.kodeKlasse }}
                     >
-                      {fagomraade}
+                      {fagomraade.kodeFagomraade}
                     </Link>
+                  </Table.DataCell>
+                  <Table.DataCell>{fagomraade.navnFagomraade}</Table.DataCell>
+                  <Table.DataCell>
                     <Link
                       as={RouterLink}
-                      to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade)}`}
-                      className={styles.secondaryLink}
+                      to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
                     >
-                      Klassekoder i {fagomraade}
+                      Klassekoder
                     </Link>
-                  </div>
-                </List.Item>
+                  </Table.DataCell>
+                </Table.Row>
               ))}
-            </List>
-          </>
+            </Table.Body>
+          </Table>
         ) : (
           <Alert variant="info" role="status">
             Ingen fagområder registrert for{" "}
