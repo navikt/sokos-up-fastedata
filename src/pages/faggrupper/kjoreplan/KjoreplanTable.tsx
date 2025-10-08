@@ -1,16 +1,12 @@
-import dayjs from "dayjs";
 import { useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../../styles/commonstyles.module.css";
 import { Kjoreplan } from "../../../types/Kjoreplan";
+import { formatDate } from "../../../util/dateUtil";
 
 interface Props {
   past?: boolean; // Om dette er kjøreplaner som er kjørt (true) eller planlagt (false)
   data?: Kjoreplan[];
-}
-
-function formatDate(value?: string) {
-  return dayjs(value).format("DD.MM.YYYY");
 }
 
 export const KjoreplanTable = ({ past, data = [] }: Props) => {
