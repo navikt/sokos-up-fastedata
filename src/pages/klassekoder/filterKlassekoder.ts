@@ -44,7 +44,7 @@ export const filterKlassekoder = (
 
     const matchesFagomraade =
       filters.fagomraade.length === 0 ||
-      filters.fagomraade.some((f) => fagomraader.includes(f.toLowerCase()));
+      filters.fagomraade.every((f) => fagomraader.includes(f.toLowerCase()));
 
     return (
       matchesKlassekoder &&
