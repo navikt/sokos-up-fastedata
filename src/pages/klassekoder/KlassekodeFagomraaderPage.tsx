@@ -5,15 +5,17 @@ import {
   useNavigate,
   useParams,
 } from "react-router";
-import { Alert, Heading, Link, Table } from "@navikt/ds-react";
+import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
+import filterstyles from "../../common/CommonFilterStyles.module.css";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
+import styles from "./KlassekodeFagomraaderPage.module.css";
 
 type LocationState = {
   klassekode?: Klassekoder;
@@ -85,6 +87,15 @@ const KlassekodeFagomraaderPage = () => {
             { label: `Fagområder for ${klassekode.kodeKlasse}` },
           ]}
         />
+
+        <div className={filterstyles["filter-container"]}>
+          <div className={styles.row}>
+            <BodyShort weight="semibold">
+              Fagområder som inneholder Klassekoden:
+            </BodyShort>{" "}
+            {klassekode.kodeKlasse}
+          </div>
+        </div>
 
         {isLoading ? (
           <ContentLoader />
