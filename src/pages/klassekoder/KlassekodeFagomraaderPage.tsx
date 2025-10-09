@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Link as RouterLink,
   useLocation,
@@ -10,8 +10,10 @@ import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { Fagomraader } from "../../types/Fagomraader";
 import { Klassekoder } from "../../types/Klassekoder";
 import { FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
+import { SortState, sortData } from "../../util/sortUtil";
 
 type LocationState = {
   klassekode?: Klassekoder;
@@ -34,6 +36,10 @@ const KlassekodeFagomraaderPage = () => {
   const klassekode = state?.klassekode;
 
   const { data: allFagomraader, error, isLoading } = useGetFagomraader();
+  const [sort, setSort] = useState<SortState<Fagomraader> | undefined>({
+    orderBy: "kodeFagomraade",
+    direction: "ascending",
+  });
 
   useEffect(() => {
     if (!klassekode) {
@@ -45,12 +51,16 @@ const KlassekodeFagomraaderPage = () => {
     return parseFagomraader(klassekode?.kodeFagomraade);
   }, [klassekode?.kodeFagomraade]);
 
-  const fagomraaderData = useMemo(() => {
+  const filteredFagomraader = useMemo(() => {
     if (!allFagomraader) return [];
     return allFagomraader.filter((fo) =>
       fagomraaderCodes.includes(fo.kodeFagomraade),
     );
   }, [allFagomraader, fagomraaderCodes]);
+
+  const fagomraaderData = useMemo(() => {
+    return sortData(filteredFagomraader, sort);
+  }, [filteredFagomraader, sort]);
 
   if (!klassekode) {
     return null;
@@ -81,11 +91,29 @@ const KlassekodeFagomraaderPage = () => {
         ) : error ? (
           <Alert variant="error">Feil ved lasting av fagområder</Alert>
         ) : fagomraaderData.length > 0 ? (
-          <Table zebraStripes size="small">
+          <Table
+            zebraStripes
+            size="small"
+            sort={sort}
+            onSortChange={(key) => {
+              setSort((prev) => {
+                const orderBy = key as keyof Fagomraader;
+                const direction =
+                  prev?.orderBy === orderBy && prev?.direction === "ascending"
+                    ? "descending"
+                    : "ascending";
+                return { orderBy, direction };
+              });
+            }}
+          >
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell scope="col">Kode</Table.HeaderCell>
-                <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+                <Table.ColumnHeader sortKey="kodeFagomraade" sortable>
+                  Kode
+                </Table.ColumnHeader>
+                <Table.ColumnHeader sortKey="navnFagomraade" sortable>
+                  Navn
+                </Table.ColumnHeader>
                 <Table.HeaderCell scope="col">Klassekoder</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
