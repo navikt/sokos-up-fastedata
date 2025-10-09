@@ -4,7 +4,11 @@ import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { FAGOMRAADER } from "../../util/paths";
-import { SortState, sortData } from "../../util/sortUtil";
+import { SortState } from "../../util/sortUtil";
+import {
+  createSortChangeHandler,
+  useTablePagination,
+} from "../../util/tableUtil";
 import FaggrupperExpandableSection from "./FaggrupperExpandableSection";
 
 interface Props {
@@ -13,16 +17,15 @@ interface Props {
 
 export const FaggruppeTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Faggruppe> | undefined>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
 
-  const sortedData = sortData(data, sort);
+  const { safePage, totalPages, paginatedData, handlePageChange } =
+    useTablePagination({
+      data,
+      sortState: sort,
+      initialRowsPerPage: 10,
+    });
 
-  const totalPages = Math.ceil(sortedData.length / pageSize);
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
+  const handleSortChange = createSortChangeHandler(setSort);
 
   return (
     <>
@@ -30,16 +33,7 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
         zebraStripes
         size="small"
         sort={sort}
-        onSortChange={(key) => {
-          setSort((prev) => {
-            const orderBy = key as keyof Faggruppe;
-            const direction =
-              prev?.orderBy === orderBy && prev?.direction === "ascending"
-                ? "descending"
-                : "ascending";
-            return { orderBy, direction };
-          });
-        }}
+        onSortChange={handleSortChange}
       >
         <Table.Header>
           <Table.Row>
@@ -78,8 +72,8 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
       </Table>
       <div className={commonstyles["table-pagination-container"]}>
         <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
+          page={safePage}
+          onPageChange={handlePageChange}
           count={totalPages}
           size="small"
         />

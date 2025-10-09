@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+.list-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
