@@ -37,6 +37,7 @@ const FaggruppeFilter = ({
           options={allOptions}
           activeValues={activeFilters}
           onValueAdd={handleAdd}
+          onValueRemove={handleRemove}
         />
 
         {activeFilters.length > 0 && (

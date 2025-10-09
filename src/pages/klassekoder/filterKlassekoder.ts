@@ -15,7 +15,7 @@ export const filterKlassekoder = (
   return data.filter((item) => {
     const matchesKlassekoder =
       filters.klassekoder.length === 0 ||
-      filters.klassekoder.some((f) =>
+      filters.klassekoder.every((f) =>
         item.kodeKlasse.toLowerCase().includes(f.toLowerCase()),
       );
 
@@ -44,7 +44,7 @@ export const filterKlassekoder = (
 
     const matchesFagomraade =
       filters.fagomraade.length === 0 ||
-      filters.fagomraade.some((f) => fagomraader.includes(f.toLowerCase()));
+      filters.fagomraade.every((f) => fagomraader.includes(f.toLowerCase()));
 
     return (
       matchesKlassekoder &&

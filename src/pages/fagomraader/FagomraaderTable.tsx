@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/paths";
-import { SortState, sortData } from "../../util/sortUtil";
+import { SortState } from "../../util/sortUtil";
+import {
+  createSortChangeHandler,
+  useTablePagination,
+} from "../../util/tableUtil";
 import BilagstypeModal from "./BilagstypeModal";
 import FagomraaderExpandableSection from "./FagomraaderExpandableSection";
 import KorrigeringsarsakModal from "./KorrigeringsarsakModal";
@@ -16,24 +20,21 @@ interface Props {
 
 export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [data]);
+  const {
+    safePage,
+    totalPages,
+    paginatedData,
+    tableKey,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data,
+    sortState: sort,
+  });
 
-  const sortedData = sortData(data, sort);
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
-
-  const updateRowsPerPage = (rows: number) => {
-    setRowsPerPage(rows);
-    setCurrentPage(1);
-  };
+  const handleSortChange = createSortChangeHandler(setSort);
 
   return (
     <>
@@ -43,19 +44,11 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
       />
 
       <Table
+        key={tableKey}
         zebraStripes
         size="small"
         sort={sort}
-        onSortChange={(key) => {
-          setSort((prev) => {
-            const orderBy = key as keyof Fagomraader;
-            const direction =
-              prev?.orderBy === orderBy && prev?.direction === "ascending"
-                ? "descending"
-                : "ascending";
-            return { orderBy, direction };
-          });
-        }}
+        onSortChange={handleSortChange}
       >
         <Table.Header>
           <Table.Row>
@@ -112,8 +105,8 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
       {totalPages > 1 && (
         <div className={commonstyles["table-pagination-container"]}>
           <Pagination
-            page={currentPage}
-            onPageChange={setCurrentPage}
+            page={safePage}
+            onPageChange={handlePageChange}
             count={totalPages}
             size="small"
           />

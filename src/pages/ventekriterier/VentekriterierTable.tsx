@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventekriterier } from "../../types/Ventekriterier";
+import { useTablePagination } from "../../util/tableUtil";
 import { formatNumber } from "./tallUtil";
 
 type Props = {
@@ -10,23 +10,16 @@ type Props = {
 };
 
 export const VentekriterierTable = ({ data = [] }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [data, rowsPerPage]);
-
-  const totalPages = Math.ceil(data.length / rowsPerPage);
-  const paginatedData = data.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
-
-  const updateRowsPerPage = (rows: number) => {
-    setRowsPerPage(rows);
-    setCurrentPage(1);
-  };
+  const {
+    safePage,
+    totalPages,
+    paginatedData,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data,
+  });
 
   return (
     <>
@@ -66,8 +59,8 @@ export const VentekriterierTable = ({ data = [] }: Props) => {
 
       <div className={commonstyles["table-pagination-container"]}>
         <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
+          page={safePage}
+          onPageChange={handlePageChange}
           count={totalPages}
           size="small"
         />

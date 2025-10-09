@@ -1,11 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link as RouterLink, generatePath } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Klassekoder } from "../../types/Klassekoder";
 import { KLASSEKODER_FAGOMRAADER } from "../../util/paths";
-import { SortState, sortData } from "../../util/sortUtil";
+import { SortState } from "../../util/sortUtil";
+import {
+  createSortChangeHandler,
+  useTablePagination,
+} from "../../util/tableUtil";
 import HistoricalDataToggle from "./HistoricalDataToggle";
 import HoverInfoCell from "./HoverInfoCell";
 
@@ -15,13 +19,7 @@ interface Props {
 
 export const KlassekoderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [showHistorical, setShowHistorical] = useState(false);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [data, showHistorical, rowsPerPage]);
 
   const filteredData = useMemo(() => {
     if (showHistorical) return data;
@@ -31,19 +29,22 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
     });
   }, [data, showHistorical]);
 
-  const sortedData = sortData(filteredData, sort);
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
+  const {
+    currentPage,
+    safePage,
+    totalPages,
+    paginatedData,
+    tableKey,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data: filteredData,
+    sortState: sort,
+    additionalKeyFactors: [showHistorical],
+  });
 
-  const tableKey = `${sort?.orderBy}-${sort?.direction}-${currentPage}-${rowsPerPage}-${filteredData.length}-${showHistorical}`;
-
-  const updateRowsPerPage = (rows: number) => {
-    setRowsPerPage(rows);
-    setCurrentPage(1);
-  };
+  const handleSortChange = createSortChangeHandler(setSort);
 
   return (
     <>
@@ -74,16 +75,7 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
         zebraStripes
         size="small"
         sort={sort}
-        onSortChange={(key) => {
-          setSort((prev) => {
-            const orderBy = key as keyof Klassekoder;
-            const direction =
-              prev?.orderBy === orderBy && prev?.direction === "ascending"
-                ? "descending"
-                : "ascending";
-            return { orderBy, direction };
-          });
-        }}
+        onSortChange={handleSortChange}
       >
         <Table.Header>
           <Table.Row>
@@ -138,8 +130,8 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
       {totalPages > 1 && (
         <div className={commonstyles["table-pagination-container"]}>
           <Pagination
-            page={currentPage}
-            onPageChange={setCurrentPage}
+            page={safePage}
+            onPageChange={handlePageChange}
             count={totalPages}
             size="small"
           />
