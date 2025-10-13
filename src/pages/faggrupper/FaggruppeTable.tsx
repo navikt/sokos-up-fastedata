@@ -11,6 +11,7 @@ import {
   useTablePagination,
 } from "../../util/tableUtil";
 import FaggrupperExpandableSection from "./FaggrupperExpandableSection";
+import RedusertSkattModal from "./RedusertSkattModal";
 
 interface Props {
   data?: Faggruppe[];
@@ -74,7 +75,17 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
                   Fagområder
                 </Link>
               </Table.DataCell>
-              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>
+                {row.antallRedusertSkatt > 0 ? (
+                  <RedusertSkattModal
+                    kodeFaggruppe={row.kodeFaggruppe}
+                    buttonText={"Redusert skatt"}
+                    disabled={false}
+                  />
+                ) : (
+                  "Ingen"
+                )}
+              </Table.DataCell>
             </FaggrupperExpandableSection>
           ))}
         </Table.Body>

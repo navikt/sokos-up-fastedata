@@ -9,6 +9,7 @@ import {
 } from "./data/kjoreplaner";
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
+import { redusertSkatt } from "./data/redusertSkatt";
 import { ventekriterierList } from "./data/ventekriterier";
 import { ventestatuskoderList } from "./data/ventestatuskoder";
 
@@ -53,6 +54,15 @@ export const handlers = [
     ];
 
     return HttpResponse.json(altList, { status: 200 });
+  }),
+  http.get(`${faggrupperUrl}/:faggruppe/redusertSkatt`, ({ params }) => {
+    const { faggruppe } = params;
+
+    if (faggruppe === "INNT") {
+      return HttpResponse.json(redusertSkatt, { status: 200 });
+    }
+
+    return HttpResponse.json([], { status: 200 });
   }),
   http.get(`${fagomraaderUrl}/:kode/korrigeringsaarsaker`, ({ params }) => {
     const { kode } = params;
