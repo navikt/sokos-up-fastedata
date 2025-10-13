@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventestatuskoder } from "../../types/Ventestatuskoder";
-import { SortState, sortData } from "../../util/sortUtil";
+import { SortState } from "../../util/sortUtil";
+import {
+  createSortChangeHandler,
+  useTablePagination,
+} from "../../util/tableUtil";
 
 type Props = {
   data?: Ventestatuskoder[];
@@ -13,34 +17,21 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
   const [sortState, setSortState] = useState<
     SortState<Ventestatuskoder> | undefined
   >();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(25);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [data, rowsPerPage]);
+  const {
+    safePage,
+    totalPages,
+    paginatedData,
+    tableKey,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data,
+    sortState,
+  });
 
-  const handleSortChange = (sortKey: string) => {
-    const key = sortKey as keyof Ventestatuskoder;
-    setSortState((prev) => {
-      const isSame = prev?.orderBy === key;
-      const newDirection =
-        isSame && prev.direction === "ascending" ? "descending" : "ascending";
-      return { orderBy: key, direction: newDirection };
-    });
-  };
-
-  const sortedData = sortData(data, sortState);
-  const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage,
-  );
-
-  const updateRowsPerPage = (rows: number) => {
-    setRowsPerPage(rows);
-    setCurrentPage(1);
-  };
+  const handleSortChange = createSortChangeHandler(setSortState);
 
   return (
     <>
@@ -52,6 +43,7 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
       </div>
 
       <Table
+        key={tableKey}
         zebraStripes
         size="small"
         sort={sortState}
@@ -88,8 +80,8 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
 
       <div className={commonstyles["table-pagination-container"]}>
         <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
+          page={safePage}
+          onPageChange={handlePageChange}
           count={totalPages}
           size="small"
         />
