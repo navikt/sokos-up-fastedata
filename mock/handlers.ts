@@ -2,6 +2,11 @@ import { HttpResponse, http } from "msw";
 import { bilagstyperMAAP } from "./data/bilagstyper";
 import { faggrupper } from "./data/faggrupper";
 import { fagomraaderList } from "./data/fagomraader";
+import {
+  ingenopKjoreplaner,
+  kjoreplanList,
+  koronaKjoreplaner,
+} from "./data/kjoreplaner";
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { ventekriterierList } from "./data/ventekriterier";
@@ -29,6 +34,25 @@ export const handlers = [
   }),
   http.get(klassekoderUrl, () => {
     return HttpResponse.json(klassekoderList, { status: 200 });
+  }),
+  http.get(`${faggrupperUrl}/:faggruppe/kjoreplan`, ({ params }) => {
+    const { faggruppe } = params;
+
+    if (faggruppe === "KORONA3") {
+      return HttpResponse.json(koronaKjoreplaner, { status: 200 });
+    }
+
+    if (faggruppe === "INGENOPP") {
+      return HttpResponse.json(ingenopKjoreplaner, { status: 200 });
+    }
+    const altList = [
+      ...kjoreplanList.map((kjoreplan) => ({
+        ...kjoreplan,
+        kodeFaggruppe: faggruppe,
+      })),
+    ];
+
+    return HttpResponse.json(altList, { status: 200 });
   }),
   http.get(`${fagomraaderUrl}/:kode/korrigeringsaarsaker`, ({ params }) => {
     const { kode } = params;

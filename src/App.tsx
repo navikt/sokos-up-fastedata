@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import FaggrupperPage from "./pages/faggrupper/FaggrupperPage";
+import KjoreplanPage from "./pages/faggrupper/kjoreplan/KjoreplanPage";
 import FagomraaderPage from "./pages/fagomraader/FagomraaderPage";
 import FastedataPage from "./pages/fastedata/FastedataPage";
 import KlassekodeFagomraaderPage from "./pages/klassekoder/KlassekodeFagomraaderPage";
@@ -25,6 +26,10 @@ export default function App() {
         <Route path={ROOT} element={<FastedataPage />} />
         <Route path={FAGOMRAADER} element={<FagomraaderPage />} />
         <Route path={FAGGRUPPER} element={<FaggrupperPage />} />
+        <Route
+          path={`fastedata/faggrupper/:faggruppe/kjoreplaner`}
+          element={<KjoreplanPage />}
+        />
         <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />
         <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />
         <Route path={KLASSEKODER} element={<KlassekoderPage />} />

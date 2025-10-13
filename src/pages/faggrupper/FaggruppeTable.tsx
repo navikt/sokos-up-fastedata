@@ -3,6 +3,7 @@ import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
+import { formatDate } from "../../util/dateUtil";
 import { FAGOMRAADER } from "../../util/paths";
 import { SortState } from "../../util/sortUtil";
 import {
@@ -56,7 +57,15 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.navnFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.ventedager}</Table.DataCell>
-              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>
+                {row.antallKjoreplaner > 0 && (
+                  <Link as={RouterLink} to={`${row.kodeFaggruppe}/kjoreplaner`}>
+                    {row.nesteKjoredato
+                      ? formatDate(row.nesteKjoredato)
+                      : "Ingen planlagt kjøring"}
+                  </Link>
+                )}
+              </Table.DataCell>
               <Table.DataCell>
                 <Link
                   as={RouterLink}
