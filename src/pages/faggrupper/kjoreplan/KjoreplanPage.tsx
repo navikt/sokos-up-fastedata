@@ -1,9 +1,10 @@
 import { useParams } from "react-router";
 import { Alert, Heading, Tabs } from "@navikt/ds-react";
 import { useGetKjoreplaner } from "../../../api/apiService";
-import BackHomeBox from "../../../common/BackHomeBox";
+import BackHomeBox2 from "../../../common/BackHomeBox2";
 import ContentLoader from "../../../common/ContentLoader";
 import commonstyles from "../../../styles/commonstyles.module.css";
+import { FAGGRUPPER, ROOT } from "../../../util/paths";
 import KjoreplanTable from "./KjoreplanTable";
 
 const KjoreplanPage = () => {
@@ -26,7 +27,10 @@ const KjoreplanPage = () => {
           Faste data - Faggrupper - Kjøreplan
         </Heading>
 
-        <BackHomeBox />
+        <BackHomeBox2
+          to={[ROOT, FAGGRUPPER]}
+          labels={["Tilbake til oversikt", "Tilbake til Faggruppesiden"]}
+        />
 
         {error ? (
           <Alert variant="error">Nettverksfeil</Alert>

@@ -56,14 +56,16 @@ export const KjoreplanTable = ({ past, data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["table-pagination-container"]}>
-        <Pagination
-          page={currentPage}
-          onPageChange={setCurrentPage}
-          count={totalPages}
-          size="small"
-        />
-      </div>
+      {data.length > pageSize && (
+        <div className={commonstyles["table-pagination-container"]}>
+          <Pagination
+            page={currentPage}
+            onPageChange={setCurrentPage}
+            count={totalPages}
+            size="small"
+          />
+        </div>
+      )}
     </>
   );
 };
