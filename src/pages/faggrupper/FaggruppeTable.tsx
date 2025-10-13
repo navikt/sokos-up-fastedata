@@ -20,7 +20,7 @@ interface Props {
 export const FaggruppeTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Faggruppe> | undefined>();
 
-  const { safePage, totalPages, paginatedData, handlePageChange } =
+  const { safePage, totalPages, paginatedData, handlePageChange, rowsPerPage } =
     useTablePagination({
       data,
       sortState: sort,
@@ -90,14 +90,16 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["table-pagination-container"]}>
-        <Pagination
-          page={safePage}
-          onPageChange={handlePageChange}
-          count={totalPages}
-          size="small"
-        />
-      </div>
+      {data.length > rowsPerPage && (
+        <div className={commonstyles["table-pagination-container"]}>
+          <Pagination
+            page={safePage}
+            onPageChange={handlePageChange}
+            count={totalPages}
+            size="small"
+          />
+        </div>
+      )}
     </>
   );
 };
