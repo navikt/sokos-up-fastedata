@@ -116,7 +116,7 @@ export function useGetKjoreplaner({ faggruppe }: { faggruppe: string }) {
 
 export function useGetRedusertSkatt({ faggruppe }: { faggruppe: string }) {
   const { data, error, isValidating } = useSWRImmutable<RedusertSkatt[]>(
-    faggruppe ? `/faggrupper/${faggruppe}/redusertskatt` : "",
+    faggruppe ? `/faggrupper/${faggruppe}/redusertSkatt` : "",
     swrConfig<RedusertSkatt[]>((url) =>
       axiosFetcher<RedusertSkatt[]>(BASE_URI.BACKEND_API, url),
     ),
