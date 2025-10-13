@@ -17,4 +17,7 @@ export const FaggruppeSchema = z.object({
   samordnetBeregning: z.string(),
   skatteprosent: z.number(),
   ventedager: z.number(),
+  antallFagomraader: z.number(),
+  antallRedusertSkatt: z.number(),
+  antallKjoreplaner: z.number(),
 });

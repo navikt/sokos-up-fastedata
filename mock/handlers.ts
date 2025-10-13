@@ -2,6 +2,7 @@ import { HttpResponse, http } from "msw";
 import { bilagstyperMAAP } from "./data/bilagstyper";
 import { faggrupper } from "./data/faggrupper";
 import { fagomraaderList } from "./data/fagomraader";
+import { kjoreplanList } from "./data/kjoreplaner";
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { ventekriterierList } from "./data/ventekriterier";
@@ -29,6 +30,9 @@ export const handlers = [
   }),
   http.get(klassekoderUrl, () => {
     return HttpResponse.json(klassekoderList, { status: 200 });
+  }),
+  http.get(`${baseUrl}/:faggruppe/kjoreplaner`, () => {
+    return HttpResponse.json(kjoreplanList, { status: 200 });
   }),
   http.get(`${fagomraaderUrl}/:kode/korrigeringsaarsaker`, ({ params }) => {
     const { kode } = params;

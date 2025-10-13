@@ -18,6 +18,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "O",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 1,
   },
   {
     kodeFaggruppe: "BARNBRIL",
@@ -36,6 +39,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "F",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 2,
   },
   {
     kodeFaggruppe: "ARBYT",
@@ -54,6 +60,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "F",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 0,
   },
   {
     kodeFaggruppe: "OMSTILL",
@@ -72,6 +81,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "F",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 0,
   },
   {
     kodeFaggruppe: "ARBTIL",
@@ -90,6 +102,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "F",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 0,
   },
   {
     kodeFaggruppe: "TREKKOPP",
@@ -108,6 +123,9 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "L",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 0,
   },
   {
     kodeFaggruppe: "UNG",
@@ -126,5 +144,8 @@ export const faggrupper: Faggruppe[] = [
     pensjon: false,
     oereavrunding: true,
     samordnetBeregning: "F",
+    antallFagomraader: 0,
+    antallRedusertSkatt: 0,
+    antallKjoreplaner: 0,
   },
 ];

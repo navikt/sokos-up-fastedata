@@ -2,6 +2,7 @@ import useSWRImmutable from "swr/immutable";
 import { Bilagstype } from "../types/Bilagstype";
 import { Faggruppe } from "../types/Faggruppe";
 import { Fagomraader } from "../types/Fagomraader";
+import { Kjoreplan } from "../types/Kjoreplan";
 import { Klassekoder } from "../types/Klassekoder";
 import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import { Ventekriterier } from "../types/Ventekriterier";
@@ -95,6 +96,17 @@ export function useGetKlassekoder() {
     `/klassekoder`,
     swrConfig<Klassekoder[]>((url) =>
       axiosFetcher<Klassekoder[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
+
+export function useGetKjoreplaner({ faggruppe }: { faggruppe: string }) {
+  const { data, error, isValidating } = useSWRImmutable<Kjoreplan[]>(
+    `/${faggruppe}/kjoreplaner`,
+    swrConfig<Kjoreplan[]>((url) =>
+      axiosFetcher<Kjoreplan[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;

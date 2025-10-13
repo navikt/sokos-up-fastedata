@@ -56,7 +56,13 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.kodeFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.navnFaggruppe}</Table.DataCell>
               <Table.DataCell>{row.ventedager}</Table.DataCell>
-              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>
+                {!!row.antallKjoreplaner && (
+                  <Link as={RouterLink} to={`${row.kodeFaggruppe}/kjoreplaner`}>
+                    Kjøreplan
+                  </Link>
+                )}
+              </Table.DataCell>
               <Table.DataCell>
                 <Link
                   as={RouterLink}
