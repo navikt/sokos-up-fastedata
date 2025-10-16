@@ -5,6 +5,7 @@ import { Fagomraader } from "../types/Fagomraader";
 import { Kjoreplan } from "../types/Kjoreplan";
 import { Klassekoder } from "../types/Klassekoder";
 import { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
+import { RedusertSkatt } from "../types/RedusertSkatt";
 import { Ventekriterier } from "../types/Ventekriterier";
 import { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
@@ -107,6 +108,17 @@ export function useGetKjoreplaner({ faggruppe }: { faggruppe: string }) {
     `/faggrupper/${faggruppe}/kjoreplan`,
     swrConfig<Kjoreplan[]>((url) =>
       axiosFetcher<Kjoreplan[]>(BASE_URI.BACKEND_API, url),
+    ),
+  );
+  const isLoading = (!error && !data) || isValidating;
+  return { data, error, isLoading };
+}
+
+export function useGetRedusertSkatt({ faggruppe }: { faggruppe: string }) {
+  const { data, error, isValidating } = useSWRImmutable<RedusertSkatt[]>(
+    faggruppe ? `/faggrupper/${faggruppe}/redusertSkatt` : "",
+    swrConfig<RedusertSkatt[]>((url) =>
+      axiosFetcher<RedusertSkatt[]>(BASE_URI.BACKEND_API, url),
     ),
   );
   const isLoading = (!error && !data) || isValidating;

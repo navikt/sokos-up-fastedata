@@ -11,6 +11,7 @@ import {
   useTablePagination,
 } from "../../util/tableUtil";
 import FaggrupperExpandableSection from "./FaggrupperExpandableSection";
+import RedusertSkattModal from "./RedusertSkattModal";
 
 interface Props {
   data?: Faggruppe[];
@@ -19,7 +20,7 @@ interface Props {
 export const FaggruppeTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Faggruppe> | undefined>();
 
-  const { safePage, totalPages, paginatedData, handlePageChange } =
+  const { safePage, totalPages, paginatedData, handlePageChange, rowsPerPage } =
     useTablePagination({
       data,
       sortState: sort,
@@ -74,19 +75,31 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
                   Fagområder
                 </Link>
               </Table.DataCell>
-              <Table.DataCell>placeholder</Table.DataCell>
+              <Table.DataCell>
+                {row.antallRedusertSkatt > 0 ? (
+                  <RedusertSkattModal
+                    kodeFaggruppe={row.kodeFaggruppe}
+                    buttonText={"Redusert skatt"}
+                    disabled={false}
+                  />
+                ) : (
+                  "Ingen"
+                )}
+              </Table.DataCell>
             </FaggrupperExpandableSection>
           ))}
         </Table.Body>
       </Table>
-      <div className={commonstyles["table-pagination-container"]}>
-        <Pagination
-          page={safePage}
-          onPageChange={handlePageChange}
-          count={totalPages}
-          size="small"
-        />
-      </div>
+      {data.length > rowsPerPage && (
+        <div className={commonstyles["table-pagination-container"]}>
+          <Pagination
+            page={safePage}
+            onPageChange={handlePageChange}
+            count={totalPages}
+            size="small"
+          />
+        </div>
+      )}
     </>
   );
 };
