@@ -39,4 +39,26 @@ test.describe("Klassekode filter", () => {
 
     await expect(table.getByRole("cell", { name: "BANKSROCR" })).toBeVisible();
   });
+
+  test("Tests link from klassekoder to fagomraader", async ({ page }) => {
+    await page.goto("/fastedata/klassekoder");
+    await page.waitForLoadState("networkidle");
+
+    const underkontoInput = page.getByLabel("Underkontonr");
+    await underkontoInput.fill("8900");
+    await page.getByRole("option", { name: "8900" }).click();
+
+    const fagomraadeInput = page.getByLabel("Fagområde");
+    await fagomraadeInput.fill("MPENBAL");
+    await page.getByRole("option", { name: "MPENBAL" }).click();
+
+    await page.getByRole("link", { name: "Fagområder" }).click();
+
+    const table = page.getByRole("table");
+    await expect(table.getByRole("cell", { name: "MOSALLE" })).toBeVisible();
+  });
 });
+
+/*
+// eslint-disable-next-line no-console
+console.log(await page.getByRole('option').allTextContents());*/
