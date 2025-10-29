@@ -57,7 +57,7 @@ export const handlers = [
   http.get(`${fagomraaderUrl}/:kode/korrigeringsaarsaker`, ({ params }) => {
     const { kode } = params;
 
-    if (kode === "AAP") {
+    if (kode === "MSKATT") {
       return HttpResponse.json(korrigeringsaarsakerAAP, { status: 200 });
     }
 
@@ -66,7 +66,7 @@ export const handlers = [
   http.get(`${fagomraaderUrl}/:kode/bilagstyper`, ({ params }) => {
     const { kode } = params;
 
-    if (kode === "MAAP") {
+    if (kode === "MSKATT") {
       return HttpResponse.json(bilagstyperMAAP, { status: 200 });
     }
 

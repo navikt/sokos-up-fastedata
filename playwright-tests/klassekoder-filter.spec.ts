@@ -7,9 +7,9 @@ test.describe("Klassekode filter", () => {
     await page.goto("/fastedata/klassekoder");
     await page.waitForLoadState("networkidle");
 
-    const klassekodeInput = page.getByLabel("Klassekode");
-    await klassekodeInput.fill("VALUTAGEVINST");
-    await klassekodeInput.press("Enter");
+    const klassekodeinput = page.getByLabel("Klassekode");
+    await klassekodeinput.fill("VALUTAGEVINST");
+    await klassekodeinput.press("Enter");
 
     const table = page.getByRole("table");
     await expect(
@@ -24,12 +24,12 @@ test.describe("Klassekode filter", () => {
     await page.waitForLoadState("networkidle");
     const table = page.getByRole("table");
 
-    const artIdInput = page.getByLabel("Art-ID");
-    await artIdInput.fill("80");
+    const artidinput = page.getByLabel("Art-ID");
+    await artidinput.fill("80");
     await page.getByRole("option", { name: "80" }).click();
 
-    const klassekodeInput = page.getByLabel("Klassekode");
-    await klassekodeInput.fill("BANKSROCR");
+    const klassekodeinput = page.getByLabel("Klassekode");
+    await klassekodeinput.fill("BANKSROCR");
     await page.getByRole("option", { name: /Legg til.*BANKSROCR/i }).click();
     await page.getByText("Faste data - Klassekoder").click();
 
@@ -44,12 +44,12 @@ test.describe("Klassekode filter", () => {
     await page.goto("/fastedata/klassekoder");
     await page.waitForLoadState("networkidle");
 
-    const underkontoInput = page.getByLabel("Underkontonr");
-    await underkontoInput.fill("8900");
+    const underkontoinput = page.getByLabel("Underkontonr");
+    await underkontoinput.fill("8900");
     await page.getByRole("option", { name: "8900" }).click();
 
-    const fagomraadeInput = page.getByLabel("Fagområde");
-    await fagomraadeInput.fill("MPENBAL");
+    const fagomraadeinput = page.getByLabel("Fagområde");
+    await fagomraadeinput.fill("MPENBAL");
     await page.getByRole("option", { name: "MPENBAL" }).click();
 
     await page.getByRole("link", { name: "Fagområder" }).click();
@@ -58,7 +58,3 @@ test.describe("Klassekode filter", () => {
     await expect(table.getByRole("cell", { name: "MOSALLE" })).toBeVisible();
   });
 });
-
-/*
-// eslint-disable-next-line no-console
-console.log(await page.getByRole('option').allTextContents());*/
