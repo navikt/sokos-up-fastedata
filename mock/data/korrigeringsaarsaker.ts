@@ -21,4 +21,9 @@ export const korrigeringsaarsakerAAP: Korrigeringsaarsak[] = [
     beskrivelse: "Kode-klassefik endret",
     medforerKorr: true,
   },
+  {
+    kodeAarsakKorr: "0025",
+    beskrivelse: "etteroppgjør",
+    medforerKorr: false,
+  },
 ];
