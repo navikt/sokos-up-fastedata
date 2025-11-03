@@ -5,10 +5,9 @@ import { useGetBilagstyper } from "../../api/apiService";
 interface Props {
   kodeFagomraade: string;
   buttonText: string;
-  disabled: boolean;
 }
 
-const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
+const BilagstypeModal = ({ kodeFagomraade, buttonText }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
   const [shouldFetch, setShouldFetch] = useState(false);
 
@@ -25,12 +24,7 @@ const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
 
   return (
     <div>
-      <Button
-        variant="secondary"
-        size="xsmall"
-        disabled={disabled}
-        onClick={handleClick}
-      >
+      <Button variant="secondary" size="xsmall" onClick={handleClick}>
         {buttonText}
       </Button>
 

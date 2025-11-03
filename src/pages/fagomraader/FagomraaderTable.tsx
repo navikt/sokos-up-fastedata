@@ -83,19 +83,25 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
                 )}
               </Table.DataCell>
               <Table.DataCell>{row.kodeMotregningsgruppe}</Table.DataCell>
-              <Table.DataCell>
-                <KorrigeringsarsakModal
-                  kodeFagomraade={row.kodeFagomraade}
-                  buttonText="Korrigeringsårsak"
-                  disabled={!row.korraarsakFinnes}
-                />
+              <Table.DataCell align="center">
+                {row.korraarsakFinnes ? (
+                  <KorrigeringsarsakModal
+                    kodeFagomraade={row.kodeFagomraade}
+                    buttonText="Korrigeringsårsak"
+                  />
+                ) : (
+                  "Ingen"
+                )}
               </Table.DataCell>
-              <Table.DataCell>
-                <BilagstypeModal
-                  kodeFagomraade={row.kodeFagomraade}
-                  buttonText="Bilagstype"
-                  disabled={!row.bilagstypeFinnes}
-                />
+              <Table.DataCell align="center">
+                {row.bilagstypeFinnes ? (
+                  <BilagstypeModal
+                    kodeFagomraade={row.kodeFagomraade}
+                    buttonText="Bilagstype"
+                  />
+                ) : (
+                  "Ingen"
+                )}
               </Table.DataCell>
             </FagomraaderExpandableSection>
           ))}
