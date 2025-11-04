@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link as RouterLink } from "react-router";
+import { Link as RouterLink, generatePath } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { formatDate } from "../../util/dateUtil";
-import { FAGOMRAADER } from "../../util/paths";
+import { FAGGRUPPER_FAGOMRAADER } from "../../util/paths";
 import { SortState } from "../../util/sortUtil";
 import {
   createSortChangeHandler,
@@ -70,7 +70,10 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>
                 <Link
                   as={RouterLink}
-                  to={`${FAGOMRAADER}?faggruppe=${encodeURIComponent(row.kodeFaggruppe)}`}
+                  to={generatePath(FAGGRUPPER_FAGOMRAADER, {
+                    faggruppe: row.kodeFaggruppe,
+                  })}
+                  state={{ faggruppe: row }}
                 >
                   Fagområder
                 </Link>
