@@ -18,26 +18,8 @@ export const FaggrupperPage = () => {
     return [faggruppeUrlParam];
   });
 
-  const displayFilters = useMemo(() => {
-    if (!data || filters.length === 0) return [];
-
-    return filters.map((kodeFaggruppe) => {
-      const matchingItem = data.find(
-        (item) => item.kodeFaggruppe === kodeFaggruppe,
-      );
-
-      if (matchingItem) {
-        return `${matchingItem.kodeFaggruppe} - ${matchingItem.navnFaggruppe}`;
-      }
-
-      return kodeFaggruppe;
-    });
-  }, [data, filters]);
-
   const handleFiltersChange = (newFilters: string[]) => {
-    const kodeFaggruppe = newFilters.map((filter) => filter.split(" - ")[0]);
-    setFilters(kodeFaggruppe);
-
+    setFilters(newFilters);
     if (newFilters.length === 0) {
       const newUrlParams = new URLSearchParams(urlParameters);
       newUrlParams.delete("faggruppe");
@@ -45,11 +27,15 @@ export const FaggrupperPage = () => {
     }
   };
 
+  const normalize = (s: string) =>
+    s.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
+
   const filteredData = useMemo(() => {
     if (!data || filters.length === 0) return data || [];
-
+    const terms = filters.map((f) => normalize(f));
     return data.filter((item) => {
-      return filters.includes(item.kodeFaggruppe);
+      const hay = normalize(`${item.kodeFaggruppe} ${item.navnFaggruppe}`);
+      return terms.every((t) => hay.includes(t));
     });
   }, [data, filters]);
 
@@ -71,8 +57,8 @@ export const FaggrupperPage = () => {
 
         {data && (
           <FaggruppeFilter
-            data={data}
-            activeFilters={displayFilters}
+            data={filteredData}
+            activeFilters={filters}
             onFiltersChange={handleFiltersChange}
           />
         )}
