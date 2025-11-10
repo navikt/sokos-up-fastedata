@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link as RouterLink, generatePath } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
+import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { formatDate } from "../../util/dateUtil";
@@ -20,18 +21,45 @@ interface Props {
 export const FaggruppeTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Faggruppe> | undefined>();
 
-  const { safePage, totalPages, paginatedData, handlePageChange, rowsPerPage } =
-    useTablePagination({
-      data,
-      sortState: sort,
-      initialRowsPerPage: 10,
-    });
+  const {
+    currentPage,
+    safePage,
+    totalPages,
+    paginatedData,
+    tableKey,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data,
+    sortState: sort,
+    initialRowsPerPage: 25,
+  });
 
   const handleSortChange = createSortChangeHandler(setSort);
 
   return (
     <>
+      <div className={commonstyles["table-controls"]}>
+        <div className={commonstyles["controls-row"]}>
+          <div className={commonstyles["left-controls"]}>
+            <p className={commonstyles["treff-info"]}>
+              {`${data.length} treff`}
+              {rowsPerPage &&
+                data.length > rowsPerPage &&
+                totalPages > 1 &&
+                `, ${currentPage} av ${totalPages} sider`}
+            </p>
+          </div>
+          <RowsPerPageSelector
+            rowsPerPage={rowsPerPage}
+            updateRowsPerPage={updateRowsPerPage}
+          />
+        </div>
+      </div>
+
       <Table
+        key={tableKey}
         zebraStripes
         size="small"
         sort={sort}

@@ -38,7 +38,7 @@ const FaggruppeFilter = ({
     <div className={commonStyles["filter-container"]}>
       <div className={commonStyles["search-bar-group"]}>
         <div
-          className={`${commonStyles["search-container"]} ${commonStyles["fagomraade-search-container"]}`}
+          className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}
         >
           <FilterInput
             label="Filtrer på faggruppekode og navn"
