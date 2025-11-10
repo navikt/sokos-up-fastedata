@@ -5,7 +5,10 @@ import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { formatDate } from "../../util/dateUtil";
-import { FAGGRUPPER_FAGOMRAADER } from "../../util/paths";
+import {
+  FAGGRUPPER_FAGOMRAADER,
+  FAGGRUPPER_KJOREPLANER,
+} from "../../util/paths";
 import { SortState } from "../../util/sortUtil";
 import {
   createSortChangeHandler,
@@ -80,7 +83,9 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
                 {row.antallKjoreplaner > 0 && (
                   <Link
                     as={RouterLink}
-                    to={`${row.kodeFaggruppe}/kjoreplaner`}
+                    to={generatePath(FAGGRUPPER_KJOREPLANER, {
+                      faggruppe: row.kodeFaggruppe,
+                    })}
                     state={{ faggruppe: row }}
                   >
                     {row.nesteKjoredato

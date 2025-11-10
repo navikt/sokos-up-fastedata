@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import FaggruppeFagomraaderPage from "./pages/faggrupper/FaggruppeFagomraaderPage";
 import FaggrupperPage from "./pages/faggrupper/FaggrupperPage";
+import FagomraaderForFaggrupper from "./pages/faggrupper/FagomraaderForFaggrupper";
 import KjoreplanPage from "./pages/faggrupper/kjoreplan/KjoreplanPage";
 import FagomraaderPage from "./pages/fagomraader/FagomraaderPage";
 import FastedataPage from "./pages/fastedata/FastedataPage";
-import KlassekodeFagomraaderPage from "./pages/klassekoder/KlassekodeFagomraaderPage";
+import FagomraaderForKlassekoder from "./pages/klassekoder/FagomraaderForKlassekoder";
 import KlassekoderPage from "./pages/klassekoder/KlassekoderPage";
 import NotFound from "./pages/notfound/NotFound";
 import VentekriterierPage from "./pages/ventekriterier/VentekriterierPage";
@@ -13,6 +13,7 @@ import {
   BASENAME,
   FAGGRUPPER,
   FAGGRUPPER_FAGOMRAADER,
+  FAGGRUPPER_KJOREPLANER,
   FAGOMRAADER,
   KLASSEKODER,
   KLASSEKODER_FAGOMRAADER,
@@ -30,18 +31,15 @@ export default function App() {
         <Route path={FAGGRUPPER} element={<FaggrupperPage />} />
         <Route
           path={FAGGRUPPER_FAGOMRAADER}
-          element={<FaggruppeFagomraaderPage />}
+          element={<FagomraaderForFaggrupper />}
         />
-        <Route
-          path={`fastedata/faggrupper/:faggruppe/kjoreplaner`}
-          element={<KjoreplanPage />}
-        />
+        <Route path={FAGGRUPPER_KJOREPLANER} element={<KjoreplanPage />} />
         <Route path={VENTEKRITERIER} element={<VentekriterierPage />} />
         <Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />
         <Route path={KLASSEKODER} element={<KlassekoderPage />} />
         <Route
           path={KLASSEKODER_FAGOMRAADER}
-          element={<KlassekodeFagomraaderPage />}
+          element={<FagomraaderForKlassekoder />}
         />
         <Route path={"*"} element={<NotFound />} />
       </Routes>

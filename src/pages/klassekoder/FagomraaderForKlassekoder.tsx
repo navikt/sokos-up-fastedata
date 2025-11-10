@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router";
-import FagomraaderDetaljer from "../../common/FagomraaderDetailPage";
+import FagomraaderDetaljer from "../../common/FagomraaderDetaljer";
 import { Klassekoder } from "../../types/Klassekoder";
 import {
   parseCommaSeparated,
@@ -12,7 +12,7 @@ type LocationState = {
   klassekode?: Klassekoder;
 };
 
-const KlassekodeFagomraaderPage = () => {
+const FagomraaderForKlassekoder = () => {
   const { klassekode: klassekodeParam } = useParams<{ klassekode: string }>();
   const { klassekode } =
     useRequiredLocationState<LocationState>(KLASSEKODER) || {};
@@ -42,4 +42,4 @@ const KlassekodeFagomraaderPage = () => {
   );
 };
 
-export default KlassekodeFagomraaderPage;
+export default FagomraaderForKlassekoder;

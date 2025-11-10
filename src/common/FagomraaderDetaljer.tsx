@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
 import { useGetFagomraader } from "../api/apiService";
-import styles from "../pages/klassekoder/KlassekodeFagomraaderPage.module.css";
 import commonstyles from "../styles/commonstyles.module.css";
 import { Fagomraader } from "../types/Fagomraader";
 import { FAGOMRAADER, KLASSEKODER } from "../util/paths";
@@ -10,6 +9,7 @@ import { SortState, sortData } from "../util/sortUtil";
 import BackHomeBox from "./BackHomeBox";
 import filterstyles from "./CommonFilterStyles.module.css";
 import ContentLoader from "./ContentLoader";
+import styles from "./FagomraaderDetaljer.module.css";
 
 type Breadcrumb = {
   label: string;
