@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import RowsPerPageSelector from "../../common/RowsPerPageSelector";
+import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/paths";
@@ -22,6 +22,7 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
 
   const {
+    currentPage,
     safePage,
     totalPages,
     paginatedData,
@@ -38,7 +39,10 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
 
   return (
     <>
-      <RowsPerPageSelector
+      <TableControls
+        totalCount={data.length}
+        currentPage={currentPage}
+        totalPages={totalPages}
         rowsPerPage={rowsPerPage}
         updateRowsPerPage={updateRowsPerPage}
       />

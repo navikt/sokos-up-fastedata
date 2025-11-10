@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
-import RowsPerPageSelector from "../../common/RowsPerPageSelector";
+import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventestatuskoder } from "../../types/Ventestatuskoder";
 import { SortState } from "../../util/sortUtil";
@@ -19,6 +19,7 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
   >();
 
   const {
+    currentPage,
     safePage,
     totalPages,
     paginatedData,
@@ -35,12 +36,13 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
 
   return (
     <>
-      <div className={commonstyles["table-controls-end-aligned"]}>
-        <RowsPerPageSelector
-          rowsPerPage={rowsPerPage}
-          updateRowsPerPage={updateRowsPerPage}
-        />
-      </div>
+      <TableControls
+        totalCount={data.length}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        rowsPerPage={rowsPerPage}
+        updateRowsPerPage={updateRowsPerPage}
+      />
 
       <Table
         key={tableKey}

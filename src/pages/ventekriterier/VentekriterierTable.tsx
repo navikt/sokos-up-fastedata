@@ -1,5 +1,5 @@
 import { Pagination, Table } from "@navikt/ds-react";
-import RowsPerPageSelector from "../../common/RowsPerPageSelector";
+import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Ventekriterier } from "../../types/Ventekriterier";
 import { useTablePagination } from "../../util/tableUtil";
@@ -11,6 +11,7 @@ type Props = {
 
 export const VentekriterierTable = ({ data = [] }: Props) => {
   const {
+    currentPage,
     safePage,
     totalPages,
     paginatedData,
@@ -23,12 +24,13 @@ export const VentekriterierTable = ({ data = [] }: Props) => {
 
   return (
     <>
-      <div className={commonstyles["table-controls-end-aligned"]}>
-        <RowsPerPageSelector
-          rowsPerPage={rowsPerPage}
-          updateRowsPerPage={updateRowsPerPage}
-        />
-      </div>
+      <TableControls
+        totalCount={data.length}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        rowsPerPage={rowsPerPage}
+        updateRowsPerPage={updateRowsPerPage}
+      />
 
       <Table zebraStripes size="small">
         <Table.Header>

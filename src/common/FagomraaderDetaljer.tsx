@@ -1,59 +1,65 @@
-import { useEffect, useMemo, useState } from "react";
-import {
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router";
+import { useMemo, useState } from "react";
+import { Link as RouterLink } from "react-router";
 import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
-import { useGetFagomraader } from "../../api/apiService";
-import BackHomeBox from "../../common/BackHomeBox";
-import filterstyles from "../../common/CommonFilterStyles.module.css";
-import ContentLoader from "../../common/ContentLoader";
-import commonstyles from "../../styles/commonstyles.module.css";
-import { Faggruppe } from "../../types/Faggruppe";
-import { Fagomraader } from "../../types/Fagomraader";
-import { FAGGRUPPER, FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
-import { SortState, sortData } from "../../util/sortUtil";
-import styles from "../klassekoder/KlassekodeFagomraaderPage.module.css";
+import { useGetFagomraader } from "../api/apiService";
+import commonstyles from "../styles/commonstyles.module.css";
+import { Fagomraader } from "../types/Fagomraader";
+import { FAGOMRAADER, KLASSEKODER } from "../util/paths";
+import { SortState, sortData } from "../util/sortUtil";
+import BackHomeBox from "./BackHomeBox";
+import filterstyles from "./CommonFilterStyles.module.css";
+import ContentLoader from "./ContentLoader";
+import styles from "./FagomraaderDetaljer.module.css";
 
-type LocationState = {
-  faggruppe?: Faggruppe;
+type Breadcrumb = {
+  label: string;
+  to?: string;
 };
 
-const FaggruppeFagomraaderPage = () => {
-  const navigate = useNavigate();
-  const { faggruppe: faggruppeParam } = useParams<{ faggruppe: string }>();
-  const location = useLocation();
-  const state = location.state as LocationState | undefined;
-  const faggruppe = state?.faggruppe;
+interface FagomraaderDetaljerProps {
+  title: string;
+  breadcrumbs: Breadcrumb[];
+  descriptionLabel: string;
+  descriptionValue: string;
+  filterPredicate: (fagomraade: Fagomraader) => boolean;
+  stateValue?: Record<string, unknown>;
+  emptyMessage: string;
+}
 
+const FagomraaderDetaljer = ({
+  title,
+  breadcrumbs,
+  descriptionLabel,
+  descriptionValue,
+  filterPredicate,
+  stateValue,
+  emptyMessage,
+}: FagomraaderDetaljerProps) => {
   const { data: allFagomraader, error, isLoading } = useGetFagomraader();
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>({
     orderBy: "kodeFagomraade",
     direction: "ascending",
   });
 
-  useEffect(() => {
-    if (!faggruppe) {
-      navigate(FAGGRUPPER, { replace: true });
-    }
-  }, [faggruppe, navigate]);
-
   const filteredFagomraader = useMemo(() => {
-    if (!allFagomraader || !faggruppe) return [];
-    return allFagomraader.filter(
-      (fo) => fo.kodeFaggruppe === faggruppe.kodeFaggruppe,
-    );
-  }, [allFagomraader, faggruppe]);
+    if (!allFagomraader) return [];
+    return allFagomraader.filter(filterPredicate);
+  }, [allFagomraader, filterPredicate]);
 
   const fagomraaderData = useMemo(() => {
     return sortData(filteredFagomraader, sort);
   }, [filteredFagomraader, sort]);
 
-  if (!faggruppe) {
-    return null;
-  }
+  const handleSortChange = (key: string | undefined) => {
+    setSort((prev) => {
+      const orderBy = key as keyof Fagomraader;
+      const direction =
+        prev?.orderBy === orderBy && prev?.direction === "ascending"
+          ? "descending"
+          : "ascending";
+      return { orderBy, direction };
+    });
+  };
 
   return (
     <div className={commonstyles["container"]}>
@@ -64,23 +70,15 @@ const FaggruppeFagomraaderPage = () => {
           level="1"
           className={commonstyles["page-heading"]}
         >
-          Faste data - Faggrupper
+          {title}
         </Heading>
 
-        <BackHomeBox
-          breadcrumbs={[
-            { label: "Faste data", to: ROOT },
-            { label: "Faggrupper", to: FAGGRUPPER },
-            { label: `Fagområder for ${faggruppe.kodeFaggruppe}` },
-          ]}
-        />
+        <BackHomeBox breadcrumbs={breadcrumbs} />
 
         <div className={filterstyles["filter-container"]}>
           <div className={styles.row}>
-            <BodyShort weight="semibold">
-              Fagområder som tilhører Faggruppen:
-            </BodyShort>{" "}
-            {faggruppe.kodeFaggruppe} - {faggruppe.navnFaggruppe}
+            <BodyShort weight="semibold">{descriptionLabel}</BodyShort>{" "}
+            {descriptionValue}
           </div>
         </div>
 
@@ -93,16 +91,7 @@ const FaggruppeFagomraaderPage = () => {
             zebraStripes
             size="small"
             sort={sort}
-            onSortChange={(key) => {
-              setSort((prev) => {
-                const orderBy = key as keyof Fagomraader;
-                const direction =
-                  prev?.orderBy === orderBy && prev?.direction === "ascending"
-                    ? "descending"
-                    : "ascending";
-                return { orderBy, direction };
-              });
-            }}
+            onSortChange={handleSortChange}
           >
             <Table.Header>
               <Table.Row>
@@ -122,7 +111,7 @@ const FaggruppeFagomraaderPage = () => {
                     <Link
                       as={RouterLink}
                       to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
-                      state={{ fromFaggruppe: faggruppe.kodeFaggruppe }}
+                      state={stateValue}
                     >
                       {fagomraade.kodeFagomraade}
                     </Link>
@@ -142,8 +131,7 @@ const FaggruppeFagomraaderPage = () => {
           </Table>
         ) : (
           <Alert variant="info" role="status">
-            Ingen fagområder registrert for{" "}
-            {faggruppeParam ?? "denne faggruppen"}.
+            {emptyMessage}
           </Alert>
         )}
       </div>
@@ -151,4 +139,4 @@ const FaggruppeFagomraaderPage = () => {
   );
 };
 
-export default FaggruppeFagomraaderPage;
+export default FagomraaderDetaljer;

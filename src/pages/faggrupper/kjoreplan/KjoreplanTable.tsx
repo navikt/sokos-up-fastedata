@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
-import RowsPerPageSelector from "../../../common/RowsPerPageSelector";
+import TableControls from "../../../common/TableControls";
 import commonstyles from "../../../styles/commonstyles.module.css";
 import { Kjoreplan } from "../../../types/Kjoreplan";
 import { formatDate } from "../../../util/dateUtil";
@@ -36,23 +36,13 @@ export const KjoreplanTable = ({ past, data = [] }: Props) => {
 
   return (
     <>
-      <div className={commonstyles["table-controls"]}>
-        <div className={commonstyles["controls-row"]}>
-          <div className={commonstyles["left-controls"]}>
-            <p className={commonstyles["treff-info"]}>
-              {`${data.length} treff`}
-              {rowsPerPage &&
-                data.length > rowsPerPage &&
-                totalPages > 1 &&
-                `, ${currentPage} av ${totalPages} sider`}
-            </p>
-          </div>
-          <RowsPerPageSelector
-            rowsPerPage={rowsPerPage}
-            updateRowsPerPage={updateRowsPerPage}
-          />
-        </div>
-      </div>
+      <TableControls
+        totalCount={data.length}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        rowsPerPage={rowsPerPage}
+        updateRowsPerPage={updateRowsPerPage}
+      />
 
       <Table
         key={tableKey}

@@ -9,3 +9,5 @@ export const FAGOMRAADER = "/fastedata/fagomraader";
 export const FAGGRUPPER = "/fastedata/faggrupper";
 export const FAGGRUPPER_FAGOMRAADER =
   "/fastedata/faggrupper/:faggruppe/fagomraader";
+export const FAGGRUPPER_KJOREPLANER =
+  "/fastedata/faggrupper/:faggruppe/kjoreplaner";
