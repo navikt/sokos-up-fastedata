@@ -7,14 +7,18 @@ import { filterByNormalizedTerms } from "./filterUtil";
  *
  * @param data - The data array to filter
  * @param urlParamName - The URL parameter name to sync with
- * @param searchableTextFn - Function to extract searchable text from each item
+ * @param searchableTextFn - Function to extract searchable text from each item (should be memoized)
  * @returns Object containing filters, filteredData, and handleFiltersChange
  *
  * @example
+ * const searchableTextFn = useCallback(
+ *   (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`,
+ *   []
+ * );
  * const { filters, filteredData, handleFiltersChange } = useSimpleFilter(
  *   data,
  *   "faggruppe",
- *   (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`
+ *   searchableTextFn
  * );
  */
 export function useSimpleFilter<T>(
