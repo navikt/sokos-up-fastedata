@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Alert, Heading, Tabs } from "@navikt/ds-react";
 import { useGetKjoreplaner } from "../../../api/apiService";
 import BackHomeBox from "../../../common/BackHomeBox";
 import ContentLoader from "../../../common/ContentLoader";
 import commonstyles from "../../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../../types/Faggruppe";
+import { useRequiredLocationState } from "../../../util/navigationUtil";
 import { FAGGRUPPER, ROOT } from "../../../util/paths";
 import KjoreplanTable from "./KjoreplanTable";
 
@@ -15,20 +15,12 @@ type LocationState = {
 
 const KjoreplanPage = () => {
   const { faggruppe: faggruppeParam } = useParams();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const state = location.state as LocationState | undefined;
-  const faggruppe = state?.faggruppe;
+  const { faggruppe } =
+    useRequiredLocationState<LocationState>(FAGGRUPPER) || {};
 
   const { data, error, isLoading } = useGetKjoreplaner({
     faggruppe: faggruppeParam || "",
   });
-
-  useEffect(() => {
-    if (!faggruppe) {
-      navigate(FAGGRUPPER, { replace: true });
-    }
-  }, [faggruppe, navigate]);
 
   if (!faggruppe) {
     return null;

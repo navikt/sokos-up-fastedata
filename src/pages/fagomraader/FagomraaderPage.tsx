@@ -5,6 +5,8 @@ import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { Fagomraader } from "../../types/Fagomraader";
+import { filterByNormalizedTerms } from "../../util/filterUtil";
 import FagomraaderFilter from "./FagomraaderFilter";
 import FagomraaderTable from "./FagomraaderTable";
 
@@ -27,16 +29,13 @@ export const FagomraaderPage = () => {
     }
   };
 
-  const normalize = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
-
   const filteredData = useMemo(() => {
-    if (!data || filters.length === 0) return data || [];
-    const terms = filters.map((f) => normalize(f));
-    return data.filter((item) => {
-      const hay = normalize(`${item.kodeFagomraade} ${item.navnFagomraade}`);
-      return terms.every((t) => hay.includes(t));
-    });
+    if (!data) return [];
+    return filterByNormalizedTerms<Fagomraader>(
+      data,
+      filters,
+      (item) => `${item.kodeFagomraade} ${item.navnFagomraade}`,
+    );
   }, [data, filters]);
 
   if (isLoading) return <ContentLoader />;

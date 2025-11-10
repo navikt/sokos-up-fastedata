@@ -1,10 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import {
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router";
+import { useMemo, useState } from "react";
+import { Link as RouterLink, useParams } from "react-router";
 import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
@@ -13,6 +8,7 @@ import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Faggruppe } from "../../types/Faggruppe";
 import { Fagomraader } from "../../types/Fagomraader";
+import { useRequiredLocationState } from "../../util/navigationUtil";
 import { FAGGRUPPER, FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
 import styles from "../klassekoder/KlassekodeFagomraaderPage.module.css";
@@ -22,23 +18,15 @@ type LocationState = {
 };
 
 const FaggruppeFagomraaderPage = () => {
-  const navigate = useNavigate();
   const { faggruppe: faggruppeParam } = useParams<{ faggruppe: string }>();
-  const location = useLocation();
-  const state = location.state as LocationState | undefined;
-  const faggruppe = state?.faggruppe;
+  const { faggruppe } =
+    useRequiredLocationState<LocationState>(FAGGRUPPER) || {};
 
   const { data: allFagomraader, error, isLoading } = useGetFagomraader();
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>({
     orderBy: "kodeFagomraade",
     direction: "ascending",
   });
-
-  useEffect(() => {
-    if (!faggruppe) {
-      navigate(FAGGRUPPER, { replace: true });
-    }
-  }, [faggruppe, navigate]);
 
   const filteredFagomraader = useMemo(() => {
     if (!allFagomraader || !faggruppe) return [];

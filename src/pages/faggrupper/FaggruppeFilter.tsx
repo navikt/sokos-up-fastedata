@@ -46,6 +46,8 @@ const FaggruppeFilter = ({
             activeValues={activeFilters}
             onValueAdd={handleAdd}
             onValueRemove={handleRemove}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus={true}
           />
         </div>
       </div>

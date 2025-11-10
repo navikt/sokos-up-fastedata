@@ -5,6 +5,8 @@ import { useGetFaggrupper } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { Faggruppe } from "../../types/Faggruppe";
+import { filterByNormalizedTerms } from "../../util/filterUtil";
 import FaggruppeFilter from "./FaggruppeFilter";
 import FaggruppeTable from "./FaggruppeTable";
 
@@ -27,16 +29,13 @@ export const FaggrupperPage = () => {
     }
   };
 
-  const normalize = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
-
   const filteredData = useMemo(() => {
-    if (!data || filters.length === 0) return data || [];
-    const terms = filters.map((f) => normalize(f));
-    return data.filter((item) => {
-      const hay = normalize(`${item.kodeFaggruppe} ${item.navnFaggruppe}`);
-      return terms.every((t) => hay.includes(t));
-    });
+    if (!data) return [];
+    return filterByNormalizedTerms<Faggruppe>(
+      data,
+      filters,
+      (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`,
+    );
   }, [data, filters]);
 
   if (isLoading) return <ContentLoader />;

@@ -1,10 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import {
-  Link as RouterLink,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router";
+import { useMemo, useState } from "react";
+import { Link as RouterLink, useParams } from "react-router";
 import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
@@ -13,6 +8,10 @@ import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { Fagomraader } from "../../types/Fagomraader";
 import { Klassekoder } from "../../types/Klassekoder";
+import {
+  parseCommaSeparated,
+  useRequiredLocationState,
+} from "../../util/navigationUtil";
 import { FAGOMRAADER, KLASSEKODER, ROOT } from "../../util/paths";
 import { SortState, sortData } from "../../util/sortUtil";
 import styles from "./KlassekodeFagomraaderPage.module.css";
@@ -21,21 +20,10 @@ type LocationState = {
   klassekode?: Klassekoder;
 };
 
-const parseFagomraader = (value?: string) => {
-  if (!value) return [] as string[];
-
-  return value
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 0);
-};
-
 const KlassekodeFagomraaderPage = () => {
-  const navigate = useNavigate();
   const { klassekode: klassekodeParam } = useParams<{ klassekode: string }>();
-  const location = useLocation();
-  const state = location.state as LocationState | undefined;
-  const klassekode = state?.klassekode;
+  const { klassekode } =
+    useRequiredLocationState<LocationState>(KLASSEKODER) || {};
 
   const { data: allFagomraader, error, isLoading } = useGetFagomraader();
   const [sort, setSort] = useState<SortState<Fagomraader> | undefined>({
@@ -43,14 +31,8 @@ const KlassekodeFagomraaderPage = () => {
     direction: "ascending",
   });
 
-  useEffect(() => {
-    if (!klassekode) {
-      navigate(KLASSEKODER, { replace: true });
-    }
-  }, [klassekode, navigate]);
-
   const fagomraaderCodes = useMemo(() => {
-    return parseFagomraader(klassekode?.kodeFagomraade);
+    return parseCommaSeparated(klassekode?.kodeFagomraade);
   }, [klassekode?.kodeFagomraade]);
 
   const filteredFagomraader = useMemo(() => {
