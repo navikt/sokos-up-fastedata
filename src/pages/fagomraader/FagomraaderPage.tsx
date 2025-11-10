@@ -1,42 +1,20 @@
-import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
-import { Fagomraader } from "../../types/Fagomraader";
-import { filterByNormalizedTerms } from "../../util/filterUtil";
+import { useSimpleFilter } from "../../util/useSimpleFilter";
 import FagomraaderFilter from "./FagomraaderFilter";
 import FagomraaderTable from "./FagomraaderTable";
 
 export const FagomraaderPage = () => {
   const { data, error, isLoading } = useGetFagomraader();
-  const [urlParameters, setUrlParameters] = useSearchParams();
 
-  const [filters, setFilters] = useState(() => {
-    const fagomraadeUrlParam = urlParameters.get("fagomraade");
-    if (!fagomraadeUrlParam) return [];
-    return [fagomraadeUrlParam];
-  });
-
-  const handleFiltersChange = (newFilters: string[]) => {
-    setFilters(newFilters);
-    if (newFilters.length === 0) {
-      const newUrlParams = new URLSearchParams(urlParameters);
-      newUrlParams.delete("fagomraade");
-      setUrlParameters(newUrlParams, { replace: true });
-    }
-  };
-
-  const filteredData = useMemo(() => {
-    if (!data) return [];
-    return filterByNormalizedTerms<Fagomraader>(
-      data,
-      filters,
-      (item) => `${item.kodeFagomraade} ${item.navnFagomraade}`,
-    );
-  }, [data, filters]);
+  const { filters, filteredData, handleFiltersChange } = useSimpleFilter(
+    data,
+    "fagomraade",
+    (item) => `${item.kodeFagomraade} ${item.navnFagomraade}`,
+  );
 
   if (isLoading) return <ContentLoader />;
 

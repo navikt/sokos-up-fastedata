@@ -1,42 +1,20 @@
-import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
 import { Alert, Heading } from "@navikt/ds-react";
 import { useGetFaggrupper } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
-import { Faggruppe } from "../../types/Faggruppe";
-import { filterByNormalizedTerms } from "../../util/filterUtil";
+import { useSimpleFilter } from "../../util/useSimpleFilter";
 import FaggruppeFilter from "./FaggruppeFilter";
 import FaggruppeTable from "./FaggruppeTable";
 
 export const FaggrupperPage = () => {
   const { data, error, isLoading } = useGetFaggrupper();
-  const [urlParameters, setUrlParameters] = useSearchParams();
 
-  const [filters, setFilters] = useState(() => {
-    const faggruppeUrlParam = urlParameters.get("faggruppe");
-    if (!faggruppeUrlParam) return [];
-    return [faggruppeUrlParam];
-  });
-
-  const handleFiltersChange = (newFilters: string[]) => {
-    setFilters(newFilters);
-    if (newFilters.length === 0) {
-      const newUrlParams = new URLSearchParams(urlParameters);
-      newUrlParams.delete("faggruppe");
-      setUrlParameters(newUrlParams, { replace: true });
-    }
-  };
-
-  const filteredData = useMemo(() => {
-    if (!data) return [];
-    return filterByNormalizedTerms<Faggruppe>(
-      data,
-      filters,
-      (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`,
-    );
-  }, [data, filters]);
+  const { filters, filteredData, handleFiltersChange } = useSimpleFilter(
+    data,
+    "faggruppe",
+    (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`,
+  );
 
   if (isLoading) return <ContentLoader />;
 
