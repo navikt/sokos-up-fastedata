@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { Pagination, Table } from "@navikt/ds-react";
+import RowsPerPageSelector from "../../../common/RowsPerPageSelector";
 import commonstyles from "../../../styles/commonstyles.module.css";
 import { Kjoreplan } from "../../../types/Kjoreplan";
 import { formatDate } from "../../../util/dateUtil";
+import { SortState } from "../../../util/sortUtil";
+import {
+  createSortChangeHandler,
+  useTablePagination,
+} from "../../../util/tableUtil";
 
 interface Props {
   past?: boolean; // Om dette er kjøreplaner som er kjørt (true) eller planlagt (false)
@@ -10,28 +16,69 @@ interface Props {
 }
 
 export const KjoreplanTable = ({ past, data = [] }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [sort, setSort] = useState<SortState<Kjoreplan> | undefined>();
 
-  const totalPages = Math.ceil(data.length / pageSize);
-  const paginatedData = data.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  );
+  const {
+    currentPage,
+    safePage,
+    totalPages,
+    paginatedData,
+    tableKey,
+    updateRowsPerPage,
+    handlePageChange,
+    rowsPerPage,
+  } = useTablePagination({
+    data,
+    sortState: sort,
+  });
+
+  const handleSortChange = createSortChangeHandler(setSort);
 
   return (
     <>
-      <Table zebraStripes size="small">
+      <div className={commonstyles["table-controls"]}>
+        <div className={commonstyles["controls-row"]}>
+          <div className={commonstyles["left-controls"]}>
+            <p className={commonstyles["treff-info"]}>
+              {`${data.length} treff`}
+              {rowsPerPage &&
+                data.length > rowsPerPage &&
+                totalPages > 1 &&
+                `, ${currentPage} av ${totalPages} sider`}
+            </p>
+          </div>
+          <RowsPerPageSelector
+            rowsPerPage={rowsPerPage}
+            updateRowsPerPage={updateRowsPerPage}
+          />
+        </div>
+      </div>
+
+      <Table
+        key={tableKey}
+        zebraStripes
+        size="small"
+        sort={sort}
+        onSortChange={handleSortChange}
+      >
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader>Faggruppe</Table.ColumnHeader>
-            <Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="kodeFaggruppe" sortable>
+              Faggruppe
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="datoKjores" sortable>
               {past ? "Dato kjørt" : "Dato kjøres"}
             </Table.ColumnHeader>
-            <Table.ColumnHeader>Status</Table.ColumnHeader>
-            <Table.ColumnHeader>Dato overføres</Table.ColumnHeader>
-            <Table.ColumnHeader>Dato forfall</Table.ColumnHeader>
-            <Table.ColumnHeader>Beregningsperiode</Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="status" sortable>
+              Status
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="datoOverfores" sortable>
+              Dato overføres
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="datoForfall" sortable>
+              Dato forfall
+            </Table.ColumnHeader>
+            <Table.HeaderCell>Beregningsperiode</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -52,11 +99,11 @@ export const KjoreplanTable = ({ past, data = [] }: Props) => {
           ))}
         </Table.Body>
       </Table>
-      {data.length > pageSize && (
+      {totalPages > 1 && (
         <div className={commonstyles["table-pagination-container"]}>
           <Pagination
-            page={currentPage}
-            onPageChange={setCurrentPage}
+            page={safePage}
+            onPageChange={handlePageChange}
             count={totalPages}
             size="small"
           />

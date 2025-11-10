@@ -60,7 +60,11 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.ventedager}</Table.DataCell>
               <Table.DataCell>
                 {row.antallKjoreplaner > 0 && (
-                  <Link as={RouterLink} to={`${row.kodeFaggruppe}/kjoreplaner`}>
+                  <Link
+                    as={RouterLink}
+                    to={`${row.kodeFaggruppe}/kjoreplaner`}
+                    state={{ faggruppe: row }}
+                  >
                     {row.nesteKjoredato
                       ? formatDate(row.nesteKjoredato)
                       : "Ingen planlagt kjøring"}

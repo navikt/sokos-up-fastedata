@@ -1,19 +1,40 @@
-import { useParams } from "react-router";
+import { useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Alert, Heading, Tabs } from "@navikt/ds-react";
 import { useGetKjoreplaner } from "../../../api/apiService";
-import BackHomeBox2 from "../../../common/BackHomeBox2";
+import BackHomeBox from "../../../common/BackHomeBox";
 import ContentLoader from "../../../common/ContentLoader";
 import commonstyles from "../../../styles/commonstyles.module.css";
+import { Faggruppe } from "../../../types/Faggruppe";
 import { FAGGRUPPER, ROOT } from "../../../util/paths";
 import KjoreplanTable from "./KjoreplanTable";
 
+type LocationState = {
+  faggruppe?: Faggruppe;
+};
+
 const KjoreplanPage = () => {
-  const { faggruppe } = useParams();
+  const { faggruppe: faggruppeParam } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = location.state as LocationState | undefined;
+  const faggruppe = state?.faggruppe;
+
   const { data, error, isLoading } = useGetKjoreplaner({
-    faggruppe: faggruppe || "",
+    faggruppe: faggruppeParam || "",
   });
 
+  useEffect(() => {
+    if (!faggruppe) {
+      navigate(FAGGRUPPER, { replace: true });
+    }
+  }, [faggruppe, navigate]);
+
   if (isLoading) return <ContentLoader />;
+
+  if (!faggruppe) {
+    return null;
+  }
 
   return (
     <div className={commonstyles["container"]}>
@@ -24,12 +45,15 @@ const KjoreplanPage = () => {
           level="1"
           className={commonstyles["page-heading"]}
         >
-          Faste data - Faggrupper - Kjøreplan
+          Faste data - Faggrupper
         </Heading>
 
-        <BackHomeBox2
-          to={[ROOT, FAGGRUPPER]}
-          labels={["Tilbake til oversikt", "Tilbake til Faggruppesiden"]}
+        <BackHomeBox
+          breadcrumbs={[
+            { label: "Faste data", to: ROOT },
+            { label: "Faggrupper", to: FAGGRUPPER },
+            { label: `Kjøreplaner for ${faggruppe.kodeFaggruppe}` },
+          ]}
         />
 
         {error ? (
