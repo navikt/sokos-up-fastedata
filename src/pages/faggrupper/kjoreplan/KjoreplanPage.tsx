@@ -30,11 +30,11 @@ const KjoreplanPage = () => {
     }
   }, [faggruppe, navigate]);
 
-  if (isLoading) return <ContentLoader />;
-
   if (!faggruppe) {
     return null;
   }
+
+  if (isLoading) return <ContentLoader />;
 
   return (
     <div className={commonstyles["container"]}>
