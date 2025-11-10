@@ -29,7 +29,7 @@ const RedusertSkattModal = ({ kodeFaggruppe, buttonText, disabled }: Props) => {
   return (
     <div>
       <Button
-        variant="tertiary"
+        variant="secondary"
         size="xsmall"
         disabled={disabled}
         onClick={handleClick}

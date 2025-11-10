@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { Chips } from "@navikt/ds-react";
+import { XMarkIcon } from "@navikt/aksel-icons";
+import { Button, Chips } from "@navikt/ds-react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import FilterInput from "../../common/FilterInput";
 import { Faggruppe } from "../../types/Faggruppe";
@@ -29,19 +30,29 @@ const FaggruppeFilter = ({
     onFiltersChange(activeFilters.filter((f) => f !== value));
   };
 
+  const handleResetFilters = () => {
+    onFiltersChange([]);
+  };
+
   return (
     <div className={commonStyles["filter-container"]}>
-      <div>
-        <FilterInput
-          label="Filtrer på fagområdekode og navn"
-          options={allOptions}
-          activeValues={activeFilters}
-          onValueAdd={handleAdd}
-          onValueRemove={handleRemove}
-        />
+      <div className={commonStyles["search-bar-group"]}>
+        <div
+          className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}
+        >
+          <FilterInput
+            label="Filtrer på faggruppekode og navn"
+            options={allOptions}
+            activeValues={activeFilters}
+            onValueAdd={handleAdd}
+            onValueRemove={handleRemove}
+          />
+        </div>
+      </div>
 
-        {activeFilters.length > 0 && (
-          <Chips style={{ marginTop: "1.5rem" }}>
+      {activeFilters.length > 0 && (
+        <div className={commonStyles["filter-actions"]}>
+          <Chips>
             {activeFilters.map((filter) => (
               <Chips.Removable
                 key={filter}
@@ -51,8 +62,18 @@ const FaggruppeFilter = ({
               </Chips.Removable>
             ))}
           </Chips>
-        )}
-      </div>
+
+          <Button
+            variant="tertiary"
+            size="small"
+            onClick={handleResetFilters}
+            iconPosition="right"
+            icon={<XMarkIcon aria-hidden />}
+          >
+            Nullstill Filter
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
