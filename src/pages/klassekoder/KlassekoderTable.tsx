@@ -83,12 +83,12 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
               Klassekoder
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="artID" sortable>
-              Art ID
+              Art id
             </Table.ColumnHeader>
-            <Table.HeaderCell>Dato fom</Table.HeaderCell>
-            <Table.HeaderCell>Dato tom</Table.HeaderCell>
-            <Table.HeaderCell>Hovedkontonr</Table.HeaderCell>
-            <Table.HeaderCell>Underkontonr</Table.HeaderCell>
+            <Table.HeaderCell>fom</Table.HeaderCell>
+            <Table.HeaderCell>tom</Table.HeaderCell>
+            <Table.HeaderCell>Hovedkonto</Table.HeaderCell>
+            <Table.HeaderCell>Underkonto</Table.HeaderCell>
             <Table.HeaderCell>Fagområde</Table.HeaderCell>
           </Table.Row>
         </Table.Header>

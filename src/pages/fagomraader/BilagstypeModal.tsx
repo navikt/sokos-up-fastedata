@@ -61,7 +61,9 @@ const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
                   <Table.Row key={`${item.typeBilag}-${index}`}>
                     <Table.DataCell>{item.typeBilag}</Table.DataCell>
                     <Table.DataCell>{item.datoFom}</Table.DataCell>
-                    <Table.DataCell>{item.autoFagsystemId}</Table.DataCell>
+                    <Table.DataCell>
+                      {item.autoFagsystemId ? "Nei" : ""}
+                    </Table.DataCell>
                   </Table.Row>
                 ))}
               </Table.Body>

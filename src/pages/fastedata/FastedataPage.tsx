@@ -2,7 +2,7 @@ import { Heading } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import AppCard from "./AppCard";
 import styles from "./Fastedata.module.css";
-import { appList } from "./appList";
+import { routes } from "./routes";
 
 export default function FastedataPage() {
   return (
@@ -21,13 +21,12 @@ export default function FastedataPage() {
         </Heading>
 
         <div className={styles["card-grid"]}>
-          {appList.map((app) => (
+          {routes.map((app) => (
             <AppCard
               key={app.title}
               title={app.title}
               description={app.description}
               route={app.route}
-              disabled={app.disabled}
             />
           ))}
         </div>
