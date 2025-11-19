@@ -72,7 +72,9 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
               <Table.DataCell>{row.kodeVentestatus}</Table.DataCell>
               <Table.DataCell>{row.beskrivelse}</Table.DataCell>
               <Table.DataCell>{row.prioritet}</Table.DataCell>
-              <Table.DataCell>{row.settesManuelt}</Table.DataCell>
+              <Table.DataCell>
+                {row.settesManuelt === "J" ? "Ja" : "Nei"}
+              </Table.DataCell>
               <Table.DataCell>{row.kodeArvesTil}</Table.DataCell>
               <Table.DataCell>{row.kanManueltEndresTil}</Table.DataCell>
             </Table.Row>

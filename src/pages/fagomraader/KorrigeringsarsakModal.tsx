@@ -70,7 +70,7 @@ const KorrigeringsarsakModal = ({
                     <Table.DataCell>{item.kodeAarsakKorr}</Table.DataCell>
                     <Table.DataCell>{item.beskrivelse}</Table.DataCell>
                     <Table.DataCell>
-                      {item.medforerKorr ? "J" : "N"}
+                      {item.medforerKorr ? "Ja" : "Nei"}
                     </Table.DataCell>
                   </Table.Row>
                 ))}
