@@ -51,9 +51,6 @@ const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
                 <Table.Row>
                   <Table.HeaderCell scope="col">Type bilag</Table.HeaderCell>
                   <Table.HeaderCell scope="col">Dato fra</Table.HeaderCell>
-                  <Table.HeaderCell scope="col">
-                    Automatisk fagsystem-id
-                  </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -61,9 +58,6 @@ const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
                   <Table.Row key={`${item.typeBilag}-${index}`}>
                     <Table.DataCell>{item.typeBilag}</Table.DataCell>
                     <Table.DataCell>{item.datoFom}</Table.DataCell>
-                    <Table.DataCell>
-                      {item.autoFagsystemId ? "Nei" : ""}
-                    </Table.DataCell>
                   </Table.Row>
                 ))}
               </Table.Body>
