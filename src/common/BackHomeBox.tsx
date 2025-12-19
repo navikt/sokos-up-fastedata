@@ -45,10 +45,7 @@ const BackHomeBox = ({
               <li key={key} className={styles["breadcrumb-item"]}>
                 {content}
                 {!isLast && (
-                  <ChevronRightDoubleIcon
-                    aria-hidden
-                    className={styles.separator}
-                  />
+                  <ChevronRightDoubleIcon className={styles.separator} />
                 )}
               </li>
             );
@@ -61,7 +58,7 @@ const BackHomeBox = ({
   return (
     <div className={styles.container}>
       <RouterLink to={to} className={styles.link}>
-        <ArrowLeftIcon aria-hidden className={styles.ikon} />
+        <ArrowLeftIcon className={styles.ikon} />
         {label}
       </RouterLink>
     </div>

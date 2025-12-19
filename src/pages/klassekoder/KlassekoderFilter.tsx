@@ -80,7 +80,7 @@ const KlassekoderFilter = ({
             size="small"
             onClick={handleResetFilters}
             iconPosition="right"
-            icon={<XMarkIcon aria-hidden />}
+            icon={<XMarkIcon />}
           >
             Nullstill Filter
           </Button>
