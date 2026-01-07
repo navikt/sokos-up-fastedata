@@ -4,7 +4,7 @@
  * - Removing all non-alphanumeric characters (except Unicode letters)
  */
 export function normalizeString(str: string): string {
-  return str.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
+	return str.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g, "");
 }
 
 /**
@@ -17,18 +17,18 @@ export function normalizeString(str: string): string {
  * @returns Filtered array
  */
 export function filterByNormalizedTerms<T>(
-  data: T[],
-  filters: string[],
-  getSearchableText: (item: T) => string,
+	data: T[],
+	filters: string[],
+	getSearchableText: (item: T) => string,
 ): T[] {
-  if (filters.length === 0) return data;
+	if (filters.length === 0) return data;
 
-  const normalizedTerms = filters.map((f) => normalizeString(f));
+	const normalizedTerms = filters.map((f) => normalizeString(f));
 
-  return data.filter((item) => {
-    const searchableText = normalizeString(getSearchableText(item));
-    return normalizedTerms.every((term) => searchableText.includes(term));
-  });
+	return data.filter((item) => {
+		const searchableText = normalizeString(getSearchableText(item));
+		return normalizedTerms.every((term) => searchableText.includes(term));
+	});
 }
 
 /**
@@ -40,26 +40,26 @@ export function filterByNormalizedTerms<T>(
  * @returns [filters, handleFiltersChange] tuple
  */
 export function useUrlParameterFilters(
-  urlParameters: URLSearchParams,
-  setUrlParameters: (
-    params: URLSearchParams,
-    options?: { replace?: boolean },
-  ) => void,
-  paramName: string,
+	urlParameters: URLSearchParams,
+	setUrlParameters: (
+		params: URLSearchParams,
+		options?: { replace?: boolean },
+	) => void,
+	paramName: string,
 ): [string[], (newFilters: string[]) => void] {
-  const getInitialFilters = (): string[] => {
-    const urlParam = urlParameters.get(paramName);
-    if (!urlParam) return [];
-    return [urlParam];
-  };
+	const getInitialFilters = (): string[] => {
+		const urlParam = urlParameters.get(paramName);
+		if (!urlParam) return [];
+		return [urlParam];
+	};
 
-  const handleFiltersChange = (newFilters: string[]): void => {
-    if (newFilters.length === 0) {
-      const newUrlParams = new URLSearchParams(urlParameters);
-      newUrlParams.delete(paramName);
-      setUrlParameters(newUrlParams, { replace: true });
-    }
-  };
+	const handleFiltersChange = (newFilters: string[]): void => {
+		if (newFilters.length === 0) {
+			const newUrlParams = new URLSearchParams(urlParameters);
+			newUrlParams.delete(paramName);
+			setUrlParameters(newUrlParams, { replace: true });
+		}
+	};
 
-  return [getInitialFilters(), handleFiltersChange];
+	return [getInitialFilters(), handleFiltersChange];
 }

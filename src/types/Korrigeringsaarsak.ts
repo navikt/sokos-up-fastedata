@@ -1,4 +1,4 @@
-import { z } from "zod";
-import { KorrigeringsaarsakSchema } from "./schema/KorrigeringsaarsakSchema";
+import type { z } from "zod";
+import type { KorrigeringsaarsakSchema } from "./schema/KorrigeringsaarsakSchema";
 
 export type Korrigeringsaarsak = z.infer<typeof KorrigeringsaarsakSchema>;

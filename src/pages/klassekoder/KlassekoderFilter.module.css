@@ -1,25 +1,25 @@
 .search-bar-group {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 
 .search-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex: 1 1 100%;
-  max-width: 20rem;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	flex: 1 1 100%;
+	max-width: 20rem;
 }
 
 .hovedkonto-search-container,
 .underkonto-search-container,
 .artid-search-container {
-  flex: 1 1 40%;
-  max-width: 14%;
+	flex: 1 1 40%;
+	max-width: 14%;
 }
 
 .fagomraade-search-container {
-  flex: 1 1 35%;
-  max-width: 22%;
+	flex: 1 1 35%;
+	max-width: 22%;
 }

@@ -22,31 +22,31 @@ import { filterByNormalizedTerms } from "./filterUtil";
  * );
  */
 export function useSimpleFilter<T>(
-  data: T[] | undefined,
-  urlParamName: string,
-  searchableTextFn: (item: T) => string,
+	data: T[] | undefined,
+	urlParamName: string,
+	searchableTextFn: (item: T) => string,
 ) {
-  const [urlParameters, setUrlParameters] = useSearchParams();
+	const [urlParameters, setUrlParameters] = useSearchParams();
 
-  const [filters, setFilters] = useState(() => {
-    const urlParam = urlParameters.get(urlParamName);
-    if (!urlParam) return [];
-    return [urlParam];
-  });
+	const [filters, setFilters] = useState(() => {
+		const urlParam = urlParameters.get(urlParamName);
+		if (!urlParam) return [];
+		return [urlParam];
+	});
 
-  const handleFiltersChange = (newFilters: string[]) => {
-    setFilters(newFilters);
-    if (newFilters.length === 0) {
-      const newUrlParams = new URLSearchParams(urlParameters);
-      newUrlParams.delete(urlParamName);
-      setUrlParameters(newUrlParams, { replace: true });
-    }
-  };
+	const handleFiltersChange = (newFilters: string[]) => {
+		setFilters(newFilters);
+		if (newFilters.length === 0) {
+			const newUrlParams = new URLSearchParams(urlParameters);
+			newUrlParams.delete(urlParamName);
+			setUrlParameters(newUrlParams, { replace: true });
+		}
+	};
 
-  const filteredData = useMemo(() => {
-    if (!data) return [];
-    return filterByNormalizedTerms<T>(data, filters, searchableTextFn);
-  }, [data, filters, searchableTextFn]);
+	const filteredData = useMemo(() => {
+		if (!data) return [];
+		return filterByNormalizedTerms<T>(data, filters, searchableTextFn);
+	}, [data, filters, searchableTextFn]);
 
-  return { filters, filteredData, handleFiltersChange };
+	return { filters, filteredData, handleFiltersChange };
 }

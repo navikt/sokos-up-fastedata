@@ -1,4 +1,4 @@
-import { z } from "zod";
-import { BilagstypeSchema } from "./schema/BilagstypeSchema";
+import type { z } from "zod";
+import type { BilagstypeSchema } from "./schema/BilagstypeSchema";
 
 export type Bilagstype = z.infer<typeof BilagstypeSchema>;
