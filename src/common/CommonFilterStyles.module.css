@@ -1,77 +1,77 @@
 .filter-container {
-  background-color: #dbeafe;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
+	background-color: #dbeafe;
+	border-radius: 12px;
+	padding: 1.5rem;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
 }
 
 .search-container {
-  max-width: 300px;
-  position: relative;
-  margin-top: 0.6rem;
+	max-width: 300px;
+	position: relative;
+	margin-top: 0.6rem;
 }
 
 .wider-search-container {
-  max-width: 400px;
+	max-width: 400px;
 }
 
 .suggestions-list {
-  margin-top: 0.25rem;
-  padding: 0;
-  list-style: none;
-  border: 1px solid gray;
-  border-radius: 4px;
-  background-color: #fff;
-  max-height: 120px;
-  overflow-y: auto;
-  animation: fade-in 0.2s ease-out;
-  position: absolute;
-  z-index: 10;
-  width: 100%;
+	margin-top: 0.25rem;
+	padding: 0;
+	list-style: none;
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: #fff;
+	max-height: 120px;
+	overflow-y: auto;
+	animation: fade-in 0.2s ease-out;
+	position: absolute;
+	z-index: 10;
+	width: 100%;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(-5px);
+	}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .suggestion-item {
-  padding: 4px 8px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  text-align: left;
-  width: 100%;
-  font-size: 0.95rem;
+	padding: 4px 8px;
+	cursor: pointer;
+	border: none;
+	background: none;
+	text-align: left;
+	width: 100%;
+	font-size: 0.95rem;
 }
 
 .suggestion-item:hover {
-  background-color: #f0f0f0;
+	background-color: #f0f0f0;
 }
 
 .no-results {
-  padding: 4px;
-  cursor: default;
-  text-align: center;
-  color: #6b7280;
-  font-style: italic;
+	padding: 4px;
+	cursor: default;
+	text-align: center;
+	color: #6b7280;
+	font-style: italic;
 }
 
 .filter-actions {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	margin-top: 1rem;
+	flex-wrap: wrap;
 }

@@ -96,6 +96,9 @@ build
 # Serverless directories
 .serverless/
 
+# MSW generated files
+public/mockServiceWorker.js
+
 # FuseBox cache
 .fusebox/
 
@@ -114,4 +117,3 @@ build
 
 # asdf
 .tool-versions
-

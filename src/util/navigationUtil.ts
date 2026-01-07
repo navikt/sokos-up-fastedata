@@ -9,17 +9,17 @@ import { useLocation, useNavigate } from "react-router";
  * @returns The location state or null if missing
  */
 export function useRequiredLocationState<T>(redirectPath: string): T | null {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const state = location.state as T | undefined;
+	const location = useLocation();
+	const navigate = useNavigate();
+	const state = location.state as T | undefined;
 
-  useEffect(() => {
-    if (!state) {
-      navigate(redirectPath, { replace: true });
-    }
-  }, [state, navigate, redirectPath]);
+	useEffect(() => {
+		if (!state) {
+			navigate(redirectPath, { replace: true });
+		}
+	}, [state, navigate, redirectPath]);
 
-  return state || null;
+	return state || null;
 }
 
 /**
@@ -29,10 +29,10 @@ export function useRequiredLocationState<T>(redirectPath: string): T | null {
  * @returns Array of trimmed strings
  */
 export function parseCommaSeparated(value?: string): string[] {
-  if (!value) return [];
+	if (!value) return [];
 
-  return value
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.length > 0);
+	return value
+		.split(",")
+		.map((entry) => entry.trim())
+		.filter((entry) => entry.length > 0);
 }

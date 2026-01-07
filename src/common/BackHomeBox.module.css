@@ -1,65 +1,65 @@
 .container {
-  width: 100%;
-  background-color: #e3dbf5;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+	width: 100%;
+	background-color: #e3dbf5;
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	margin-bottom: 1.5rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .link {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 500;
-  color: #0056b4;
-  text-decoration: none;
-  transition: text-decoration 0.2s ease;
-  font-size: 1rem;
+	display: inline-flex;
+	align-items: center;
+	font-weight: 500;
+	color: #0056b4;
+	text-decoration: none;
+	transition: text-decoration 0.2s ease;
+	font-size: 1rem;
 }
 
 .link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .ikon {
-  margin-right: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .breadcrumbs {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
 }
 
 .breadcrumb-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .breadcrumb-link {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 500;
-  color: #0056b4;
-  text-decoration: none;
-  font-size: 1rem;
+	display: inline-flex;
+	align-items: center;
+	font-weight: 500;
+	color: #0056b4;
+	text-decoration: none;
+	font-size: 1rem;
 }
 
 .breadcrumb-link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .separator {
-  font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 
 .current {
-  color: #1d1d1d;
+	color: #1d1d1d;
 }
