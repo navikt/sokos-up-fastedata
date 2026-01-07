@@ -35,7 +35,6 @@ const FilterInput = ({
 			selectedOptions={activeValues}
 			onToggleSelected={handleToggleSelected}
 			shouldShowSelectedOptions={false}
-			// eslint-disable-next-line jsx-a11y/no-autofocus
 			autoFocus={autoFocus}
 		/>
 	);

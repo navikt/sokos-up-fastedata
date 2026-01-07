@@ -30,5 +30,5 @@ server.get(`${basePath}/internal/isReady`, (_req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
-// biome-ignore lint/suspicious/noConsole: false positive
+// biome-ignore lint/suspicious/noConsole: <log server start>
 server.listen(8080, () => console.log("Server listening on port 8080"));

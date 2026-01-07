@@ -55,7 +55,6 @@ const KlassekoderFilter = ({
 							activeValues={activeFilters[key]}
 							onValueAdd={(val) => handleAdd(key, val)}
 							onValueRemove={(val) => handleRemove(key, val)}
-							// eslint-disable-next-line jsx-a11y/no-autofocus
 							autoFocus={inputFieldIndex === 0}
 						/>
 					</div>

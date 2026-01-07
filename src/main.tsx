@@ -11,7 +11,7 @@ const startMsw = async () => {
 				onUnhandledRequest: "bypass",
 			});
 		} catch (error) {
-			// biome-ignore lint/suspicious/noConsole: false positive
+			// biome-ignore lint/suspicious/noConsole: <in case of error>
 			console.error("Failed to start MSW", error);
 		}
 	}

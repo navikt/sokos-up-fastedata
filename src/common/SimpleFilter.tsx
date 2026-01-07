@@ -51,7 +51,6 @@ const SimpleFilter = <T,>({
 						activeValues={activeFilters}
 						onValueAdd={handleAdd}
 						onValueRemove={handleRemove}
-						// eslint-disable-next-line jsx-a11y/no-autofocus
 						autoFocus={autoFocus}
 					/>
 				</div>
