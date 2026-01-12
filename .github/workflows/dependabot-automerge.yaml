@@ -10,5 +10,5 @@ jobs:
     name: Dependabot Auto-merge
     uses: navikt/mob-gha-workflows/.github/workflows/dependabot-automerge-v2.yaml@main
     secrets:
-      APP_ID: ${{ secrets.APP_ID }}
+      APP_ID: ${{ vars.APP_ID }}
       PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
