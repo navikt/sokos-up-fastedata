@@ -26,7 +26,7 @@ env:
 jobs:
   playwright-test:
     name: Playwright test
-    uses: navikt/mob-gha-workflows/.github/workflows/playwright.yaml@fix/webkit
+    uses: navikt/mob-gha-workflows/.github/workflows/playwright.yaml@main
     secrets: inherit
 
   build-push-image:
