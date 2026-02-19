@@ -8,6 +8,7 @@ Hensikten er å avhjelpe saksbehandler med hvilke verdier som er gyldige og kan 
 ## Miljøer
 
 - [Q1-miljø](https://utbetalingsportalen.intern.dev.nav.no/fastedata)
+- [Prod-miljø](https://utbetalingsportalen.intern.nav.no/fastedata)
 
 ## Tilganger
 
@@ -15,16 +16,16 @@ Hensikten er å avhjelpe saksbehandler med hvilke verdier som er gyldige og kan 
 
 For å få tilgang til skjermbildet:
 
-- `0000-CA-SOKOS-MF-Fastedata` (applikasjon i Utbetalingsportalen)
+- `0000-CA-SOKOS-MF-Fastedata-Nasjonalt-READ` (applikasjon i Utbetalingsportalen)
 
 Tilgang fås ved ta kontakt med din identansvarlig. Det kan noen ganger være en strevsomt å få på plass tilganger
 i identrutinene. Det er derfor viktig å benytte riktig begrep i kommunikasjon med dem.
 
 ### Beskrivelse av AD-grupper og hva de heter i identrutinen
 
-| Navn Identrutinen                                    | AD-gruppe                  | Beskrivelse           |
-| ---------------------------------------------------- | -------------------------- | --------------------- |
-| Utbetalingsportalen - fastedata - Applikasjontilgang | 0000-CA-SOKOS-MF-Fastedata | Tilgang til fastedata |
+| Navn Identrutinen                                     | AD-gruppe                                 | Beskrivelse            |
+| ----------------------------------------------------- | ----------------------------------        | ---------------------- |
+| Utbetalingsportalen - fastedata - Applikasjontilgang  | 0000-CA-SOKOS-MF-Fastedata-Nasjonalt-READ | Tilgang til fastedata  |
 
 ## Kom i gang
 
