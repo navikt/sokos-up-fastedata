@@ -6,6 +6,7 @@ import type { Kjoreplan } from "../types/Kjoreplan";
 import type { Klassekoder } from "../types/Klassekoder";
 import type { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import type { RedusertSkatt } from "../types/RedusertSkatt";
+import type { Trekkgruppe } from "../types/Trekkgruppe";
 import type { Ventekriterier } from "../types/Ventekriterier";
 import type { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
@@ -40,6 +41,17 @@ export function useGetVentestatuskoder() {
 		`/ventestatuskoder`,
 		swrConfig<Ventestatuskoder[]>((url) =>
 			axiosFetcher<Ventestatuskoder[]>(BASE_URI.BACKEND_API, url),
+		),
+	);
+	const isLoading = (!error && !data) || isValidating;
+	return { data, error, isLoading };
+}
+
+export function useGetTrekkgrupper() {
+	const { data, error, isValidating } = useSWRImmutable<Trekkgruppe[]>(
+		`/trekkgrupper`,
+		swrConfig<Trekkgruppe[]>((url) =>
+			axiosFetcher<Trekkgruppe[]>(BASE_URI.BACKEND_API, url),
 		),
 	);
 	const isLoading = (!error && !data) || isValidating;
