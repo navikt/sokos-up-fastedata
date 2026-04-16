@@ -7,6 +7,7 @@ import FastedataPage from "./pages/fastedata/FastedataPage";
 import FagomraaderForKlassekoder from "./pages/klassekoder/FagomraaderForKlassekoder";
 import KlassekoderPage from "./pages/klassekoder/KlassekoderPage";
 import NotFound from "./pages/notfound/NotFound";
+import TrekkgrupperPage from "./pages/trekkgrupper/TrekkgrupperPage";
 import VentekriterierPage from "./pages/ventekriterier/VentekriterierPage";
 import VentestatuskoderPage from "./pages/ventestatuskoder/VentestatuskoderPage";
 import {
@@ -18,6 +19,7 @@ import {
 	KLASSEKODER,
 	KLASSEKODER_FAGOMRAADER,
 	ROOT,
+	TREKKGRUPPER,
 	VENTEKRITERIER,
 	VENTESTATUSKODER,
 } from "./util/paths";
@@ -36,6 +38,7 @@ export default function App() {
 				<Route path={FAGGRUPPER_KJOREPLANER} element={<KjoreplanPage />} />
 				<Route path={VENTEKRITERIER} element={<VentekriterierPage />} />
 				<Route path={VENTESTATUSKODER} element={<VentestatuskoderPage />} />
+				<Route path={TREKKGRUPPER} element={<TrekkgrupperPage />} />
 				<Route path={KLASSEKODER} element={<KlassekoderPage />} />
 				<Route
 					path={KLASSEKODER_FAGOMRAADER}

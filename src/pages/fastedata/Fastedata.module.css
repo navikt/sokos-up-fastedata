@@ -3,6 +3,10 @@
 	width: 100%;
 }
 
+.section {
+	margin-bottom: 2rem;
+}
+
 .card-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
