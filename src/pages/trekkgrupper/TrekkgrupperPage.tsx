@@ -5,6 +5,7 @@ import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
 import { useSimpleFilter } from "../../util/useSimpleFilter";
 import TrekkgrupperFilter from "./TrekkgrupperFilter";
+import styles from "./TrekkgrupperPage.module.css";
 import TrekkgrupperTable from "./TrekkgrupperTable";
 
 export const TrekkgrupperPage = () => {
@@ -20,7 +21,9 @@ export const TrekkgrupperPage = () => {
 
 	return (
 		<div className={commonstyles.container}>
-			<div className={commonstyles["content-wrapper"]}>
+			<div
+				className={`${commonstyles["content-wrapper"]} ${styles["content-wrapper"]}`}
+			>
 				<Heading
 					spacing
 					size="medium"
