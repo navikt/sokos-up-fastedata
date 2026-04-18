@@ -31,16 +31,21 @@ export function useSimpleFilter<T>(
 	const [filters, setFilters] = useState(() => {
 		const urlParam = urlParameters.get(urlParamName);
 		if (!urlParam) return [];
-		return [urlParam];
+		return urlParam
+			.split(",")
+			.map((s) => s.trim())
+			.filter(Boolean);
 	});
 
 	const handleFiltersChange = (newFilters: string[]) => {
 		setFilters(newFilters);
+		const newUrlParams = new URLSearchParams(urlParameters);
 		if (newFilters.length === 0) {
-			const newUrlParams = new URLSearchParams(urlParameters);
 			newUrlParams.delete(urlParamName);
-			setUrlParameters(newUrlParams, { replace: true });
+		} else {
+			newUrlParams.set(urlParamName, newFilters.join(","));
 		}
+		setUrlParameters(newUrlParams, { replace: true });
 	};
 
 	const filteredData = useMemo(() => {

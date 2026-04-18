@@ -30,36 +30,3 @@ export function filterByNormalizedTerms<T>(
 		return normalizedTerms.every((term) => searchableText.includes(term));
 	});
 }
-
-/**
- * Custom hook for managing URL parameter-based filters
- *
- * @param urlParameters - URLSearchParams object from react-router
- * @param setUrlParameters - Function to update URL parameters
- * @param paramName - Name of the URL parameter to manage
- * @returns [filters, handleFiltersChange] tuple
- */
-export function useUrlParameterFilters(
-	urlParameters: URLSearchParams,
-	setUrlParameters: (
-		params: URLSearchParams,
-		options?: { replace?: boolean },
-	) => void,
-	paramName: string,
-): [string[], (newFilters: string[]) => void] {
-	const getInitialFilters = (): string[] => {
-		const urlParam = urlParameters.get(paramName);
-		if (!urlParam) return [];
-		return [urlParam];
-	};
-
-	const handleFiltersChange = (newFilters: string[]): void => {
-		if (newFilters.length === 0) {
-			const newUrlParams = new URLSearchParams(urlParameters);
-			newUrlParams.delete(paramName);
-			setUrlParameters(newUrlParams, { replace: true });
-		}
-	};
-
-	return [getInitialFilters(), handleFiltersChange];
-}

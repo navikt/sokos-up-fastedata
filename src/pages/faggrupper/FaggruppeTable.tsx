@@ -86,7 +86,6 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
 										to={generatePath(FAGGRUPPER_KJOREPLANER, {
 											faggruppe: row.kodeFaggruppe,
 										})}
-										state={{ faggruppe: row }}
 									>
 										{row.nesteKjoredato
 											? formatDate(row.nesteKjoredato)
@@ -100,7 +99,6 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
 									to={generatePath(FAGGRUPPER_FAGOMRAADER, {
 										faggruppe: row.kodeFaggruppe,
 									})}
-									state={{ faggruppe: row }}
 								>
 									Fagområder
 								</Link>

@@ -1,30 +1,20 @@
 import { Alert, Heading, Tabs } from "@navikt/ds-react";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { useGetKjoreplaner } from "../../../api/apiService";
 import BackHomeBox from "../../../common/BackHomeBox";
 import ContentLoader from "../../../common/ContentLoader";
 import commonstyles from "../../../styles/commonstyles.module.css";
-import type { Faggruppe } from "../../../types/Faggruppe";
-import { useRequiredLocationState } from "../../../util/navigationUtil";
 import { FAGGRUPPER, ROOT } from "../../../util/paths";
 import KjoreplanTable from "./KjoreplanTable";
 
-type LocationState = {
-	faggruppe?: Faggruppe;
-};
-
 const KjoreplanPage = () => {
 	const { faggruppe: faggruppeParam } = useParams();
-	const { faggruppe } =
-		useRequiredLocationState<LocationState>(FAGGRUPPER) || {};
 
 	const { data, error, isLoading } = useGetKjoreplaner({
 		faggruppe: faggruppeParam || "",
 	});
 
-	if (!faggruppe) {
-		return null;
-	}
+	if (!faggruppeParam) return <Navigate to={FAGGRUPPER} replace />;
 
 	if (isLoading) return <ContentLoader />;
 
@@ -44,7 +34,7 @@ const KjoreplanPage = () => {
 					breadcrumbs={[
 						{ label: "Faste data", to: ROOT },
 						{ label: "Faggrupper", to: FAGGRUPPER },
-						{ label: `Kjøreplaner for ${faggruppe.kodeFaggruppe}` },
+						{ label: `Kjøreplaner for ${faggruppeParam}` },
 					]}
 				/>
 
