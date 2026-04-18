@@ -5,6 +5,7 @@ import { useGetKlassekoder } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { parseCommaSeparated } from "../../util/navigationUtil";
 import { type FilterKey } from "./fieldConfig";
 import { filterKlassekoder, getAvailableOptions } from "./filterKlassekoder";
 import KlassekoderFilter from "./KlassekoderFilter";
@@ -18,32 +19,27 @@ const filterKeyToUrlParam: Record<FilterKey, string> = {
 	fagomraade: "fagomraade",
 };
 
-const readUrlParam = (urlParameters: URLSearchParams, paramName: string) => {
-	const val = urlParameters.get(paramName);
-	if (!val) return [];
-	return val
-		.split(",")
-		.map((s) => s.trim())
-		.filter(Boolean);
-};
-
 export const KlassekoderPage = () => {
 	const { data, error, isLoading } = useGetKlassekoder();
 	const [urlParameters, setUrlParameters] = useSearchParams();
 
 	const [filters, setFilters] = useState(() => {
 		return {
-			klassekoder: readUrlParam(urlParameters, filterKeyToUrlParam.klassekoder),
-			hovedkontoNr: readUrlParam(
-				urlParameters,
-				filterKeyToUrlParam.hovedkontoNr,
+			klassekoder: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.klassekoder) ?? undefined,
 			),
-			underkontoNr: readUrlParam(
-				urlParameters,
-				filterKeyToUrlParam.underkontoNr,
+			hovedkontoNr: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.hovedkontoNr) ?? undefined,
 			),
-			artID: readUrlParam(urlParameters, filterKeyToUrlParam.artID),
-			fagomraade: readUrlParam(urlParameters, filterKeyToUrlParam.fagomraade),
+			underkontoNr: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.underkontoNr) ?? undefined,
+			),
+			artID: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.artID) ?? undefined,
+			),
+			fagomraade: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.fagomraade) ?? undefined,
+			),
 		};
 	});
 

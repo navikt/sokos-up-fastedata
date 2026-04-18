@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { filterByNormalizedTerms } from "./filterUtil";
+import { parseCommaSeparated } from "./navigationUtil";
 
 /**
  * Custom hook for simple list filtering with URL parameter synchronization.
@@ -29,12 +30,7 @@ export function useSimpleFilter<T>(
 	const [urlParameters, setUrlParameters] = useSearchParams();
 
 	const [filters, setFilters] = useState(() => {
-		const urlParam = urlParameters.get(urlParamName);
-		if (!urlParam) return [];
-		return urlParam
-			.split(",")
-			.map((s) => s.trim())
-			.filter(Boolean);
+		return parseCommaSeparated(urlParameters.get(urlParamName) ?? undefined);
 	});
 
 	const handleFiltersChange = (newFilters: string[]) => {
