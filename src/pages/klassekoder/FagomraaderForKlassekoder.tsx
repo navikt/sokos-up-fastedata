@@ -1,29 +1,27 @@
 import { useMemo } from "react";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
+import { useGetKlassekoder } from "../../api/apiService";
+import ContentLoader from "../../common/ContentLoader";
 import FagomraaderDetaljer from "../../common/FagomraaderDetaljer";
-import type { Klassekoder } from "../../types/Klassekoder";
-import {
-	parseCommaSeparated,
-	useRequiredLocationState,
-} from "../../util/navigationUtil";
 import { KLASSEKODER, ROOT } from "../../util/paths";
-
-type LocationState = {
-	klassekode?: Klassekoder;
-};
+import { parseCommaSeparated } from "../../util/navigationUtil";
 
 const FagomraaderForKlassekoder = () => {
 	const { klassekode: klassekodeParam } = useParams<{ klassekode: string }>();
-	const { klassekode } =
-		useRequiredLocationState<LocationState>(KLASSEKODER) || {};
+	const { data: klassekoder, isLoading } = useGetKlassekoder();
+
+	const klassekode = useMemo(() => {
+		if (!klassekoder || !klassekodeParam) return undefined;
+		return klassekoder.find((k) => k.kodeKlasse === klassekodeParam);
+	}, [klassekoder, klassekodeParam]);
 
 	const fagomraaderCodes = useMemo(() => {
 		return parseCommaSeparated(klassekode?.kodeFagomraade);
 	}, [klassekode?.kodeFagomraade]);
 
-	if (!klassekode) {
-		return null;
-	}
+	if (isLoading) return <ContentLoader />;
+	if (!klassekodeParam || !klassekode)
+		return <Navigate to={KLASSEKODER} replace />;
 
 	return (
 		<FagomraaderDetaljer
@@ -36,8 +34,7 @@ const FagomraaderForKlassekoder = () => {
 			descriptionLabel="Fagområder som inneholder Klassekoden:"
 			descriptionValue={klassekode.kodeKlasse}
 			filterPredicate={(fo) => fagomraaderCodes.includes(fo.kodeFagomraade)}
-			stateValue={{ fromKlassekode: klassekode.kodeKlasse }}
-			emptyMessage={`Ingen fagområder registrert for ${klassekodeParam ?? "denne klassekoden"}.`}
+			emptyMessage={`Ingen fagområder registrert for ${klassekodeParam}.`}
 		/>
 	);
 };
