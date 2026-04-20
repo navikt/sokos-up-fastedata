@@ -12,3 +12,8 @@
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 1rem;
 }
+
+.compact-card-grid {
+	grid-template-columns: repeat(auto-fit, minmax(300px, 348px));
+	justify-content: start;
+}
