@@ -9,12 +9,14 @@ interface KlassekoderFilterProps {
 	options: Record<FilterKey, string[]>;
 	activeFilters: Record<FilterKey, string[]>;
 	onFiltersChange: (field: FilterKey, values: string[]) => void;
+	onResetAllFilters: () => void;
 }
 
 const KlassekoderFilter = ({
 	options,
 	activeFilters,
 	onFiltersChange,
+	onResetAllFilters,
 }: KlassekoderFilterProps) => {
 	const handleAdd = (field: FilterKey, value: string) => {
 		if (field === "artID" && Number.isNaN(Number(value))) return;
@@ -31,9 +33,7 @@ const KlassekoderFilter = ({
 	};
 
 	const handleResetFilters = () => {
-		klassekoderFields.forEach(({ key }) => {
-			onFiltersChange(key, []);
-		});
+		onResetAllFilters();
 	};
 
 	const labelPrefix = (key: FilterKey) => {

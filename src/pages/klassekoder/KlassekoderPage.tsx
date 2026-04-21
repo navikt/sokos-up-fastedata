@@ -52,7 +52,20 @@ export const KlassekoderPage = () => {
 				} else {
 					next.set(urlKey, values.join(","));
 				}
-				// Reset page when filters change
+				next.delete("side");
+				return next;
+			},
+			{ replace: true },
+		);
+	};
+
+	const handleResetAllFilters = () => {
+		setSearchParams(
+			(prev) => {
+				const next = new URLSearchParams(prev);
+				for (const urlKey of Object.values(FILTER_URL_KEYS)) {
+					next.delete(urlKey);
+				}
 				next.delete("side");
 				return next;
 			},
@@ -90,6 +103,7 @@ export const KlassekoderPage = () => {
 						options={availableOptions}
 						activeFilters={filters}
 						onFiltersChange={handleFilterChange}
+						onResetAllFilters={handleResetAllFilters}
 					/>
 				)}
 
