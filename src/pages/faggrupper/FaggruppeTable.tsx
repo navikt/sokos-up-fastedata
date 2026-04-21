@@ -1,5 +1,4 @@
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import { useState } from "react";
 import { generatePath, Link as RouterLink } from "react-router";
 import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
@@ -9,11 +8,8 @@ import {
 	FAGGRUPPER_FAGOMRAADER,
 	FAGGRUPPER_KJOREPLANER,
 } from "../../util/paths";
-import type { SortState } from "../../util/sortUtil";
-import {
-	createSortChangeHandler,
-	useTablePagination,
-} from "../../util/tableUtil";
+import { useTablePagination } from "../../util/tableUtil";
+import { useUrlSort } from "../../util/useUrlSort";
 import FaggrupperExpandableSection from "./FaggrupperExpandableSection";
 import RedusertSkattModal from "./RedusertSkattModal";
 
@@ -22,7 +18,7 @@ interface Props {
 }
 
 export const FaggruppeTable = ({ data = [] }: Props) => {
-	const [sort, setSort] = useState<SortState<Faggruppe> | undefined>();
+	const [sort, handleSortChange] = useUrlSort<Faggruppe>();
 
 	const {
 		currentPage,
@@ -38,8 +34,6 @@ export const FaggruppeTable = ({ data = [] }: Props) => {
 		sortState: sort,
 		initialRowsPerPage: 25,
 	});
-
-	const handleSortChange = createSortChangeHandler(setSort);
 
 	return (
 		<>

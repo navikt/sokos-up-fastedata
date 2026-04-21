@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
-import { type SortState, sortData } from "./sortUtil";
+import type { SortState } from "./sortUtil";
+import { sortData } from "./sortUtil";
+import { useUrlNumberParam } from "./useUrlState";
 
 interface UseTablePaginationParams<T> {
 	data: T[];
@@ -27,6 +29,74 @@ export function useTablePagination<T>({
 	sortState,
 	additionalKeyFactors = [],
 }: UseTablePaginationParams<T>): UseTablePaginationReturn<T> {
+	const [currentPage, setCurrentPage] = useUrlNumberParam("side", 1);
+	const [rowsPerPage, setRowsPerPage] = useUrlNumberParam(
+		"rader",
+		initialRowsPerPage,
+	);
+
+	const sortedData = useMemo(() => {
+		return sortState ? sortData(data, sortState) : data;
+	}, [data, sortState]);
+
+	const totalPages = Math.ceil(sortedData.length / rowsPerPage);
+
+	const safePage = currentPage > totalPages ? 1 : currentPage;
+
+	const paginatedData = useMemo(() => {
+		return sortedData.slice(
+			(safePage - 1) * rowsPerPage,
+			safePage * rowsPerPage,
+		);
+	}, [sortedData, safePage, rowsPerPage]);
+
+	const tableKey = useMemo(() => {
+		const baseFactors = [data.length, rowsPerPage];
+		const allFactors = [...baseFactors, ...additionalKeyFactors];
+		return `table-${allFactors.join("-")}`;
+	}, [data.length, rowsPerPage, additionalKeyFactors]);
+
+	const updateRowsPerPage = useCallback(
+		(rows: number) => {
+			setRowsPerPage(rows);
+			setCurrentPage(1);
+		},
+		[setRowsPerPage, setCurrentPage],
+	);
+
+	const handlePageChange = useCallback(
+		(page: number) => {
+			if (page <= totalPages && page >= 1) {
+				setCurrentPage(page);
+			}
+		},
+		[totalPages, setCurrentPage],
+	);
+
+	return {
+		currentPage,
+		rowsPerPage,
+		totalPages,
+		safePage,
+		paginatedData,
+		tableKey,
+		setCurrentPage,
+		setRowsPerPage,
+		updateRowsPerPage,
+		handlePageChange,
+	};
+}
+
+/**
+ * Local (non-URL) table pagination for detail pages where multiple tables
+ * share the same page (e.g. KjoreplanPage with PLAN/AVSL tabs).
+ */
+export function useLocalTablePagination<T>({
+	data,
+	initialRowsPerPage = 25,
+	sortState,
+	additionalKeyFactors = [],
+}: UseTablePaginationParams<T>): UseTablePaginationReturn<T> {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 
@@ -35,7 +105,6 @@ export function useTablePagination<T>({
 	}, [data, sortState]);
 
 	const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-
 	const safePage = currentPage > totalPages ? 1 : currentPage;
 
 	const paginatedData = useMemo(() => {

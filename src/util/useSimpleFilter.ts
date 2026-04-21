@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useMemo } from "react";
 import { filterByNormalizedTerms } from "./filterUtil";
+import { useUrlArrayParam } from "./useUrlState";
 
 /**
- * Custom hook for simple list filtering with URL parameter synchronization.
+ * Custom hook for simple list filtering with URL parameter as source of truth.
  *
  * @param data - The data array to filter
  * @param urlParamName - The URL parameter name to sync with
@@ -11,14 +11,10 @@ import { filterByNormalizedTerms } from "./filterUtil";
  * @returns Object containing filters, filteredData, and handleFiltersChange
  *
  * @example
- * const searchableTextFn = useCallback(
- *   (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`,
- *   []
- * );
  * const { filters, filteredData, handleFiltersChange } = useSimpleFilter(
  *   data,
  *   "faggruppe",
- *   searchableTextFn
+ *   (item) => `${item.kodeFaggruppe} ${item.navnFaggruppe}`
  * );
  */
 export function useSimpleFilter<T>(
@@ -26,27 +22,12 @@ export function useSimpleFilter<T>(
 	urlParamName: string,
 	searchableTextFn: (item: T) => string,
 ) {
-	const [urlParameters, setUrlParameters] = useSearchParams();
-
-	const [filters, setFilters] = useState(() => {
-		const urlParam = urlParameters.get(urlParamName);
-		if (!urlParam) return [];
-		return [urlParam];
-	});
-
-	const handleFiltersChange = (newFilters: string[]) => {
-		setFilters(newFilters);
-		if (newFilters.length === 0) {
-			const newUrlParams = new URLSearchParams(urlParameters);
-			newUrlParams.delete(urlParamName);
-			setUrlParameters(newUrlParams, { replace: true });
-		}
-	};
+	const [filters, setFilters] = useUrlArrayParam(urlParamName);
 
 	const filteredData = useMemo(() => {
 		if (!data) return [];
 		return filterByNormalizedTerms<T>(data, filters, searchableTextFn);
 	}, [data, filters, searchableTextFn]);
 
-	return { filters, filteredData, handleFiltersChange };
+	return { filters, filteredData, handleFiltersChange: setFilters };
 }

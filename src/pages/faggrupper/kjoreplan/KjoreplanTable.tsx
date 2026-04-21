@@ -7,7 +7,7 @@ import { formatDate } from "../../../util/dateUtil";
 import type { SortState } from "../../../util/sortUtil";
 import {
 	createSortChangeHandler,
-	useTablePagination,
+	useLocalTablePagination,
 } from "../../../util/tableUtil";
 
 interface Props {
@@ -27,7 +27,7 @@ export const KjoreplanTable = ({ past, data = [] }: Props) => {
 		updateRowsPerPage,
 		handlePageChange,
 		rowsPerPage,
-	} = useTablePagination({
+	} = useLocalTablePagination({
 		data,
 		sortState: sort,
 	});
