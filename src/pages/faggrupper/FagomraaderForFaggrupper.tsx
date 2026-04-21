@@ -1,21 +1,22 @@
-import { useParams } from "react-router";
+import { useMemo } from "react";
+import { Navigate, useParams } from "react-router";
+import { useGetFaggrupper } from "../../api/apiService";
+import ContentLoader from "../../common/ContentLoader";
 import FagomraaderDetaljer from "../../common/FagomraaderDetaljer";
-import type { Faggruppe } from "../../types/Faggruppe";
-import { useRequiredLocationState } from "../../util/navigationUtil";
 import { FAGGRUPPER, ROOT } from "../../util/paths";
-
-type LocationState = {
-	faggruppe?: Faggruppe;
-};
 
 const FagomraaderForFaggrupper = () => {
 	const { faggruppe: faggruppeParam } = useParams<{ faggruppe: string }>();
-	const { faggruppe } =
-		useRequiredLocationState<LocationState>(FAGGRUPPER) || {};
+	const { data: faggrupper, isLoading } = useGetFaggrupper();
 
-	if (!faggruppe) {
-		return null;
-	}
+	const faggruppe = useMemo(() => {
+		if (!faggrupper || !faggruppeParam) return undefined;
+		return faggrupper.find((f) => f.kodeFaggruppe === faggruppeParam);
+	}, [faggrupper, faggruppeParam]);
+
+	if (isLoading) return <ContentLoader />;
+	if (!faggruppeParam || !faggruppe)
+		return <Navigate to={FAGGRUPPER} replace />;
 
 	return (
 		<FagomraaderDetaljer
@@ -28,8 +29,7 @@ const FagomraaderForFaggrupper = () => {
 			descriptionLabel="Fagområder som tilhører Faggruppen:"
 			descriptionValue={`${faggruppe.kodeFaggruppe} - ${faggruppe.navnFaggruppe}`}
 			filterPredicate={(fo) => fo.kodeFaggruppe === faggruppe.kodeFaggruppe}
-			stateValue={{ fromFaggruppe: faggruppe.kodeFaggruppe }}
-			emptyMessage={`Ingen fagområder registrert for ${faggruppeParam ?? "denne faggruppen"}.`}
+			emptyMessage={`Ingen fagområder registrert for ${faggruppeParam}.`}
 		/>
 	);
 };

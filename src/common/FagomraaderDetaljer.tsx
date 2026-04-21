@@ -22,7 +22,6 @@ interface FagomraaderDetaljerProps {
 	descriptionLabel: string;
 	descriptionValue: string;
 	filterPredicate: (fagomraade: Fagomraader) => boolean;
-	stateValue?: Record<string, unknown>;
 	emptyMessage: string;
 }
 
@@ -32,7 +31,6 @@ const FagomraaderDetaljer = ({
 	descriptionLabel,
 	descriptionValue,
 	filterPredicate,
-	stateValue,
 	emptyMessage,
 }: FagomraaderDetaljerProps) => {
 	const { data: allFagomraader, error, isLoading } = useGetFagomraader();
@@ -111,7 +109,6 @@ const FagomraaderDetaljer = ({
 										<Link
 											as={RouterLink}
 											to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
-											state={stateValue}
 										>
 											{fagomraade.kodeFagomraade}
 										</Link>
