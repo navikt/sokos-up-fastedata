@@ -43,7 +43,7 @@ export const FagomraaderPage = () => {
 				{error ? (
 					<Alert variant="error">Nettverksfeil</Alert>
 				) : filteredData.length > 0 ? (
-					<FagomraaderTable key={filters.join(",")} data={filteredData} />
+					<FagomraaderTable data={filteredData} />
 				) : (
 					<Alert variant="info">Ingen data tilgjengelig</Alert>
 				)}

@@ -1,22 +1,16 @@
 import { Pagination, Table } from "@navikt/ds-react";
-import { useState } from "react";
 import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Ventestatuskoder } from "../../types/Ventestatuskoder";
-import type { SortState } from "../../util/sortUtil";
-import {
-	createSortChangeHandler,
-	useTablePagination,
-} from "../../util/tableUtil";
+import { useTablePagination } from "../../util/tableUtil";
+import { useUrlSort } from "../../util/useUrlSort";
 
 type Props = {
 	data?: Ventestatuskoder[];
 };
 
 const VentestatuskoderTable = ({ data = [] }: Props) => {
-	const [sortState, setSortState] = useState<
-		SortState<Ventestatuskoder> | undefined
-	>();
+	const [sortState, handleSortChange] = useUrlSort<Ventestatuskoder>();
 
 	const {
 		currentPage,
@@ -31,8 +25,6 @@ const VentestatuskoderTable = ({ data = [] }: Props) => {
 		data,
 		sortState,
 	});
-
-	const handleSortChange = createSortChangeHandler(setSortState);
 
 	return (
 		<>

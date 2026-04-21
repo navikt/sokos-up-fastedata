@@ -43,7 +43,7 @@ export const FaggrupperPage = () => {
 				{error ? (
 					<Alert variant="error">Nettverksfeil</Alert>
 				) : filteredData.length > 0 ? (
-					<FaggruppeTable key={filters.join(",")} data={filteredData} />
+					<FaggruppeTable data={filteredData} />
 				) : (
 					<Alert variant="info">Ingen data tilgjengelig</Alert>
 				)}

@@ -1,15 +1,13 @@
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { generatePath, Link as RouterLink } from "react-router";
 import RowsPerPageSelector from "../../common/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Klassekoder } from "../../types/Klassekoder";
 import { KLASSEKODER_FAGOMRAADER } from "../../util/paths";
-import type { SortState } from "../../util/sortUtil";
-import {
-	createSortChangeHandler,
-	useTablePagination,
-} from "../../util/tableUtil";
+import { useTablePagination } from "../../util/tableUtil";
+import { useUrlSort } from "../../util/useUrlSort";
+import { useUrlBooleanParam } from "../../util/useUrlState";
 import HistoricalDataToggle from "./HistoricalDataToggle";
 import HoverInfoCell from "./HoverInfoCell";
 
@@ -18,8 +16,8 @@ interface Props {
 }
 
 export const KlassekoderTable = ({ data = [] }: Props) => {
-	const [sort, setSort] = useState<SortState<Klassekoder> | undefined>();
-	const [showHistorical, setShowHistorical] = useState(false);
+	const [sort, handleSortChange] = useUrlSort<Klassekoder>();
+	const [showHistorical, setShowHistorical] = useUrlBooleanParam("historisk");
 
 	const filteredData = useMemo(() => {
 		if (showHistorical) return data;
@@ -43,8 +41,6 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 		sortState: sort,
 		additionalKeyFactors: [showHistorical],
 	});
-
-	const handleSortChange = createSortChangeHandler(setSort);
 
 	return (
 		<>
