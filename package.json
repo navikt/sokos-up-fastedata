@@ -22,27 +22,27 @@
 		"@navikt/ds-react": "7.39.0",
 		"axios": "1.15.0",
 		"dayjs": "1.11.20",
-		"react": "19.2.4",
-		"react-dom": "19.2.4",
-		"react-router": "7.13.2",
+		"react": "19.2.5",
+		"react-dom": "19.2.5",
+		"react-router": "7.14.1",
 		"swr": "2.4.1",
 		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.8",
+		"@biomejs/biome": "2.4.11",
 		"@navikt/aksel-stylelint": "7.39.0",
-		"@playwright/test": "1.58.2",
+		"@playwright/test": "1.59.1",
 		"@rollup/plugin-terser": "1.0.0",
-		"@types/node": "25.5.0",
+		"@types/node": "25.6.0",
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
 		"@vitejs/plugin-react": "5.2.0",
-		"autoprefixer": "10.4.27",
+		"autoprefixer": "10.5.0",
 		"husky": "9.1.7",
 		"jsdom": "28.1.0",
 		"lint-staged": "16.4.0",
-		"msw": "2.12.14",
-		"postcss": "8.5.8",
+		"msw": "2.13.3",
+		"postcss": "8.5.9",
 		"stylelint": "16.26.1",
 		"stylelint-config-standard": "39.0.1",
 		"typescript": "6.0.2",
@@ -83,9 +83,7 @@
 	},
 	"pnpm": {
 		"overrides": {
-			"flatted": ">=3.4.2",
-			"picomatch": ">=4.0.4",
-			"undici": ">=7.24.0"
+			"protobufjs": "8.0.1"
 		}
 	}
 }
