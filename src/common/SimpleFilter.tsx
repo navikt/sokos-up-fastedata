@@ -43,9 +43,7 @@ const SimpleFilter = <T,>({
 	}, [allOptions, getOptionCode]);
 
 	const selectedOptions = useMemo(() => {
-		return activeFilters
-			.map((code) => codeToOption.get(code))
-			.filter((opt): opt is string => opt !== undefined);
+		return activeFilters.map((code) => codeToOption.get(code) ?? code);
 	}, [activeFilters, codeToOption]);
 
 	const handleAdd = (value: string) => {

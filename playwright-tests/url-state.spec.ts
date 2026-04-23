@@ -5,7 +5,7 @@ test.describe("URL state persistence", () => {
 		page,
 	}) => {
 		await page.goto("/fastedata/fagomraader");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		const input = page.getByLabel("Filtrer på fagområdekode og navn");
 		await input.fill("AAP");
@@ -16,9 +16,8 @@ test.describe("URL state persistence", () => {
 
 		// Reload and verify filter is restored
 		await page.reload();
-		await page.waitForLoadState("networkidle");
-
 		const table = page.getByRole("table");
+		await expect(table).toBeVisible();
 		await expect(
 			table.getByRole("cell", { name: "AAP", exact: true }),
 		).toBeVisible();
@@ -28,7 +27,7 @@ test.describe("URL state persistence", () => {
 		page,
 	}) => {
 		await page.goto("/fastedata/faggrupper");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		const input = page.getByLabel("Filtrer på faggruppekode og navn");
 		await input.fill("BARNBRIL");
@@ -37,15 +36,14 @@ test.describe("URL state persistence", () => {
 		await expect(page).toHaveURL(/faggruppe=BARNBRIL/);
 
 		await page.reload();
-		await page.waitForLoadState("networkidle");
-
 		const table = page.getByRole("table");
+		await expect(table).toBeVisible();
 		await expect(table.getByRole("cell", { name: "BARNBRIL" })).toBeVisible();
 	});
 
 	test("sort state persists in URL", async ({ page }) => {
 		await page.goto("/fastedata/ventestatuskoder");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		// Sort by clicking the sort button in the column header
 		await page
@@ -56,13 +54,13 @@ test.describe("URL state persistence", () => {
 
 		// Reload and verify sort param persists
 		await page.reload();
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 		await expect(page).toHaveURL(/sort=kodeVentestatus/);
 	});
 
 	test("klassekoder filters persist in URL across reload", async ({ page }) => {
 		await page.goto("/fastedata/klassekoder");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		const klassekodeinput = page.getByLabel("Klassekode");
 		await klassekodeinput.fill("VALUTAG");
@@ -71,9 +69,9 @@ test.describe("URL state persistence", () => {
 		await expect(page).toHaveURL(/klassekode=VALUTAGEVINST/);
 
 		await page.reload();
-		await page.waitForLoadState("networkidle");
-
 		const table = page.getByRole("table");
+		await expect(table).toBeVisible();
+
 		await expect(
 			table.getByRole("cell", { name: "VALUTAGEVINST" }),
 		).toBeVisible();
@@ -86,7 +84,7 @@ test.describe("URL state persistence", () => {
 
 	test("klassekoder historical toggle persists in URL", async ({ page }) => {
 		await page.goto("/fastedata/klassekoder");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		// Toggle historical data on
 		await page.getByLabel("Vis historiske data").click();
@@ -94,7 +92,7 @@ test.describe("URL state persistence", () => {
 
 		// Reload and verify toggle is still on
 		await page.reload();
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 		await expect(page.getByLabel("Vis historiske data")).toBeChecked();
 	});
 
@@ -102,7 +100,7 @@ test.describe("URL state persistence", () => {
 		page,
 	}) => {
 		await page.goto("/fastedata/fagomraader");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		// Filter to MSKATT which has klassekodeFinnes=true
 		const input = page.getByLabel("Filtrer på fagområdekode og navn");
@@ -114,7 +112,7 @@ test.describe("URL state persistence", () => {
 			.getByRole("row", { name: /MSKATT/ })
 			.getByRole("link", { name: "Klassekode" })
 			.click();
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		// Should arrive at klassekoder page with fagomraade param
 		await expect(page).toHaveURL(/klassekoder.*fagomraade=MSKATT/);
@@ -122,7 +120,7 @@ test.describe("URL state persistence", () => {
 
 	test("removing all filters clears URL params", async ({ page }) => {
 		await page.goto("/fastedata/fagomraader?fagomraade=AAP");
-		await page.waitForLoadState("networkidle");
+		await expect(page.getByRole("table")).toBeVisible();
 
 		// Remove the filter chip
 		await page.getByRole("button", { name: /AAP/ }).click();
