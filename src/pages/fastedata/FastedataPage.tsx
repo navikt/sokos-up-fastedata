@@ -22,11 +22,7 @@ export default function FastedataPage() {
 							{section.title}
 						</Heading>
 
-						<div
-							className={`${styles["card-grid"]} ${
-								section.title === "Trekk" ? styles["compact-card-grid"] : ""
-							}`}
-						>
+						<div className={styles["card-grid"]}>
 							{section.routes.map((app) => (
 								<AppCard
 									key={app.title}
