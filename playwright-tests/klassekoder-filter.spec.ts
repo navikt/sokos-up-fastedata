@@ -48,7 +48,9 @@ test.describe("Klassekode filter", () => {
 		await underkontoinput.fill("8900");
 		await page.getByRole("option", { name: "8900" }).click();
 
-		const fagomraadeinput = page.getByLabel("Fagområde");
+		const fagomraadeinput = page.getByRole("combobox", {
+			name: "Fagområde",
+		});
 		await fagomraadeinput.fill("MPENBAL");
 		await page.getByRole("option", { name: "MPENBAL" }).click();
 

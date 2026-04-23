@@ -44,7 +44,7 @@ export function useTablePagination<T>({
 }: UseTablePaginationParams<T>): UseTablePaginationReturn<T> {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const currentPage = parsePositiveInt(searchParams, "side", 1);
+	const rawPage = parsePositiveInt(searchParams, "side", 1);
 	const rawRows = parsePositiveInt(searchParams, "rader", initialRowsPerPage);
 	const rowsPerPage = VALID_PAGE_SIZES.includes(rawRows)
 		? rawRows
@@ -55,7 +55,8 @@ export function useTablePagination<T>({
 	}, [data, sortState]);
 
 	const totalPages = Math.max(1, Math.ceil(sortedData.length / rowsPerPage));
-	const safePage = currentPage > totalPages ? 1 : currentPage;
+	const safePage = rawPage > totalPages ? 1 : rawPage;
+	const currentPage = safePage;
 
 	const paginatedData = useMemo(() => {
 		return sortedData.slice(
@@ -158,7 +159,7 @@ export function useLocalTablePagination<T>({
 	sortState,
 	additionalKeyFactors = [],
 }: UseTablePaginationParams<T>): UseTablePaginationReturn<T> {
-	const [currentPage, setCurrentPage] = useState(1);
+	const [rawPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
 
 	const sortedData = useMemo(() => {
@@ -166,7 +167,8 @@ export function useLocalTablePagination<T>({
 	}, [data, sortState]);
 
 	const totalPages = Math.ceil(sortedData.length / rowsPerPage);
-	const safePage = currentPage > totalPages ? 1 : currentPage;
+	const safePage = rawPage > totalPages ? 1 : rawPage;
+	const currentPage = safePage;
 
 	const paginatedData = useMemo(() => {
 		return sortedData.slice(
