@@ -54,7 +54,7 @@ const TrekkgrupperTable = ({ data = [] }: Props) => {
 				<Table.Header>
 					<Table.Row>
 						<Table.ColumnHeader sortable sortKey="kodeTrekkgruppe">
-							Trekkgrupper
+							Trekkgruppe
 						</Table.ColumnHeader>
 						<Table.ColumnHeader sortable sortKey="kodeFagomraade">
 							Fagområde
