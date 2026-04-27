@@ -1,8 +1,14 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
-import { Button, Chips, TextField } from "@navikt/ds-react";
+import { Button, Chips, UNSAFE_Combobox } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
+import styles from "./TrekkgrupperPage.module.css";
+
+type ComboboxOption = {
+	label: string;
+	value: string;
+};
 
 export interface TrekkgrupperFilterOption {
 	displayLabel: string;
@@ -22,9 +28,8 @@ const TrekkgrupperFilter = ({
 	onFilterChange,
 }: TrekkgrupperFilterProps) => {
 	const [inputValue, setInputValue] = useState("");
-	const [isOpen, setIsOpen] = useState(false);
 
-	const options = useMemo(() => {
+	const options = useMemo<TrekkgrupperFilterOption[]>(() => {
 		const trekkgruppeOptions: TrekkgrupperFilterOption[] = Array.from(
 			new Set(data.map((item) => item.kodeTrekkgruppe)),
 		)
@@ -48,73 +53,78 @@ const TrekkgrupperFilter = ({
 		return [...trekkgruppeOptions, ...fagomraadeOptions];
 	}, [data]);
 
-	const filteredOptions = useMemo(() => {
+	const comboboxOptions = useMemo<ComboboxOption[]>(
+		() =>
+			options.map((option) => ({
+				label: option.displayLabel,
+				value: `${option.type}:${option.value}`,
+			})),
+		[options],
+	);
+
+	const filteredOptions = useMemo<ComboboxOption[]>(() => {
 		const normalizedSearch = inputValue.trim().toLowerCase();
 
 		if (!normalizedSearch) {
-			return options;
+			return comboboxOptions;
 		}
 
-		return options.filter((option) =>
-			option.value.toLowerCase().includes(normalizedSearch),
-		);
-	}, [inputValue, options]);
+		return comboboxOptions.filter((option) => {
+			const [, codeValue] = option.value.split(":");
+			return codeValue.toLowerCase().includes(normalizedSearch);
+		});
+	}, [comboboxOptions, inputValue]);
 
-	const handleSelect = (option: TrekkgrupperFilterOption) => {
-		onFilterChange(option);
-		setInputValue("");
-		setIsOpen(false);
+	const selectedComboboxOptions = selectedOption
+		? [
+				{
+					label: selectedOption.displayLabel,
+					value: `${selectedOption.type}:${selectedOption.value}`,
+				},
+			]
+		: [];
+
+	const handleToggleSelected = (optionValue: string, isSelected: boolean) => {
+		if (!isSelected) {
+			onFilterChange(null);
+			return;
+		}
+
+		const [type, value] = optionValue.split(":");
+		const option = options.find(
+			(item) => item.type === type && item.value === value,
+		);
+
+		if (option) {
+			onFilterChange(option);
+			setInputValue("");
+		}
 	};
 
 	const handleReset = () => {
 		onFilterChange(null);
 		setInputValue("");
-		setIsOpen(false);
 	};
 
 	return (
-		<div className={commonStyles["filter-container"]}>
+		<div
+			className={`${commonStyles["filter-container"]} ${styles["filter-no-highlight"]}`}
+		>
 			<div className={commonStyles["search-bar-group"]}>
 				<div
 					className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}
 				>
-					<TextField
+					<UNSAFE_Combobox
 						size="small"
 						label="Filtrer på trekkgruppe eller fagområde"
+						options={comboboxOptions}
+						filteredOptions={filteredOptions}
+						selectedOptions={selectedComboboxOptions}
 						value={inputValue}
-						autoComplete="off"
-						onFocus={() => setIsOpen(true)}
-						onChange={(event) => {
-							setInputValue(event.target.value);
-							setIsOpen(true);
-						}}
-						onBlur={() => {
-							window.setTimeout(() => setIsOpen(false), 100);
-						}}
+						onChange={setInputValue}
+						onToggleSelected={handleToggleSelected}
+						shouldShowSelectedOptions={false}
 					/>
-
-					{isOpen && (
-						<ul className={commonStyles["suggestions-list"]}>
-							{filteredOptions.length > 0 ? (
-								filteredOptions.map((option) => (
-									<li key={`${option.type}-${option.value}`}>
-										<button
-											type="button"
-											className={commonStyles["suggestion-item"]}
-											onMouseDown={(event) => {
-												event.preventDefault();
-												handleSelect(option);
-											}}
-										>
-											{option.displayLabel}
-										</button>
-									</li>
-								))
-							) : (
-								<li className={commonStyles["no-results"]}>Ingen treff</li>
-							)}
-						</ul>
-					)}
 				</div>
 			</div>
 

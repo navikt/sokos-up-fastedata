@@ -26,7 +26,6 @@ export const TrekkgrupperPage = () => {
 
 			if (filterType === "trekkgruppe") {
 				return {
-					label: filterValue,
 					displayLabel: `Trekkgruppe: ${filterValue}`,
 					type: "trekkgruppe",
 					value: filterValue,
@@ -35,7 +34,6 @@ export const TrekkgrupperPage = () => {
 
 			if (filterType === "fagomraade") {
 				return {
-					label: filterValue,
 					displayLabel: `Fagområde: ${filterValue}`,
 					type: "fagomraade",
 					value: filterValue,
