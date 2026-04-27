@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips, UNSAFE_Combobox } from "@navikt/ds-react";
-import { useMemo, useState } from "react";
+import { type KeyboardEventHandler, useMemo, useState } from "react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
 import styles from "./TrekkgrupperPage.module.css";
@@ -28,6 +28,7 @@ const TrekkgrupperFilter = ({
 	onFilterChange,
 }: TrekkgrupperFilterProps) => {
 	const [inputValue, setInputValue] = useState("");
+	const [comboboxKey, setComboboxKey] = useState(0);
 
 	const options = useMemo<TrekkgrupperFilterOption[]>(() => {
 		const trekkgruppeOptions: TrekkgrupperFilterOption[] = Array.from(
@@ -98,6 +99,7 @@ const TrekkgrupperFilter = ({
 		if (option) {
 			onFilterChange(option);
 			setInputValue("");
+			setComboboxKey((currentKey) => currentKey + 1);
 		}
 	};
 
@@ -106,15 +108,29 @@ const TrekkgrupperFilter = ({
 		setInputValue("");
 	};
 
+	const handleKeyDownCapture: KeyboardEventHandler<HTMLDivElement> = (
+		event,
+	) => {
+		if (event.key !== "Enter" || filteredOptions.length === 0) {
+			return;
+		}
+
+		event.preventDefault();
+		event.stopPropagation();
+		handleToggleSelected(filteredOptions[0].value, true);
+	};
+
 	return (
 		<div
 			className={`${commonStyles["filter-container"]} ${styles["filter-no-highlight"]}`}
+			onKeyDownCapture={handleKeyDownCapture}
 		>
 			<div className={commonStyles["search-bar-group"]}>
 				<div
 					className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}
 				>
 					<UNSAFE_Combobox
+						key={comboboxKey}
 						size="small"
 						label="Filtrer på trekkgruppe eller fagområde"
 						options={comboboxOptions}
