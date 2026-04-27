@@ -2,7 +2,7 @@ import { Heading } from "@navikt/ds-react";
 import commonstyles from "../../styles/commonstyles.module.css";
 import AppCard from "./AppCard";
 import styles from "./Fastedata.module.css";
-import { routes } from "./routes";
+import { routeSections } from "./routes";
 
 export default function FastedataPage() {
 	return (
@@ -16,20 +16,24 @@ export default function FastedataPage() {
 				>
 					Faste data
 				</Heading>
-				<Heading level="2" size="small" spacing>
-					Oppdrag
-				</Heading>
+				{routeSections.map((section) => (
+					<div key={section.title} className={styles.section}>
+						<Heading level="2" size="small" spacing>
+							{section.title}
+						</Heading>
 
-				<div className={styles["card-grid"]}>
-					{routes.map((app) => (
-						<AppCard
-							key={app.title}
-							title={app.title}
-							description={app.description}
-							route={app.route}
-						/>
-					))}
-				</div>
+						<div className={styles["card-grid"]}>
+							{section.routes.map((app) => (
+								<AppCard
+									key={app.title}
+									title={app.title}
+									description={app.description}
+									route={app.route}
+								/>
+							))}
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	);

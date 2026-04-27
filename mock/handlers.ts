@@ -10,6 +10,7 @@ import {
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { redusertSkatt } from "./data/redusertSkatt";
+import { trekkgrupper } from "./data/trekkgrupper";
 import { ventekriterierList } from "./data/ventekriterier";
 import { ventestatuskoderList } from "./data/ventestatuskoder";
 
@@ -26,6 +27,9 @@ export const handlers = [
 	}),
 	http.get(ventestatuskoderUrl, () => {
 		return HttpResponse.json(ventestatuskoderList, { status: 200 });
+	}),
+	http.get(`${baseUrl}/trekkgrupper`, () => {
+		return HttpResponse.json(trekkgrupper, { status: 200 });
 	}),
 	http.get(fagomraaderUrl, () => {
 		return HttpResponse.json(fagomraaderList, { status: 200 });
