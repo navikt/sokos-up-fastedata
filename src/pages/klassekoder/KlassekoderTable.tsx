@@ -114,7 +114,6 @@ export const KlassekoderTable = ({ data = [] }: Props) => {
 										to={generatePath(KLASSEKODER_FAGOMRAADER, {
 											klassekode: row.kodeKlasse,
 										})}
-										state={{ klassekode: row }}
 									>
 										Fagområder
 									</Link>

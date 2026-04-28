@@ -5,22 +5,41 @@ import { useGetKlassekoder } from "../../api/apiService";
 import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
 import commonstyles from "../../styles/commonstyles.module.css";
+import { parseCommaSeparated } from "../../util/navigationUtil";
+import { type FilterKey } from "./fieldConfig";
 import { filterKlassekoder, getAvailableOptions } from "./filterKlassekoder";
 import KlassekoderFilter from "./KlassekoderFilter";
 import KlassekoderTable from "./KlassekoderTable";
+
+const filterKeyToUrlParam: Record<FilterKey, string> = {
+	klassekoder: "klassekode",
+	hovedkontoNr: "hovedkonto",
+	underkontoNr: "underkonto",
+	artID: "artid",
+	fagomraade: "fagomraade",
+};
 
 export const KlassekoderPage = () => {
 	const { data, error, isLoading } = useGetKlassekoder();
 	const [urlParameters, setUrlParameters] = useSearchParams();
 
 	const [filters, setFilters] = useState(() => {
-		const fagomraadeUrlParam = urlParameters.get("fagomraade");
 		return {
-			klassekoder: [] as string[],
-			hovedkontoNr: [] as string[],
-			underkontoNr: [] as string[],
-			artID: [] as string[],
-			fagomraade: fagomraadeUrlParam ? [fagomraadeUrlParam] : ([] as string[]),
+			klassekoder: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.klassekoder) ?? undefined,
+			),
+			hovedkontoNr: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.hovedkontoNr) ?? undefined,
+			),
+			underkontoNr: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.underkontoNr) ?? undefined,
+			),
+			artID: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.artID) ?? undefined,
+			),
+			fagomraade: parseCommaSeparated(
+				urlParameters.get(filterKeyToUrlParam.fagomraade) ?? undefined,
+			),
 		};
 	});
 
@@ -33,11 +52,14 @@ export const KlassekoderPage = () => {
 			[field]: values,
 		}));
 
-		if (field === "fagomraade" && values.length === 0) {
-			const newUrlParameter = new URLSearchParams(urlParameters);
-			newUrlParameter.delete("fagomraade");
-			setUrlParameters(newUrlParameter, { replace: true });
+		const paramName = filterKeyToUrlParam[field];
+		const newUrlParameter = new URLSearchParams(urlParameters);
+		if (values.length === 0) {
+			newUrlParameter.delete(paramName);
+		} else {
+			newUrlParameter.set(paramName, values.join(","));
 		}
+		setUrlParameters(newUrlParameter, { replace: true });
 	};
 
 	const filteredData = useMemo(() => {
