@@ -5,6 +5,7 @@ export const KLASSEKODER_FAGOMRAADER =
 	"/fastedata/klassekoder/:klassekode/fagomraader";
 export const VENTEKRITERIER = "/fastedata/ventekriterier";
 export const VENTESTATUSKODER = "/fastedata/ventestatuskoder";
+export const TREKKGRUPPER = "/fastedata/trekkgrupper";
 export const FAGOMRAADER = "/fastedata/fagomraader";
 export const FAGGRUPPER = "/fastedata/faggrupper";
 export const FAGGRUPPER_FAGOMRAADER =
