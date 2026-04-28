@@ -1,15 +1,11 @@
 import { Link, Pagination, Table } from "@navikt/ds-react";
-import { useState } from "react";
 import { Link as RouterLink } from "react-router";
 import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Fagomraader } from "../../types/Fagomraader";
 import { KLASSEKODER } from "../../util/paths";
-import type { SortState } from "../../util/sortUtil";
-import {
-	createSortChangeHandler,
-	useTablePagination,
-} from "../../util/tableUtil";
+import { useTablePagination } from "../../util/tableUtil";
+import { useUrlSort } from "../../util/useUrlSort";
 import BilagstypeModal from "./BilagstypeModal";
 import FagomraaderExpandableSection from "./FagomraaderExpandableSection";
 import KorrigeringsarsakModal from "./KorrigeringsarsakModal";
@@ -19,7 +15,7 @@ interface Props {
 }
 
 export const FagomraaderTable = ({ data = [] }: Props) => {
-	const [sort, setSort] = useState<SortState<Fagomraader> | undefined>();
+	const [sort, handleSortChange] = useUrlSort<Fagomraader>();
 
 	const {
 		currentPage,
@@ -34,8 +30,6 @@ export const FagomraaderTable = ({ data = [] }: Props) => {
 		data,
 		sortState: sort,
 	});
-
-	const handleSortChange = createSortChangeHandler(setSort);
 
 	return (
 		<>
