@@ -3,7 +3,6 @@ import { Button, Chips, UNSAFE_Combobox } from "@navikt/ds-react";
 import { type KeyboardEventHandler, useMemo, useState } from "react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
-import styles from "./TrekkgrupperPage.module.css";
 
 type ComboboxOption = {
 	label: string;
@@ -122,7 +121,7 @@ const TrekkgrupperFilter = ({
 
 	return (
 		<div
-			className={`${commonStyles["filter-container"]} ${styles["filter-no-highlight"]}`}
+			className={commonStyles["filter-container"]}
 			onKeyDownCapture={handleKeyDownCapture}
 		>
 			<div className={commonStyles["search-bar-group"]}>
