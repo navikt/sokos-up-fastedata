@@ -37,6 +37,11 @@ export const routeSections = [
 				description: "Oppslag og informasjon",
 				route: "trekkgrupper",
 			},
+			{
+				title: "Trekkregler",
+				description: "Trekktyper, trekkegenskaper og kjøreplaner",
+				route: "trekkregler",
+			},
 		],
 	},
 ];
