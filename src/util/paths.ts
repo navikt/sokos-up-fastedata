@@ -8,7 +8,7 @@ export const VENTESTATUSKODER = "/fastedata/ventestatuskoder";
 export const TREKKGRUPPER = "/fastedata/trekkgrupper";
 export const TREKKREGLER = "/fastedata/trekkregler";
 export const TREKKREGLER_KJOREPLANER =
-	"/fastedata/trekkregler/:oppgjorstype/kjoreplaner";
+	"/fastedata/trekkregler/:kodeTrekktype/kjoreplaner";
 export const FAGOMRAADER = "/fastedata/fagomraader";
 export const FAGGRUPPER = "/fastedata/faggrupper";
 export const FAGGRUPPER_FAGOMRAADER =

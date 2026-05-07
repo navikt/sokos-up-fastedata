@@ -14,12 +14,12 @@ type LocationState = {
 };
 
 const KjoreplanTrekkPage = () => {
-	const { oppgjorstype: oppgjorstypeParam } = useParams();
+	const { kodeTrekktype: kodeTrekktypeParam } = useParams();
 	const { trekkregel } =
 		useRequiredLocationState<LocationState>(TREKKREGLER) || {};
 
 	const { data, error, isLoading } = useGetKjoreplanTrekk({
-		kodeTrekktype: oppgjorstypeParam || "",
+		kodeTrekktype: kodeTrekktypeParam || "",
 	});
 
 	if (!trekkregel) {

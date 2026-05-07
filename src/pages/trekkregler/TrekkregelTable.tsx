@@ -122,7 +122,7 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 									<Link
 										as={RouterLink}
 										to={generatePath(TREKKREGLER_KJOREPLANER, {
-											oppgjorstype: row.kodeOppgjorstype,
+											kodeTrekktype: row.kodeTrekktype,
 										})}
 										state={{ trekkregel: row }}
 									>
