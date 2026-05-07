@@ -94,9 +94,6 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 										<b>Oppgjørstype neg.:</b> {row.kodeOppgjorstypeNeg}
 									</div>
 									<div>
-										<b>Fagområde:</b> {row.kodeFagomraade}
-									</div>
-									<div>
 										<b>Bruker-ID:</b> {row.brukerId}
 									</div>
 									<div>
@@ -121,15 +118,19 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 							<Table.DataCell>{row.kodeKlasseTrekk}</Table.DataCell>
 							<Table.DataCell>{row.typeTrekkberegning ?? "-"}</Table.DataCell>
 							<Table.DataCell>
-								<Link
-									as={RouterLink}
-									to={generatePath(TREKKREGLER_KJOREPLANER, {
-										oppgjorstype: row.kodeOppgjorstype,
-									})}
-									state={{ trekkregel: row }}
-								>
-									Kjøreplan
-								</Link>
+								{row.kodeOppgjorstype ? (
+									<Link
+										as={RouterLink}
+										to={generatePath(TREKKREGLER_KJOREPLANER, {
+											oppgjorstype: row.kodeOppgjorstype,
+										})}
+										state={{ trekkregel: row }}
+									>
+										Kjøreplan
+									</Link>
+								) : (
+									"-"
+								)}
 							</Table.DataCell>
 						</Table.ExpandableRow>
 					))}

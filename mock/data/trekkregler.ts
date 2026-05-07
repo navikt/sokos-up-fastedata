@@ -150,8 +150,8 @@ export const trekkregler: Trekkregel[] = [
 		belopsgrense: 0,
 		oppfolging: "N",
 		kodeBehandling: "BEHA",
-		kodeOppgjorstype: "TILB",
-		kodeOppgjorstypeNeg: "TILN",
+		kodeOppgjorstype: "",
+		kodeOppgjorstypeNeg: "",
 		brukerId: "BATCH",
 	},
 ];
