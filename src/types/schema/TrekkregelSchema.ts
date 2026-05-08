@@ -16,6 +16,7 @@ export const TrekkregelSchema = z.object({
 	kodeOppgjorstype: z.string(),
 	kodeOppgjorstypeNeg: z.string(),
 	brukerId: z.string(),
+	antallKjoreplaner: z.number(),
 });
 
 export const TrekkregelListeSchema = z.array(TrekkregelSchema);

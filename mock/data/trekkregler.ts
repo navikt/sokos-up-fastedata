@@ -17,6 +17,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "BIDR",
 		kodeOppgjorstypeNeg: "BIDN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "BIDRAG",
@@ -34,6 +35,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "BIDR",
 		kodeOppgjorstypeNeg: "BIDN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "SKATT",
@@ -51,6 +53,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "SKAT",
 		kodeOppgjorstypeNeg: "SKTN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "SKATT",
@@ -68,6 +71,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "SKAT",
 		kodeOppgjorstypeNeg: "SKTN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "KRED",
@@ -85,6 +89,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "KRED",
 		kodeOppgjorstypeNeg: "KRDN",
 		brukerId: "SAKSB",
+		antallKjoreplaner: 3,
 	},
 	{
 		kodeTrekktype: "FEIL",
@@ -102,6 +107,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "FEIL",
 		kodeOppgjorstypeNeg: "FELN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "UNDER",
@@ -119,6 +125,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "BIDR",
 		kodeOppgjorstypeNeg: "BIDN",
 		brukerId: "BATCH",
+		antallKjoreplaner: 5,
 	},
 	{
 		kodeTrekktype: "TREKKP",
@@ -136,6 +143,7 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "TREK",
 		kodeOppgjorstypeNeg: "TRKN",
 		brukerId: "SAKSB",
+		antallKjoreplaner: 3,
 	},
 	{
 		kodeTrekktype: "TILBKR",
@@ -153,5 +161,6 @@ export const trekkregler: Trekkregel[] = [
 		kodeOppgjorstype: "",
 		kodeOppgjorstypeNeg: "",
 		brukerId: "BATCH",
+		antallKjoreplaner: 0,
 	},
 ];

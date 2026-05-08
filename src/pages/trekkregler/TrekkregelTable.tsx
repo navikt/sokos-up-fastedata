@@ -118,7 +118,7 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 							<Table.DataCell>{row.kodeKlasseTrekk}</Table.DataCell>
 							<Table.DataCell>{row.typeTrekkberegning ?? "-"}</Table.DataCell>
 							<Table.DataCell>
-								{row.kodeOppgjorstype ? (
+								{row.antallKjoreplaner > 0 ? (
 									<Link
 										as={RouterLink}
 										to={generatePath(TREKKREGLER_KJOREPLANER, {
