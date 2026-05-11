@@ -3,7 +3,7 @@ import type { Trekkregel } from "../../src/types/Trekkregel";
 export const trekkregler: Trekkregel[] = [
 	{
 		kodeTrekktype: "BIDRAG",
-		beskrivelse: "Bidragstrekk",
+		beskrivelse: "Avregning etteroppgjør omstill.stønad",
 		prioritet: 1,
 		reduserSkattegr: "J",
 		kodeKlasseTrekk: "TREBIDRA",

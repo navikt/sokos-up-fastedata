@@ -9,6 +9,14 @@ interface Props {
 const FagomraadeListeModal = ({ kodeTrekktype, fagomraader }: Props) => {
 	const ref = useRef<HTMLDialogElement>(null);
 
+	if (fagomraader.length === 0) {
+		return <span>-</span>;
+	}
+
+	if (fagomraader.length === 1) {
+		return <span>{fagomraader[0]}</span>;
+	}
+
 	return (
 		<div>
 			<Button
@@ -16,7 +24,7 @@ const FagomraadeListeModal = ({ kodeTrekktype, fagomraader }: Props) => {
 				size="xsmall"
 				onClick={() => ref.current?.showModal()}
 			>
-				{fagomraader.length} fagområder
+				Fagområder
 			</Button>
 
 			<Modal

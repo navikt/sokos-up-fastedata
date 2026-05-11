@@ -7,6 +7,7 @@ import commonstyles from "../../styles/commonstyles.module.css";
 import type { TrekkregelFilterKey } from "./fieldConfig";
 import { filterTrekkregler, getAvailableOptions } from "./filterTrekkregler";
 import TrekkregelFilter from "./TrekkregelFilter";
+import styles from "./TrekkregelPage.module.css";
 import TrekkregelTable from "./TrekkregelTable";
 
 export const TrekkregelPage = () => {
@@ -37,7 +38,9 @@ export const TrekkregelPage = () => {
 
 	return (
 		<div className={commonstyles.container}>
-			<div className={commonstyles["content-wrapper"]}>
+			<div
+				className={`${commonstyles["content-wrapper"]} ${styles["content-wrapper"]}`}
+			>
 				<Heading
 					spacing
 					size="medium"
