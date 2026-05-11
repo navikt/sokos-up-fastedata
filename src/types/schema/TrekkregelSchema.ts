@@ -7,7 +7,7 @@ export const TrekkregelSchema = z.object({
 	reduserSkattegr: z.string(),
 	kodeKlasseTrekk: z.string(),
 	typeTrekkberegning: z.string().nullable(),
-	kodeFagomraade: z.string(),
+	fagomraader: z.array(z.string()),
 	antDagerOppf: z.number().nullable(),
 	antDagerOppfUtf: z.number().nullable(),
 	belopsgrense: z.number(),

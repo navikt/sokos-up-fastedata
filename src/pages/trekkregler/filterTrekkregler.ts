@@ -19,7 +19,9 @@ export const filterTrekkregler = (
 		const matchesFagomraade =
 			filters.fagomraade.length === 0 ||
 			filters.fagomraade.some((f) =>
-				item.kodeFagomraade.toLowerCase().includes(f.toLowerCase()),
+				item.fagomraader.some((fo) =>
+					fo.toLowerCase().includes(f.toLowerCase()),
+				),
 			);
 
 		return matchesTrekktype && matchesFagomraade;
@@ -29,6 +31,6 @@ export const filterTrekkregler = (
 export const getAvailableOptions = (data: Trekkregel[]) => {
 	return {
 		trekktype: [...new Set(data.map((item) => item.kodeTrekktype))].sort(),
-		fagomraade: [...new Set(data.map((item) => item.kodeFagomraade))].sort(),
+		fagomraade: [...new Set(data.flatMap((item) => item.fagomraader))].sort(),
 	};
 };

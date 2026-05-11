@@ -10,6 +10,7 @@ import {
 	createSortChangeHandler,
 	useTablePagination,
 } from "../../util/tableUtil";
+import FagomraadeListeModal from "./FagomraadeListeModal";
 
 type Props = {
 	data?: Trekkregel[];
@@ -75,13 +76,14 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 						<Table.ColumnHeader sortable sortKey="typeTrekkberegning">
 							Type trekkberegning
 						</Table.ColumnHeader>
+						<Table.HeaderCell>Fagområder</Table.HeaderCell>
 						<Table.HeaderCell>Kjøreplan</Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
 					{paginatedData.map((row) => (
 						<Table.ExpandableRow
-							key={`${row.kodeTrekktype}-${row.kodeFagomraade}`}
+							key={row.kodeTrekktype}
 							content={
 								<div className={commonstyles["expandable-section-content"]}>
 									<div>
@@ -117,6 +119,12 @@ const TrekkregelTable = ({ data = [] }: Props) => {
 							<Table.DataCell>{row.reduserSkattegr}</Table.DataCell>
 							<Table.DataCell>{row.kodeKlasseTrekk}</Table.DataCell>
 							<Table.DataCell>{row.typeTrekkberegning ?? "-"}</Table.DataCell>
+							<Table.DataCell>
+								<FagomraadeListeModal
+									kodeTrekktype={row.kodeTrekktype}
+									fagomraader={row.fagomraader}
+								/>
+							</Table.DataCell>
 							<Table.DataCell>
 								{row.antallKjoreplaner > 0 ? (
 									<Link
