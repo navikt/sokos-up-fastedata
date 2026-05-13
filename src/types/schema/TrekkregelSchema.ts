@@ -19,4 +19,4 @@ export const TrekkregelSchema = z.object({
 	antallKjoreplaner: z.number(),
 });
 
-export const TrekkregelListeSchema = z.array(TrekkregelSchema);
+export const TrekkreglerListeSchema = z.array(TrekkregelSchema);

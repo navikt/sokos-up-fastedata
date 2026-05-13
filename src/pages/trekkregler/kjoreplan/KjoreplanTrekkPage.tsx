@@ -19,12 +19,16 @@ const KjoreplanTrekkPage = () => {
 		useRequiredLocationState<LocationState>(TREKKREGLER) || {};
 
 	const { data, error, isLoading } = useGetKjoreplanTrekk({
-		kodeTrekktype: kodeTrekktypeParam || "",
+		kodeTrekktype: kodeTrekktypeParam ?? "",
 	});
 
-	if (!trekkregel) {
+	if (!trekkregel || !kodeTrekktypeParam) {
 		return null;
 	}
+
+	const kjoreplanLabel = trekkregel.kodeOppgjorstype
+		? `Kjøreplaner for ${trekkregel.kodeTrekktype} (${trekkregel.kodeOppgjorstype})`
+		: `Kjøreplaner for ${trekkregel.kodeTrekktype}`;
 
 	if (isLoading) return <ContentLoader />;
 
@@ -45,7 +49,7 @@ const KjoreplanTrekkPage = () => {
 						{ label: "Faste data", to: ROOT },
 						{ label: "Trekkregler", to: TREKKREGLER },
 						{
-							label: `Kjøreplaner for ${trekkregel.kodeTrekktype} (${trekkregel.kodeOppgjorstype})`,
+							label: kjoreplanLabel,
 						},
 					]}
 				/>
