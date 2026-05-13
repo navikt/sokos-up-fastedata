@@ -42,18 +42,20 @@ const TrekkregelFilter = ({
 
 	return (
 		<div className={commonStyles["filter-container"]}>
-			{trekkregelFields.map(({ key, label }, inputFieldIndex) => (
-				<div key={key} className={styles["search-container"]}>
-					<FilterInput
-						label={label}
-						options={options[key]}
-						activeValues={activeFilters[key]}
-						onValueAdd={(val) => handleAdd(key, val)}
-						onValueRemove={(val) => handleRemove(key, val)}
-						autoFocus={inputFieldIndex === 0}
-					/>
-				</div>
-			))}
+			<div className={styles["search-bar-group"]}>
+				{trekkregelFields.map(({ key, label }, inputFieldIndex) => (
+					<div key={key} className={styles["search-container"]}>
+						<FilterInput
+							label={label}
+							options={options[key]}
+							activeValues={activeFilters[key]}
+							onValueAdd={(val) => handleAdd(key, val)}
+							onValueRemove={(val) => handleRemove(key, val)}
+							autoFocus={inputFieldIndex === 0}
+						/>
+					</div>
+				))}
+			</div>
 			{trekkregelFields.some(({ key }) => activeFilters[key].length > 0) && (
 				<div className={commonStyles["filter-actions"]}>
 					<Chips>

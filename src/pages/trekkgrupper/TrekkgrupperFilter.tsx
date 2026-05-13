@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips, UNSAFE_Combobox } from "@navikt/ds-react";
-import { type KeyboardEventHandler, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
 
@@ -107,23 +107,8 @@ const TrekkgrupperFilter = ({
 		setInputValue("");
 	};
 
-	const handleKeyDownCapture: KeyboardEventHandler<HTMLDivElement> = (
-		event,
-	) => {
-		if (event.key !== "Enter" || filteredOptions.length === 0) {
-			return;
-		}
-
-		event.preventDefault();
-		event.stopPropagation();
-		handleToggleSelected(filteredOptions[0].value, true);
-	};
-
 	return (
-		<div
-			className={commonStyles["filter-container"]}
-			onKeyDownCapture={handleKeyDownCapture}
-		>
+		<div className={commonStyles["filter-container"]}>
 			<div className={commonStyles["search-bar-group"]}>
 				<div
 					className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}

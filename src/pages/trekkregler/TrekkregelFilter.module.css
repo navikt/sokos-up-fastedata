@@ -1,3 +1,8 @@
+.search-bar-group {
+	display: flex;
+	gap: 1rem;
+}
+
 .search-container {
 	display: flex;
 	flex-direction: column;
