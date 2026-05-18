@@ -1,6 +1,6 @@
-import { Alert, Button, Modal, Table } from "@navikt/ds-react";
-import { useRef, useState } from "react";
+import { Alert, Table } from "@navikt/ds-react";
 import { useGetBilagstyper } from "../../api/apiService";
+import LazyFetchModal from "../../common/LazyFetchModal";
 
 interface Props {
 	kodeFagomraade: string;
@@ -8,70 +8,47 @@ interface Props {
 	disabled: boolean;
 }
 
-const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => {
-	const ref = useRef<HTMLDialogElement>(null);
-	const [shouldFetch, setShouldFetch] = useState(false);
+const BilagstypeModalContent = ({
+	kodeFagomraade,
+}: {
+	kodeFagomraade: string;
+}) => {
+	const { data, error } = useGetBilagstyper(kodeFagomraade);
 
-	const { data, error } = useGetBilagstyper(shouldFetch ? kodeFagomraade : "");
-
-	const handleClick = () => {
-		setShouldFetch(true);
-		ref.current?.showModal();
-	};
-
-	const handleClose = () => {
-		ref.current?.close();
-	};
+	if (error)
+		return <Alert variant="error">Feil ved lasting av bilagstyper</Alert>;
 
 	return (
-		<div>
-			<Button
-				variant="secondary"
-				size="xsmall"
-				disabled={disabled}
-				onClick={handleClick}
-			>
-				{buttonText}
-			</Button>
-
-			<Modal
-				ref={ref}
-				header={{
-					heading: `Faste data - Fagområde ${kodeFagomraade} - Bilagstype`,
-				}}
-				width={900}
-				onClose={handleClose}
-			>
-				<Modal.Body>
-					{error ? (
-						<Alert variant="error">Feil ved lasting av bilagstyper</Alert>
-					) : (
-						<Table>
-							<Table.Header>
-								<Table.Row>
-									<Table.HeaderCell scope="col">Type bilag</Table.HeaderCell>
-									<Table.HeaderCell scope="col">Dato fra</Table.HeaderCell>
-								</Table.Row>
-							</Table.Header>
-							<Table.Body>
-								{data?.map((item, index) => (
-									<Table.Row key={`${item.typeBilag}-${index}`}>
-										<Table.DataCell>{item.typeBilag}</Table.DataCell>
-										<Table.DataCell>{item.datoFom}</Table.DataCell>
-									</Table.Row>
-								))}
-							</Table.Body>
-						</Table>
-					)}
-				</Modal.Body>
-				<Modal.Footer>
-					<Button type="button" onClick={handleClose}>
-						Lukk
-					</Button>
-				</Modal.Footer>
-			</Modal>
-		</div>
+		<Table>
+			<Table.Header>
+				<Table.Row>
+					<Table.HeaderCell scope="col">Type bilag</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Dato fra</Table.HeaderCell>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
+				{data?.map((item) => (
+					<Table.Row key={`${item.typeBilag}-${item.datoFom}`}>
+						<Table.DataCell>{item.typeBilag}</Table.DataCell>
+						<Table.DataCell>{item.datoFom}</Table.DataCell>
+					</Table.Row>
+				))}
+			</Table.Body>
+		</Table>
 	);
 };
+
+const BilagstypeModal = ({ kodeFagomraade, buttonText, disabled }: Props) => (
+	<LazyFetchModal
+		buttonText={buttonText}
+		disabled={disabled}
+		heading={`Faste data - Fagområde ${kodeFagomraade} - Bilagstype`}
+		renderContent={(shouldFetch) =>
+			shouldFetch ? (
+				<BilagstypeModalContent kodeFagomraade={kodeFagomraade} />
+			) : null
+		}
+	/>
+);
 
 export default BilagstypeModal;

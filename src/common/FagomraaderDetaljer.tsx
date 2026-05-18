@@ -1,12 +1,11 @@
-import { Alert, BodyShort, Heading, Link, Table } from "@navikt/ds-react";
+import { Alert, BodyShort, Link, Table } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { useGetFagomraader } from "../api/apiService";
-import commonstyles from "../styles/commonstyles.module.css";
+import PageLayout from "../common/PageLayout";
 import type { Fagomraader } from "../types/Fagomraader";
 import { FAGOMRAADER, KLASSEKODER } from "../util/paths";
 import { type SortState, sortData } from "../util/sortUtil";
-import BackHomeBox from "./BackHomeBox";
 import filterstyles from "./CommonFilterStyles.module.css";
 import ContentLoader from "./ContentLoader";
 import styles from "./FagomraaderDetaljer.module.css";
@@ -62,80 +61,67 @@ const FagomraaderDetaljer = ({
 	};
 
 	return (
-		<div className={commonstyles.container}>
-			<div className={commonstyles["content-wrapper"]}>
-				<Heading
-					spacing
-					size="medium"
-					level="1"
-					className={commonstyles["page-heading"]}
-				>
-					{title}
-				</Heading>
-
-				<BackHomeBox breadcrumbs={breadcrumbs} />
-
-				<div className={filterstyles["filter-container"]}>
-					<div className={styles.row}>
-						<BodyShort weight="semibold">{descriptionLabel}</BodyShort>{" "}
-						{descriptionValue}
-					</div>
+		<PageLayout title={title} breadcrumbs={breadcrumbs}>
+			<div className={filterstyles["filter-container"]}>
+				<div className={styles.row}>
+					<BodyShort weight="semibold">{descriptionLabel}</BodyShort>{" "}
+					{descriptionValue}
 				</div>
-
-				{isLoading ? (
-					<ContentLoader />
-				) : error ? (
-					<Alert variant="error">Feil ved lasting av fagområder</Alert>
-				) : fagomraaderData.length > 0 ? (
-					<Table
-						zebraStripes
-						size="small"
-						sort={sort}
-						onSortChange={handleSortChange}
-					>
-						<Table.Header>
-							<Table.Row>
-								<Table.ColumnHeader sortKey="kodeFagomraade" sortable>
-									Kode
-								</Table.ColumnHeader>
-								<Table.ColumnHeader sortKey="navnFagomraade" sortable>
-									Navn
-								</Table.ColumnHeader>
-								<Table.HeaderCell scope="col">Klassekoder</Table.HeaderCell>
-							</Table.Row>
-						</Table.Header>
-						<Table.Body>
-							{fagomraaderData.map((fagomraade) => (
-								<Table.Row key={fagomraade.kodeFagomraade}>
-									<Table.DataCell>
-										<Link
-											as={RouterLink}
-											to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
-											state={stateValue}
-										>
-											{fagomraade.kodeFagomraade}
-										</Link>
-									</Table.DataCell>
-									<Table.DataCell>{fagomraade.navnFagomraade}</Table.DataCell>
-									<Table.DataCell>
-										<Link
-											as={RouterLink}
-											to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
-										>
-											Klassekoder
-										</Link>
-									</Table.DataCell>
-								</Table.Row>
-							))}
-						</Table.Body>
-					</Table>
-				) : (
-					<Alert variant="info" role="status">
-						{emptyMessage}
-					</Alert>
-				)}
 			</div>
-		</div>
+
+			{isLoading ? (
+				<ContentLoader />
+			) : error ? (
+				<Alert variant="error">Feil ved lasting av fagområder</Alert>
+			) : fagomraaderData.length > 0 ? (
+				<Table
+					zebraStripes
+					size="small"
+					sort={sort}
+					onSortChange={handleSortChange}
+				>
+					<Table.Header>
+						<Table.Row>
+							<Table.ColumnHeader sortKey="kodeFagomraade" sortable>
+								Kode
+							</Table.ColumnHeader>
+							<Table.ColumnHeader sortKey="navnFagomraade" sortable>
+								Navn
+							</Table.ColumnHeader>
+							<Table.HeaderCell scope="col">Klassekoder</Table.HeaderCell>
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+						{fagomraaderData.map((fagomraade) => (
+							<Table.Row key={fagomraade.kodeFagomraade}>
+								<Table.DataCell>
+									<Link
+										as={RouterLink}
+										to={`${FAGOMRAADER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
+										state={stateValue}
+									>
+										{fagomraade.kodeFagomraade}
+									</Link>
+								</Table.DataCell>
+								<Table.DataCell>{fagomraade.navnFagomraade}</Table.DataCell>
+								<Table.DataCell>
+									<Link
+										as={RouterLink}
+										to={`${KLASSEKODER}?fagomraade=${encodeURIComponent(fagomraade.kodeFagomraade)}`}
+									>
+										Klassekoder
+									</Link>
+								</Table.DataCell>
+							</Table.Row>
+						))}
+					</Table.Body>
+				</Table>
+			) : (
+				<Alert variant="info" role="status">
+					{emptyMessage}
+				</Alert>
+			)}
+		</PageLayout>
 	);
 };
 

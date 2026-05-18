@@ -1,5 +1,6 @@
 import { Table } from "@navikt/ds-react";
 import type React from "react";
+import commonstyles from "../../styles/commonstyles.module.css";
 import type { Fagomraader } from "../../types/Fagomraader";
 
 interface Props {
@@ -10,15 +11,7 @@ interface Props {
 const FagomraaderExpandableSection = ({ row, children }: Props) => (
 	<Table.ExpandableRow
 		content={
-			<div
-				style={{
-					display: "grid",
-					gridTemplateColumns: "1fr 1fr 1fr", // 3 columns
-					gap: "1rem",
-					padding: "1rem",
-					borderRadius: "8px",
-				}}
-			>
+			<div className={commonstyles["expandable-section-content"]}>
 				<div>
 					<b>Kode:</b> {row.kodeFagomraade}
 				</div>

@@ -2,8 +2,8 @@ import { Pagination, Table } from "@navikt/ds-react";
 import TableControls from "../../common/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Ventekriterier } from "../../types/Ventekriterier";
+import { formatNumber } from "../../util/numberUtil";
 import { useTablePagination } from "../../util/tableUtil";
-import { formatNumber } from "./tallUtil";
 
 type Props = {
 	data?: Ventekriterier[];

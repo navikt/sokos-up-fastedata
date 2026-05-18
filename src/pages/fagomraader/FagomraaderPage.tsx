@@ -1,10 +1,9 @@
-import { Alert, Heading } from "@navikt/ds-react";
+import { Alert } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
-import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
-import commonstyles from "../../styles/commonstyles.module.css";
+import PageLayout from "../../common/PageLayout";
+import SimpleFilter from "../../common/SimpleFilter";
 import { useSimpleFilter } from "../../util/useSimpleFilter";
-import FagomraaderFilter from "./FagomraaderFilter";
 import FagomraaderTable from "./FagomraaderTable";
 
 export const FagomraaderPage = () => {
@@ -19,36 +18,27 @@ export const FagomraaderPage = () => {
 	if (isLoading) return <ContentLoader />;
 
 	return (
-		<div className={commonstyles.container}>
-			<div className={commonstyles["content-wrapper"]}>
-				<Heading
-					spacing
-					size="medium"
-					level="1"
-					className={commonstyles["page-heading"]}
-				>
-					Faste data - Fagområde
-				</Heading>
+		<PageLayout title="Faste data - Fagområde">
+			{data && (
+				<SimpleFilter
+					data={filteredData}
+					activeFilters={filters}
+					onFiltersChange={handleFiltersChange}
+					label="Filtrer på fagområdekode og navn"
+					getOptionText={(item) =>
+						`${item.kodeFagomraade} - ${item.navnFagomraade}`
+					}
+				/>
+			)}
 
-				<BackHomeBox />
-
-				{data && (
-					<FagomraaderFilter
-						data={filteredData}
-						activeFilters={filters}
-						onFiltersChange={handleFiltersChange}
-					/>
-				)}
-
-				{error ? (
-					<Alert variant="error">Nettverksfeil</Alert>
-				) : filteredData.length > 0 ? (
-					<FagomraaderTable key={filters.join(",")} data={filteredData} />
-				) : (
-					<Alert variant="info">Ingen data tilgjengelig</Alert>
-				)}
-			</div>
-		</div>
+			{error ? (
+				<Alert variant="error">Nettverksfeil</Alert>
+			) : filteredData.length > 0 ? (
+				<FagomraaderTable key={filters.join(",")} data={filteredData} />
+			) : (
+				<Alert variant="info">Ingen data tilgjengelig</Alert>
+			)}
+		</PageLayout>
 	);
 };
 

@@ -1,10 +1,9 @@
-import { Alert, Heading } from "@navikt/ds-react";
+import { Alert } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useGetKlassekoder } from "../../api/apiService";
-import BackHomeBox from "../../common/BackHomeBox";
 import ContentLoader from "../../common/ContentLoader";
-import commonstyles from "../../styles/commonstyles.module.css";
+import PageLayout from "../../common/PageLayout";
 import { filterKlassekoder, getAvailableOptions } from "./filterKlassekoder";
 import KlassekoderFilter from "./KlassekoderFilter";
 import KlassekoderTable from "./KlassekoderTable";
@@ -52,36 +51,23 @@ export const KlassekoderPage = () => {
 	if (isLoading) return <ContentLoader />;
 
 	return (
-		<div className={commonstyles.container}>
-			<div className={commonstyles["content-wrapper"]}>
-				<Heading
-					spacing
-					size="medium"
-					level="1"
-					className={commonstyles["page-heading"]}
-				>
-					Faste data - Klassekoder
-				</Heading>
+		<PageLayout title="Faste data - Klassekoder">
+			{data && (
+				<KlassekoderFilter
+					options={availableOptions}
+					activeFilters={filters}
+					onFiltersChange={handleFilterChange}
+				/>
+			)}
 
-				<BackHomeBox />
-
-				{data && (
-					<KlassekoderFilter
-						options={availableOptions}
-						activeFilters={filters}
-						onFiltersChange={handleFilterChange}
-					/>
-				)}
-
-				{error ? (
-					<Alert variant="error">Nettverksfeil</Alert>
-				) : filteredData.length > 0 ? (
-					<KlassekoderTable data={filteredData} />
-				) : (
-					<Alert variant="info">Ingen data tilgjengelig</Alert>
-				)}
-			</div>
-		</div>
+			{error ? (
+				<Alert variant="error">Nettverksfeil</Alert>
+			) : filteredData.length > 0 ? (
+				<KlassekoderTable data={filteredData} />
+			) : (
+				<Alert variant="info">Ingen data tilgjengelig</Alert>
+			)}
+		</PageLayout>
 	);
 };
 
