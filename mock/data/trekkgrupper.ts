@@ -1,4 +1,6 @@
-export const trekkgrupper = [
+import type { Trekkgruppe } from "../../src/types/Trekkgruppe";
+
+export const trekkgrupper: Trekkgruppe[] = [
 	{
 		kodeTrekkgruppe: "AVRG",
 		kodeFagomraade: "MEFOGNY",
