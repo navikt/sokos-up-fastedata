@@ -1,111 +1,67 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
-import { Button, Chips, UNSAFE_Combobox } from "@navikt/ds-react";
-import { useMemo, useState } from "react";
+import { Button, Chips } from "@navikt/ds-react";
+import { useMemo } from "react";
 import commonStyles from "../../common/CommonFilterStyles.module.css";
+import FilterInput from "../../common/FilterInput";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
-
-type ComboboxOption = {
-	label: string;
-	value: string;
-};
-
-export interface TrekkgrupperFilterOption {
-	displayLabel: string;
-	type: "trekkgruppe" | "fagomraade";
-	value: string;
-}
 
 interface TrekkgrupperFilterProps {
 	data: Trekkgruppe[];
-	selectedOption: TrekkgrupperFilterOption | null;
-	onFilterChange: (filter: TrekkgrupperFilterOption | null) => void;
+	activeFilters: string[];
+	onFiltersChange: (filters: string[]) => void;
 }
 
 const TrekkgrupperFilter = ({
 	data,
-	selectedOption,
-	onFilterChange,
+	activeFilters,
+	onFiltersChange,
 }: TrekkgrupperFilterProps) => {
-	const [inputValue, setInputValue] = useState("");
-	const [comboboxKey, setComboboxKey] = useState(0);
-
-	const options = useMemo<TrekkgrupperFilterOption[]>(() => {
-		const trekkgruppeOptions: TrekkgrupperFilterOption[] = Array.from(
+	const allOptions = useMemo(() => {
+		const trekkgruppeOptions = Array.from(
 			new Set(data.map((item) => item.kodeTrekkgruppe)),
 		)
 			.sort()
-			.map((kodeTrekkgruppe) => ({
-				displayLabel: `Trekkgruppe: ${kodeTrekkgruppe}`,
-				type: "trekkgruppe" as const,
-				value: kodeTrekkgruppe,
-			}));
+			.map((code) => `Trekkgruppe: ${code}`);
 
-		const fagomraadeOptions: TrekkgrupperFilterOption[] = Array.from(
+		const fagomraadeOptions = Array.from(
 			new Set(data.map((item) => item.kodeFagomraade)),
 		)
 			.sort()
-			.map((kodeFagomraade) => ({
-				displayLabel: `Fagområde: ${kodeFagomraade}`,
-				type: "fagomraade" as const,
-				value: kodeFagomraade,
-			}));
+			.map((code) => `Fagområde: ${code}`);
 
 		return [...trekkgruppeOptions, ...fagomraadeOptions];
 	}, [data]);
 
-	const comboboxOptions = useMemo<ComboboxOption[]>(
-		() =>
-			options.map((option) => ({
-				label: option.displayLabel,
-				value: `${option.type}:${option.value}`,
-			})),
-		[options],
-	);
-
-	const filteredOptions = useMemo<ComboboxOption[]>(() => {
-		const normalizedSearch = inputValue.trim().toLowerCase();
-
-		if (!normalizedSearch) {
-			return comboboxOptions;
-		}
-
-		return comboboxOptions.filter((option) => {
-			const [, codeValue] = option.value.split(":");
-			return codeValue.toLowerCase().includes(normalizedSearch);
-		});
-	}, [comboboxOptions, inputValue]);
-
-	const selectedComboboxOptions = selectedOption
-		? [
-				{
-					label: selectedOption.displayLabel,
-					value: `${selectedOption.type}:${selectedOption.value}`,
-				},
-			]
-		: [];
-
-	const handleToggleSelected = (optionValue: string, isSelected: boolean) => {
-		if (!isSelected) {
-			onFilterChange(null);
+	const handleAdd = (value: string) => {
+		if (allOptions.includes(value)) {
+			if (!activeFilters.includes(value)) {
+				onFiltersChange([...activeFilters, value]);
+			}
 			return;
 		}
 
-		const [type, value] = optionValue.split(":");
-		const option = options.find(
-			(item) => item.type === type && item.value === value,
+		const upperValue = value.toUpperCase();
+		const trekkgruppeMatch = allOptions.find(
+			(opt) => opt === `Trekkgruppe: ${upperValue}`,
 		);
+		if (trekkgruppeMatch && !activeFilters.includes(trekkgruppeMatch)) {
+			onFiltersChange([...activeFilters, trekkgruppeMatch]);
+			return;
+		}
 
-		if (option) {
-			onFilterChange(option);
-			setInputValue("");
-			setComboboxKey((currentKey) => currentKey + 1);
+		const fagomraadeMatch = allOptions.find(
+			(opt) => opt === `Fagområde: ${upperValue}`,
+		);
+		if (fagomraadeMatch && !activeFilters.includes(fagomraadeMatch)) {
+			onFiltersChange([...activeFilters, fagomraadeMatch]);
 		}
 	};
 
-	const handleReset = () => {
-		onFilterChange(null);
-		setInputValue("");
+	const handleRemove = (value: string) => {
+		onFiltersChange(activeFilters.filter((f) => f !== value));
 	};
+
+	const handleReset = () => onFiltersChange([]);
 
 	return (
 		<div className={commonStyles["filter-container"]}>
@@ -113,27 +69,28 @@ const TrekkgrupperFilter = ({
 				<div
 					className={`${commonStyles["search-container"]} ${commonStyles["wider-search-container"]}`}
 				>
-					<UNSAFE_Combobox
-						key={comboboxKey}
-						size="small"
+					<FilterInput
 						label="Filtrer på trekkgruppe eller fagområde"
-						options={comboboxOptions}
-						filteredOptions={filteredOptions}
-						selectedOptions={selectedComboboxOptions}
-						value={inputValue}
-						onChange={setInputValue}
-						onToggleSelected={handleToggleSelected}
-						shouldShowSelectedOptions={false}
+						options={allOptions}
+						activeValues={activeFilters}
+						onValueAdd={handleAdd}
+						onValueRemove={handleRemove}
+						autoFocus
 					/>
 				</div>
 			</div>
 
-			{selectedOption && (
+			{activeFilters.length > 0 && (
 				<div className={commonStyles["filter-actions"]}>
 					<Chips>
-						<Chips.Removable onClick={handleReset}>
-							{selectedOption.displayLabel}
-						</Chips.Removable>
+						{activeFilters.map((filter) => (
+							<Chips.Removable
+								key={filter}
+								onClick={() => handleRemove(filter)}
+							>
+								{filter}
+							</Chips.Removable>
+						))}
 					</Chips>
 
 					<Button
