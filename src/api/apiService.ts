@@ -3,9 +3,12 @@ import type { Bilagstype } from "../types/Bilagstype";
 import type { Faggruppe } from "../types/Faggruppe";
 import type { Fagomraader } from "../types/Fagomraader";
 import type { Kjoreplan } from "../types/Kjoreplan";
+import type { KjoreplanTrekk } from "../types/KjoreplanTrekk";
 import type { Klassekoder } from "../types/Klassekoder";
 import type { Korrigeringsaarsak } from "../types/Korrigeringsaarsak";
 import type { RedusertSkatt } from "../types/RedusertSkatt";
+import type { Trekkgruppe } from "../types/Trekkgruppe";
+import type { Trekkregel } from "../types/Trekkregel";
 import type { Ventekriterier } from "../types/Ventekriterier";
 import type { Ventestatuskoder } from "../types/Ventestatuskoder";
 import { axiosFetcher } from "./config/apiConfig";
@@ -40,6 +43,17 @@ export function useGetVentestatuskoder() {
 		`/ventestatuskoder`,
 		swrConfig<Ventestatuskoder[]>((url) =>
 			axiosFetcher<Ventestatuskoder[]>(BASE_URI.BACKEND_API, url),
+		),
+	);
+	const isLoading = (!error && !data) || isValidating;
+	return { data, error, isLoading };
+}
+
+export function useGetTrekkgrupper() {
+	const { data, error, isValidating } = useSWRImmutable<Trekkgruppe[]>(
+		`/trekkgrupper`,
+		swrConfig<Trekkgruppe[]>((url) =>
+			axiosFetcher<Trekkgruppe[]>(BASE_URI.BACKEND_API, url),
 		),
 	);
 	const isLoading = (!error && !data) || isValidating;
@@ -119,6 +133,32 @@ export function useGetRedusertSkatt({ faggruppe }: { faggruppe: string }) {
 		faggruppe ? `/faggrupper/${faggruppe}/redusertSkatt` : "",
 		swrConfig<RedusertSkatt[]>((url) =>
 			axiosFetcher<RedusertSkatt[]>(BASE_URI.BACKEND_API, url),
+		),
+	);
+	const isLoading = (!error && !data) || isValidating;
+	return { data, error, isLoading };
+}
+
+export function useGetTrekkregler() {
+	const { data, error, isValidating } = useSWRImmutable<Trekkregel[]>(
+		`/trekkregler`,
+		swrConfig<Trekkregel[]>((url) =>
+			axiosFetcher<Trekkregel[]>(BASE_URI.BACKEND_API, url),
+		),
+	);
+	const isLoading = (!error && !data) || isValidating;
+	return { data, error, isLoading };
+}
+
+export function useGetKjoreplanTrekk({
+	kodeTrekktype,
+}: {
+	kodeTrekktype: string;
+}) {
+	const { data, error, isValidating } = useSWRImmutable<KjoreplanTrekk[]>(
+		kodeTrekktype ? `/trekkregler/${kodeTrekktype}/kjoreplan` : null,
+		swrConfig<KjoreplanTrekk[]>((url) =>
+			axiosFetcher<KjoreplanTrekk[]>(BASE_URI.BACKEND_API, url),
 		),
 	);
 	const isLoading = (!error && !data) || isValidating;

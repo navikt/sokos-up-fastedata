@@ -7,9 +7,12 @@ import {
 	kjoreplanList,
 	koronaKjoreplaner,
 } from "./data/kjoreplaner";
+import { kjoreplanTrekkList } from "./data/kjoreplanTrekk";
 import { klassekoderList } from "./data/klassekoder";
 import { korrigeringsaarsakerAAP } from "./data/korrigeringsaarsaker";
 import { redusertSkatt } from "./data/redusertSkatt";
+import { trekkgrupper } from "./data/trekkgrupper";
+import { trekkregler } from "./data/trekkregler";
 import { ventekriterierList } from "./data/ventekriterier";
 import { ventestatuskoderList } from "./data/ventestatuskoder";
 
@@ -26,6 +29,9 @@ export const handlers = [
 	}),
 	http.get(ventestatuskoderUrl, () => {
 		return HttpResponse.json(ventestatuskoderList, { status: 200 });
+	}),
+	http.get(`${baseUrl}/trekkgrupper`, () => {
+		return HttpResponse.json(trekkgrupper, { status: 200 });
 	}),
 	http.get(fagomraaderUrl, () => {
 		return HttpResponse.json(fagomraaderList, { status: 200 });
@@ -81,5 +87,11 @@ export const handlers = [
 		}
 
 		return HttpResponse.json([], { status: 200 });
+	}),
+	http.get(`${baseUrl}/trekkregler`, () => {
+		return HttpResponse.json(trekkregler, { status: 200 });
+	}),
+	http.get(`${baseUrl}/trekkregler/:kodeTrekktype/kjoreplan`, () => {
+		return HttpResponse.json(kjoreplanTrekkList, { status: 200 });
 	}),
 ];

@@ -1,0 +1,12 @@
+.search-bar-group {
+	display: flex;
+	gap: 1rem;
+}
+
+.search-container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	min-width: 0;
+	width: 12rem;
+}
