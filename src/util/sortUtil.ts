@@ -25,12 +25,11 @@ export function sortData<T>(data: T[], sort: SortState<T> | undefined): T[] {
 export function toggleSort<T>(
 	current: SortState<T> | undefined,
 	key: keyof T,
-): SortState<T> {
+): SortState<T> | undefined {
 	if (current?.orderBy === key) {
-		return {
-			orderBy: key,
-			direction: current.direction === "ascending" ? "descending" : "ascending",
-		};
+		if (current.direction === "ascending")
+			return { orderBy: key, direction: "descending" };
+		return undefined;
 	}
 	return { orderBy: key, direction: "ascending" };
 }

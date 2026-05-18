@@ -85,11 +85,12 @@ export function createSortChangeHandler<T>(
 	return (key: string) => {
 		setSortState((prev) => {
 			const orderBy = key as keyof T;
-			const direction =
-				prev?.orderBy === orderBy && prev?.direction === "ascending"
-					? "descending"
-					: "ascending";
-			return { orderBy, direction };
+			if (prev?.orderBy === orderBy) {
+				if (prev.direction === "ascending")
+					return { orderBy, direction: "descending" };
+				return undefined;
+			}
+			return { orderBy, direction: "ascending" };
 		});
 	};
 }
