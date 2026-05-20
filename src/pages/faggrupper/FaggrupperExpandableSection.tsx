@@ -31,7 +31,7 @@ const FaggrupperExpandableSection = ({ row, children }: Props) => (
 					<b>Øreavrunding:</b> {row.oereavrunding ? "Ja" : "Nei"}
 				</div>
 				<div>
-					<b>Navn:</b> {row.kodeFaggruppe}
+					<b>Navn:</b> {row.navnFaggruppe}
 				</div>
 				<div>
 					<b>Klassekode feil:</b> {row.klassekodeFeil}
