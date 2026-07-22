@@ -1,8 +1,8 @@
-import { Alert } from "@navikt/ds-react";
+import { Alert, LocalAlert } from "@navikt/ds-react";
 import { useGetFagomraader } from "../../api/apiService";
-import ContentLoader from "../../common/ContentLoader";
-import PageLayout from "../../common/PageLayout";
-import SimpleFilter from "../../common/SimpleFilter";
+import ContentLoader from "../../components/ContentLoader";
+import PageLayout from "../../components/PageLayout";
+import SimpleFilter from "../../components/SimpleFilter";
 import { useSimpleFilter } from "../../util/useSimpleFilter";
 import FagomraaderTable from "./FagomraaderTable";
 
@@ -32,7 +32,11 @@ export const FagomraaderPage = () => {
 			)}
 
 			{error ? (
-				<Alert variant="error">Nettverksfeil</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : filteredData.length > 0 ? (
 				<FagomraaderTable key={filters.join(",")} data={filteredData} />
 			) : (

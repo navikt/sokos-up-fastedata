@@ -1,8 +1,8 @@
-import { Alert, Tabs } from "@navikt/ds-react";
+import { Alert, LocalAlert, Tabs } from "@navikt/ds-react";
 import { useParams } from "react-router";
 import { useGetKjoreplaner } from "../../../api/apiService";
-import ContentLoader from "../../../common/ContentLoader";
-import PageLayout from "../../../common/PageLayout";
+import ContentLoader from "../../../components/ContentLoader";
+import PageLayout from "../../../components/PageLayout";
 import type { Faggruppe } from "../../../types/Faggruppe";
 import { useRequiredLocationState } from "../../../util/navigationUtil";
 import { FAGGRUPPER, ROOT } from "../../../util/paths";
@@ -37,7 +37,11 @@ const KjoreplanPage = () => {
 			]}
 		>
 			{error ? (
-				<Alert variant="error">Nettverksfeil</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : data && data.length > 0 ? (
 				<Tabs defaultValue="PLAN" style={{ marginBottom: "1.5rem" }}>
 					<Tabs.List>

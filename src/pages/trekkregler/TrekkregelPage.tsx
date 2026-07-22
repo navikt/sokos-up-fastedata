@@ -1,11 +1,12 @@
-import { Alert } from "@navikt/ds-react";
+import { Alert, LocalAlert } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { useGetTrekkregler } from "../../api/apiService";
-import ContentLoader from "../../common/ContentLoader";
-import PageLayout from "../../common/PageLayout";
-import type { TrekkregelFilterKey } from "./fieldConfig";
+import ContentLoader from "../../components/ContentLoader";
+import MultiFieldFilter from "../../components/MultiFieldFilter";
+import PageLayout from "../../components/PageLayout";
+import { type TrekkregelFilterKey, trekkregelFields } from "./fieldConfig";
 import { filterTrekkregler, getAvailableOptions } from "./filterTrekkregler";
-import TrekkregelFilter from "./TrekkregelFilter";
+import filterStyles from "./TrekkregelFilter.module.css";
 import styles from "./TrekkregelPage.module.css";
 import TrekkregelTable from "./TrekkregelTable";
 
@@ -41,15 +42,22 @@ export const TrekkregelPage = () => {
 			contentWrapperClassName={styles["content-wrapper"]}
 		>
 			{data && (
-				<TrekkregelFilter
+				<MultiFieldFilter
+					fields={trekkregelFields}
 					options={availableOptions}
 					activeFilters={filters}
 					onFiltersChange={handleFilterChange}
+					searchBarGroupClassName={filterStyles["search-bar-group"]}
+					searchContainerClassName={filterStyles["search-container"]}
 				/>
 			)}
 
 			{error ? (
-				<Alert variant="error">Nettverksfeil</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : filteredData.length > 0 ? (
 				<TrekkregelTable data={filteredData} />
 			) : (

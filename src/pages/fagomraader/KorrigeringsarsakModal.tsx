@@ -1,6 +1,6 @@
-import { Alert, Table } from "@navikt/ds-react";
+import { LocalAlert, Table } from "@navikt/ds-react";
 import { useGetKorrigeringsaarsaker } from "../../api/apiService";
-import LazyFetchModal from "../../common/LazyFetchModal";
+import LazyFetchModal from "../../components/LazyFetchModal";
 
 interface Props {
 	kodeFagomraade: string;
@@ -17,7 +17,13 @@ const KorrigeringsarsakModalContent = ({
 
 	if (error)
 		return (
-			<Alert variant="error">Feil ved lasting av korrigeringsårsaker</Alert>
+			<LocalAlert status="error">
+				<LocalAlert.Header>
+					<LocalAlert.Title>
+						Feil ved lasting av korrigeringsårsaker
+					</LocalAlert.Title>
+				</LocalAlert.Header>
+			</LocalAlert>
 		);
 
 	return (

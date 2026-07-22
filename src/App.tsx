@@ -6,7 +6,7 @@ import FagomraaderPage from "./pages/fagomraader/FagomraaderPage";
 import Home from "./pages/Home";
 import FagomraaderForKlassekoder from "./pages/klassekoder/FagomraaderForKlassekoder";
 import KlassekoderPage from "./pages/klassekoder/KlassekoderPage";
-import NotFound from "./pages/notfound/NotFound";
+import NotFound from "./pages/NotFound";
 import TrekkgrupperPage from "./pages/trekkgrupper/TrekkgrupperPage";
 import KjoreplanTrekkPage from "./pages/trekkregler/kjoreplan/KjoreplanTrekkPage";
 import TrekkregelPage from "./pages/trekkregler/TrekkregelPage";

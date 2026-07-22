@@ -1,8 +1,8 @@
-import { Alert, BodyShort, Link, Table } from "@navikt/ds-react";
+import { Alert, BodyShort, Link, LocalAlert, Table } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import { useGetFagomraader } from "../api/apiService";
-import PageLayout from "../common/PageLayout";
+import PageLayout from "../components/PageLayout";
 import type { Fagomraader } from "../types/Fagomraader";
 import { FAGOMRAADER, KLASSEKODER } from "../util/paths";
 import { type SortState, sortData } from "../util/sortUtil";
@@ -72,7 +72,11 @@ const FagomraaderDetaljer = ({
 			{isLoading ? (
 				<ContentLoader />
 			) : error ? (
-				<Alert variant="error">Feil ved lasting av fagområder</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Feil ved lasting av fagområder</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : fagomraaderData.length > 0 ? (
 				<Table
 					zebraStripes
@@ -117,9 +121,7 @@ const FagomraaderDetaljer = ({
 					</Table.Body>
 				</Table>
 			) : (
-				<Alert variant="info" role="status">
-					{emptyMessage}
-				</Alert>
+				<Alert variant="info">{emptyMessage}</Alert>
 			)}
 		</PageLayout>
 	);
