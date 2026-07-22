@@ -1,0 +1,28 @@
+.filter-container {
+	background-color: var(--ax-bg-accent-moderate);
+	border-radius: 12px;
+	padding: 1.5rem;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+}
+
+.search-container {
+	max-width: 300px;
+	position: relative;
+	margin-top: 0.6rem;
+}
+
+.wider-search-container {
+	max-width: 400px;
+}
+
+.filter-actions {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	margin-top: 1rem;
+	flex-wrap: wrap;
+}

@@ -1,6 +1,6 @@
-import { Alert, Table } from "@navikt/ds-react";
+import { LocalAlert, Table } from "@navikt/ds-react";
 import { useGetRedusertSkatt } from "../../api/apiService";
-import LazyFetchModal from "../../common/LazyFetchModal";
+import LazyFetchModal from "../../components/LazyFetchModal";
 import { formatDate } from "../../util/dateUtil";
 
 interface Props {
@@ -17,7 +17,15 @@ const RedusertSkattModalContent = ({
 	const { data, error } = useGetRedusertSkatt({ faggruppe: kodeFaggruppe });
 
 	if (error)
-		return <Alert variant="error">Feil ved lasting av redusert skatt</Alert>;
+		return (
+			<LocalAlert status="error">
+				<LocalAlert.Header>
+					<LocalAlert.Title>
+						Feil ved lasting av redusert skatt
+					</LocalAlert.Title>
+				</LocalAlert.Header>
+			</LocalAlert>
+		);
 
 	return (
 		<Table>

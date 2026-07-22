@@ -1,8 +1,8 @@
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { Button, Chips } from "@navikt/ds-react";
 import { useMemo } from "react";
-import commonStyles from "../../common/CommonFilterStyles.module.css";
-import FilterInput from "../../common/FilterInput";
+import commonStyles from "../../components/CommonFilterStyles.module.css";
+import FilterInput from "../../components/FilterInput";
 import type { Trekkgruppe } from "../../types/Trekkgruppe";
 
 interface TrekkgrupperFilterProps {
@@ -98,7 +98,7 @@ const TrekkgrupperFilter = ({
 						size="small"
 						onClick={handleReset}
 						iconPosition="right"
-						icon={<XMarkIcon />}
+						icon={<XMarkIcon aria-hidden />}
 					>
 						Nullstill Filter
 					</Button>

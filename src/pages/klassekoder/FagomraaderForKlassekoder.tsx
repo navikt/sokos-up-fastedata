@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router";
-import FagomraaderDetaljer from "../../common/FagomraaderDetaljer";
+import FagomraaderDetaljer from "../../components/FagomraaderDetaljer";
 import type { Klassekoder } from "../../types/Klassekoder";
 import {
 	parseCommaSeparated,
