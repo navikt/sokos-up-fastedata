@@ -3,7 +3,7 @@ import FaggrupperPage from "./pages/faggrupper/FaggrupperPage";
 import FagomraaderForFaggrupper from "./pages/faggrupper/FagomraaderForFaggrupper";
 import KjoreplanPage from "./pages/faggrupper/kjoreplan/KjoreplanPage";
 import FagomraaderPage from "./pages/fagomraader/FagomraaderPage";
-import FastedataPage from "./pages/fastedata/FastedataPage";
+import Home from "./pages/Home";
 import FagomraaderForKlassekoder from "./pages/klassekoder/FagomraaderForKlassekoder";
 import KlassekoderPage from "./pages/klassekoder/KlassekoderPage";
 import NotFound from "./pages/notfound/NotFound";
@@ -32,7 +32,7 @@ export default function App() {
 	return (
 		<BrowserRouter basename={BASENAME}>
 			<Routes>
-				<Route path={ROOT} element={<FastedataPage />} />
+				<Route path={ROOT} element={<Home />} />
 				<Route path={FAGOMRAADER} element={<FagomraaderPage />} />
 				<Route path={FAGGRUPPER} element={<FaggrupperPage />} />
 				<Route
