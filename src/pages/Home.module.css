@@ -13,6 +13,10 @@
 	gap: 1rem;
 }
 
+.link-card {
+	background: var(--ax-bg-accent-moderate);
+}
+
 @media (width <= 700px) {
 	.card-grid {
 		grid-template-columns: 1fr;

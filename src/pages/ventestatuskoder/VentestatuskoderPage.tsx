@@ -1,7 +1,7 @@
-import { Alert } from "@navikt/ds-react";
+import { Alert, LocalAlert } from "@navikt/ds-react";
 import { useGetVentestatuskoder } from "../../api/apiService";
-import ContentLoader from "../../common/ContentLoader";
-import PageLayout from "../../common/PageLayout";
+import ContentLoader from "../../components/ContentLoader";
+import PageLayout from "../../components/PageLayout";
 import VentestatuskoderTable from "./VentestatuskoderTable";
 
 export const VentestatuskoderPage = () => {
@@ -12,7 +12,11 @@ export const VentestatuskoderPage = () => {
 	return (
 		<PageLayout title="Faste data - Ventestatuskoder">
 			{error ? (
-				<Alert variant="error">Nettverksfeil</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : data && data.length > 0 ? (
 				<VentestatuskoderTable data={data} />
 			) : (

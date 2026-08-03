@@ -1,11 +1,13 @@
-import { Alert } from "@navikt/ds-react";
+import { Alert, LocalAlert } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useGetKlassekoder } from "../../api/apiService";
-import ContentLoader from "../../common/ContentLoader";
-import PageLayout from "../../common/PageLayout";
+import ContentLoader from "../../components/ContentLoader";
+import MultiFieldFilter from "../../components/MultiFieldFilter";
+import PageLayout from "../../components/PageLayout";
+import { type FilterKey, klassekoderFields } from "./fieldConfig";
 import { filterKlassekoder, getAvailableOptions } from "./filterKlassekoder";
-import KlassekoderFilter from "./KlassekoderFilter";
+import styles from "./KlassekoderFilter.module.css";
 import KlassekoderTable from "./KlassekoderTable";
 
 export const KlassekoderPage = () => {
@@ -53,15 +55,25 @@ export const KlassekoderPage = () => {
 	return (
 		<PageLayout title="Faste data - Klassekoder">
 			{data && (
-				<KlassekoderFilter
+				<MultiFieldFilter
+					fields={klassekoderFields}
 					options={availableOptions}
 					activeFilters={filters}
 					onFiltersChange={handleFilterChange}
+					searchBarGroupClassName={styles["search-bar-group"]}
+					searchContainerClassName={styles["search-container"]}
+					canAdd={(field, value) =>
+						(field as FilterKey) !== "artID" || !Number.isNaN(Number(value))
+					}
 				/>
 			)}
 
 			{error ? (
-				<Alert variant="error">Nettverksfeil</Alert>
+				<LocalAlert status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+					</LocalAlert.Header>
+				</LocalAlert>
 			) : filteredData.length > 0 ? (
 				<KlassekoderTable data={filteredData} />
 			) : (
