@@ -7,5 +7,5 @@
 
 .treff-info {
 	font-style: italic;
-	color: #4b5563;
+	color: var(--ax-text-subtle);
 }

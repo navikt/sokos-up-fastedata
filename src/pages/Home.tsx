@@ -1,10 +1,10 @@
-import { Heading } from "@navikt/ds-react";
-import commonstyles from "../../styles/commonstyles.module.css";
-import AppCard from "./AppCard";
-import styles from "./Fastedata.module.css";
+import { Heading, LinkCard } from "@navikt/ds-react";
+import { Link } from "react-router";
+import commonstyles from "../styles/commonstyles.module.css";
+import styles from "./Home.module.css";
 import { routeSections } from "./routes";
 
-export default function FastedataPage() {
+export default function Home() {
 	return (
 		<div className={commonstyles.container}>
 			<div className={styles["content-wrapper"]}>
@@ -24,12 +24,20 @@ export default function FastedataPage() {
 
 						<div className={styles["card-grid"]}>
 							{section.routes.map((app) => (
-								<AppCard
+								<LinkCard
 									key={app.title}
-									title={app.title}
-									description={app.description}
-									route={app.route}
-								/>
+									as="article"
+									className={styles["link-card"]}
+								>
+									<LinkCard.Title as="h3">
+										<LinkCard.Anchor asChild>
+											<Link to={app.route} data-umami-event-app={app.title}>
+												{app.title}
+											</Link>
+										</LinkCard.Anchor>
+									</LinkCard.Title>
+									<LinkCard.Description>{app.description}</LinkCard.Description>
+								</LinkCard>
 							))}
 						</div>
 					</div>
