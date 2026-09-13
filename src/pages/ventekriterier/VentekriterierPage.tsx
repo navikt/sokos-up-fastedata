@@ -14,7 +14,11 @@ export const VentekriterierPage = () => {
 			{error ? (
 				<LocalAlert status="error">
 					<LocalAlert.Header>
-						<LocalAlert.Title>Nettverksfeil</LocalAlert.Title>
+						<LocalAlert.Title as="h2">
+							{error instanceof Error
+								? error.message
+								: "Noe gikk galt. Hvis feilen vedvarer, meld sak i Porten."}
+						</LocalAlert.Title>
 					</LocalAlert.Header>
 				</LocalAlert>
 			) : data && data.length > 0 ? (
