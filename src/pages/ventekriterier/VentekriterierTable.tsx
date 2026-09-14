@@ -1,5 +1,5 @@
 import { Pagination, Table } from "@navikt/ds-react";
-import TableControls from "../../common/TableControls";
+import TableControls from "../../components/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Ventekriterier } from "../../types/Ventekriterier";
 import { formatNumber } from "../../util/numberUtil";

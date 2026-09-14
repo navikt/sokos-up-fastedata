@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import FagomraaderDetaljer from "../../common/FagomraaderDetaljer";
+import FagomraaderDetaljer from "../../components/FagomraaderDetaljer";
 import type { Faggruppe } from "../../types/Faggruppe";
 import { useRequiredLocationState } from "../../util/navigationUtil";
 import { FAGGRUPPER, ROOT } from "../../util/paths";

@@ -7,12 +7,9 @@ export default function NotFound() {
 	const navigate = useNavigate();
 
 	return (
-		<Box paddingBlock="20 16" data-aksel-template="404-v2">
+		<Box paddingBlock="space-20 space-16" data-aksel-template="404-v2">
 			<div className={styles["error-page"]}>
-				<ChatExclamationmarkIcon
-					title="Chat exclamationmark ikon"
-					fontSize="6rem"
-				/>
+				<ChatExclamationmarkIcon aria-hidden fontSize="6rem" />
 				<Heading level="1" size="large" spacing>
 					Beklager, vi fant ikke siden
 				</Heading>
