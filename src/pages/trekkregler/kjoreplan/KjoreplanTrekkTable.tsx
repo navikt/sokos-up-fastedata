@@ -1,6 +1,6 @@
 import { Pagination, Table } from "@navikt/ds-react";
 import { useState } from "react";
-import TableControls from "../../../common/TableControls";
+import TableControls from "../../../components/TableControls";
 import commonstyles from "../../../styles/commonstyles.module.css";
 import type { KjoreplanTrekk } from "../../../types/KjoreplanTrekk";
 import { formatDate } from "../../../util/dateUtil";

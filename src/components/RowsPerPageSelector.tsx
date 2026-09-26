@@ -21,7 +21,7 @@ export default function RowsPerPageSelector({
 					className={styles["selector-button"]}
 				>
 					<span>Vis {rowsPerPage} per side</span>
-					<ChevronDownIcon className={styles["arrow-icon"]} />
+					<ChevronDownIcon aria-hidden className={styles["arrow-icon"]} />
 				</Button>
 				<Dropdown.Menu className={styles["dropdown-menu"]}>
 					<Dropdown.Menu.GroupedList>

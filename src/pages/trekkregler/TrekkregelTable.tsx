@@ -1,7 +1,7 @@
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import { useState } from "react";
 import { generatePath, Link as RouterLink } from "react-router";
-import TableControls from "../../common/TableControls";
+import TableControls from "../../components/TableControls";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Trekkregel } from "../../types/Trekkregel";
 import { TREKKREGLER_KJOREPLANER } from "../../util/paths";
