@@ -74,7 +74,7 @@ const SimpleFilter = <T,>({
 						size="small"
 						onClick={handleResetFilters}
 						iconPosition="right"
-						icon={<XMarkIcon />}
+						icon={<XMarkIcon aria-hidden />}
 					>
 						Nullstill Filter
 					</Button>

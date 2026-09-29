@@ -1,7 +1,7 @@
 import { Link, Pagination, Table } from "@navikt/ds-react";
 import { useMemo, useState } from "react";
 import { generatePath, Link as RouterLink } from "react-router";
-import RowsPerPageSelector from "../../common/RowsPerPageSelector";
+import RowsPerPageSelector from "../../components/RowsPerPageSelector";
 import commonstyles from "../../styles/commonstyles.module.css";
 import type { Klassekoder } from "../../types/Klassekoder";
 import { KLASSEKODER_FAGOMRAADER } from "../../util/paths";

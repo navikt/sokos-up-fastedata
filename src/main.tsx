@@ -1,3 +1,4 @@
+import { Provider } from "@navikt/ds-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -20,13 +21,15 @@ const startMsw = async () => {
 startMsw().then(() =>
 	ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 		<React.StrictMode>
-			<div className="page-wrapper">
-				<div className="page-layout">
-					<main>
-						<App />
-					</main>
+			<Provider>
+				<div className="page-wrapper">
+					<div className="page-layout">
+						<main>
+							<App />
+						</main>
+					</div>
 				</div>
-			</div>
+			</Provider>
 		</React.StrictMode>,
 	),
 );

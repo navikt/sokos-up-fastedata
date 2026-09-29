@@ -88,7 +88,7 @@ const MultiFieldFilter = <K extends string>({
 						size="small"
 						onClick={handleReset}
 						iconPosition="right"
-						icon={<XMarkIcon />}
+						icon={<XMarkIcon aria-hidden />}
 					>
 						Nullstill Filter
 					</Button>
