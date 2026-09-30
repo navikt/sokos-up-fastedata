@@ -17,9 +17,6 @@ spec:
   readiness:
     path: /sokos-up-fastedata/internal/isReady
     initialDelay: 10
-  prometheus:
-    enabled: true
-    path: /sokos-up-fastedata/internal/metrics
   replicas:
     min: 2
     max: 2
