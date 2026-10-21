@@ -2,7 +2,9 @@
 # Settings apply ONLY to the root install (`pnpm install` at repo root).
 # Server-specific overrides live in server/pnpm-workspace.yaml and are NOT inherited.
 
-overrides: {}
+overrides:
+  follow-redirects: 1.16.1
+  vite: 8.3.3
 engineStrict: true
 saveExact: true
 ignoreScripts: true
