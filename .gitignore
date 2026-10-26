@@ -117,3 +117,5 @@ public/mockServiceWorker.js
 
 # asdf
 .tool-versions
+
+.pnpm-store/
