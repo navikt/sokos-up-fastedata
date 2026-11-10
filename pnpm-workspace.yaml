@@ -3,9 +3,10 @@
 # Server-specific overrides live in server/pnpm-workspace.yaml and are NOT inherited.
 
 overrides:
-  follow-redirects: 1.16.1
-  vite: 8.3.3
+  follow-redirects: 1.16.3
 engineStrict: true
 saveExact: true
 ignoreScripts: true
 minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+  - follow-redirects@1.16.3
